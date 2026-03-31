@@ -1,22 +1,11 @@
-import express from 'express';
-import dotenv from 'dotenv';
+import { Router, Request, Response } from 'express';
+import { AuthController } from '../controllers/AuthController';
 
-dotenv.config();
+const router = Router();
+const authController = new AuthController();
 
-const app = express();
-const PORT = process.env.PORT || 3000;
-
-app.use(express.json());
-
-console.log('Registrando rutas...');
-
-app.post('/api/auth/login', (req, res) => {
-  console.log('Login hit!');
-  res.json({ message: 'login funcionando' });
+router.post('/login', async (req: Request, res: Response) => {
+  await authController.login(req, res);
 });
 
-console.log('Rutas registradas');
-
-app.listen(PORT, () => {
-  console.log(`Servidor corriendo en puerto ${PORT}`);
-});
+export default router;
