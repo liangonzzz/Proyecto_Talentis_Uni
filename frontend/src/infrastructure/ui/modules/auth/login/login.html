@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GRH Talentis</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="login.css">
+</head>
+<body>
+  <div class="wrapper-background">
+
+    <div class="login-image"></div>
+
+    <div class="login-form">
+
+      <div class="logos-wrapper">
+        <img class="logo-top" src="https://img.freepik.com/vector-gratis/plantilla-logotipo-centro_23-2149852444.jpg?semt=ais_incoming&w=740&q=80" alt="Logo Uniminuto">
+        <img class="logo-bottom" src="https://coopminutodedios.com/wp-content/uploads/2021/10/uniminuto.png" alt="Logo Uniminuto">
+      </div>
+
+      <div class="form-card">
+
+        <h1 class="form-title">Bienvenido</h1>
+
+        <div class="select-wrapper">
+          <select id="tipoDoc" aria-label="Tipo de documento">
+            <option value="">Cédula de ciudadanía</option>
+            <option value="ce">Cédula de extranjería</option>
+            <option value="pas">Pasaporte</option>
+            <option value="nit">NIT</option>
+          </select>
+          <span class="select-arrow">›</span>
+        </div>
+
+        <label class="field-label" for="numId">Número de identificación</label>
+        <div class="input-wrapper">
+          <input
+            id="numId"
+            type="text"
+            placeholder="Ingrese su número de identificación"
+            inputmode="numeric"
+          >
+        </div>
+
+        <label class="field-label" for="password">Contraseña</label>
+        <div class="input-wrapper has-icon-left">
+          <span class="input-icon-left">🔒</span>
+          <input
+            id="password"
+            type="password"
+            placeholder="Ingrese la contraseña"
+          >
+          <button
+            class="toggle-password"
+            type="button"
+            aria-label="Mostrar/ocultar contraseña"
+            onclick="togglePass()"
+          >👁</button>
+        </div>
+
+        <div class="checkboxes">
+          <label class="checkbox-label">
+            <input type="checkbox">
+            <span><a href="#">Acepto la política de seguridad de la información.</a></span>
+          </label>
+          <label class="checkbox-label">
+            <input type="checkbox">
+            <span><a href="#">Acepto la política de tratamiento de datos personales.</a></span>
+          </label>
+        </div>
+
+        <button class="btn-login" type="button">Iniciar sesión</button>
+
+        <a class="forgot-link" href="#">¿Olvidó la contraseña?</a>
+
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function togglePass() {
+      const input = document.getElementById('password');
+      input.type = input.type === 'password' ? 'text' : 'password';
+    }
+  </script>
+</body>
+</html>

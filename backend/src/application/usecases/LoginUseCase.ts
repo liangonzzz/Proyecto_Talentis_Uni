@@ -24,6 +24,10 @@ export class LoginUseCase {
       { expiresIn: '8h' }
     );
 
-    return { token, rol: usuario.rol, nombre: usuario.nombre };
+    return {
+      token,
+      rol: usuario.rol,
+      nombre: usuario.nombre,
+    };
   }
 }
