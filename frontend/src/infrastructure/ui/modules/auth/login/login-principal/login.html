@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GRH Talentis</title>
+  <link rel="icon" type="image/x-icon" href="../../../../assets/icons/Icono-pestaña.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="login.css">
+</head>
+<body>
+  <div class="wrapper-background">
+    <div class="login-image"></div>
+    <div class="login-form">
+      <div class="logos-wrapper">
+        <img class="logo-top" src="../../../../assets/images/logos/Logo-completo.png" alt="Logo Talentis">
+        <img class="logo-bottom" src="../../../../assets/images/logos/Uniminuto.png" alt="Logo Uniminuto">
+      </div>
+      <div class="form-card">
+        <h1 class="form-title">Bienvenido</h1>
+
+        <div class="select-wrapper">
+          <select id="tipoDoc">
+            <option value="" disabled selected>Seleccione tipo de documento</option>
+            <option value="cc">Cédula de ciudadanía</option>
+            <option value="ce">Cédula de extranjería</option>
+            <option value="pas">Pasaporte</option>
+            <option value="nit">NIT</option>
+          </select>
+          <span class="select-arrow"><i class="fa fa-angle-right"></i></span>
+        </div>
+
+        <label class="field-label" for="numId">Número de identificación</label>
+        <div class="input-wrapper">
+          <input id="numId" type="text" placeholder="Ingrese su número de identificación" inputmode="numeric">
+        </div>
+
+        <label class="field-label" for="password">Contraseña</label>
+        <div class="input-wrapper has-icon-left">
+          <span class="input-icon-left"><i class="fa-solid fa-lock"></i></span>
+          <input id="password" type="password" placeholder="Ingrese la contraseña">
+          <button class="toggle-password" type="button" onclick="togglePass()">
+            <i id="eye-icon" class="fa-solid fa-eye"></i>
+          </button>
+        </div>
+
+        <div class="checkboxes">
+          <label class="checkbox-label">
+            <input type="checkbox" id="pol1">
+            <span><a href="#" onclick="abrirModal('modal-seguridad'); return false;">Acepto la política de seguridad de la información.</a></span>
+          </label>
+          <label class="checkbox-label">
+            <input type="checkbox" id="pol2">
+            <span><a href="#" onclick="abrirModal('modal-datos'); return false;">Acepto la política de tratamiento de datos personales.</a></span>
+          </label>
+        </div>
+
+        <div class="error-box" id="error-box">
+          <i class="fa-solid fa-circle-xmark"></i>
+          <span id="error-msg"></span>
+        </div>
+
+        <button class="btn-login" type="button" onclick="iniciarSesion()">Iniciar sesión</button>
+        <a class="forgot-link" href="../forgot-password/forgot-password.html">¿Olvidó la contraseña?</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: Política de seguridad -->
+  <div class="modal-overlay" id="modal-seguridad">
+    <div class="modal-box">
+      <button class="modal-close" onclick="cerrarModal('modal-seguridad')">&#x2715;</button>
+      <h2 class="modal-title">Política de seguridad de la información</h2>
+      <div class="modal-content">
+        <p>La presente política tiene como objetivo establecer los lineamientos para la protección de la información dentro de la organización, garantizando su confidencialidad, integridad y disponibilidad.</p>
+        <p>Todo usuario del sistema se compromete a hacer uso responsable de las credenciales de acceso, no compartir contraseñas, y reportar cualquier actividad sospechosa al área de sistemas.</p>
+        <p>La información almacenada en el sistema es de uso exclusivo para fines laborales. Queda prohibido el acceso no autorizado, la divulgación o el uso indebido de datos de otros usuarios.</p>
+        <p>El incumplimiento de esta política podrá dar lugar a sanciones disciplinarias de acuerdo con el reglamento interno de la organización.</p>
+        <p>La organización se reserva el derecho de auditar el uso del sistema en cualquier momento para garantizar el cumplimiento de esta política.</p>
+      </div>
+      <button class="modal-btn" onclick="aceptarPolitica('pol1', 'modal-seguridad')">Acepto la política de seguridad de la información</button>
+    </div>
+  </div>
+
+  <!-- MODAL: Política de datos -->
+  <div class="modal-overlay" id="modal-datos">
+    <div class="modal-box">
+      <button class="modal-close" onclick="cerrarModal('modal-datos')">&#x2715;</button>
+      <h2 class="modal-title">Política de tratamiento de datos personales</h2>
+      <div class="modal-content">
+        <p>En cumplimiento de la Ley 1581 de 2012 y el Decreto 1377 de 2013, la organización informa que los datos personales recopilados serán tratados de manera confidencial y utilizados únicamente para los fines propios de la relación laboral.</p>
+        <p>Los datos personales incluyen nombre, número de identificación, correo electrónico, información de contacto y demás datos necesarios para la gestión del talento humano.</p>
+        <p>El titular de los datos tiene derecho a conocer, actualizar, rectificar y solicitar la supresión de su información personal en cualquier momento, comunicándose con el área de Recursos Humanos.</p>
+        <p>La organización implementa las medidas técnicas y administrativas necesarias para garantizar la seguridad de los datos personales y prevenir su acceso no autorizado.</p>
+        <p>Al aceptar esta política, el usuario autoriza expresamente el tratamiento de sus datos personales conforme a los términos aquí descritos.</p>
+      </div>
+      <button class="modal-btn" onclick="aceptarPolitica('pol2', 'modal-datos')">Acepto la política de tratamiento de datos personales</button>
+    </div>
+  </div>
+
+  <script>
+    function mostrarError(msg) {
+      const box = document.getElementById('error-box');
+      document.getElementById('error-msg').textContent = msg;
+      box.classList.add('visible');
+
+      clearTimeout(window._errorTimer);
+      window._errorTimer = setTimeout(() => ocultarError(), 2000);
+    }
+
+    function ocultarError() {
+      document.getElementById('error-box').classList.remove('visible');
+    }
+
+    function togglePass() {
+      const input = document.getElementById('password');
+      const icon = document.getElementById('eye-icon');
+      if (input.type === 'password') {
+        input.type = 'text';
+        icon.classList.replace('fa-eye', 'fa-eye-low-vision');
+      } else {
+        input.type = 'password';
+        icon.classList.replace('fa-eye-low-vision', 'fa-eye');
+      }
+    }
+
+    function abrirModal(id) {
+      document.getElementById(id).classList.add('open');
+    }
+
+    function cerrarModal(id) {
+      document.getElementById(id).classList.remove('open');
+    }
+
+    function aceptarPolitica(checkId, modalId) {
+      document.getElementById(checkId).checked = true;
+      cerrarModal(modalId);
+    }
+
+    function iniciarSesion() {
+      ocultarError();
+      const tipo = document.getElementById('tipoDoc').value;
+      const num = document.getElementById('numId').value.trim();
+      const pass = document.getElementById('password').value;
+      const pol1 = document.getElementById('pol1').checked;
+      const pol2 = document.getElementById('pol2').checked;
+
+      if (!tipo) return mostrarError('Por favor seleccione el tipo de documento.');
+      if (!num) return mostrarError('Por favor ingrese su número de identificación.');
+      if (!pass) return mostrarError('Por favor ingrese su contraseña.');
+      if (!pol1 || !pol2) return mostrarError('Debe aceptar las políticas para continuar.');
+    }
+  </script>
+</body>
+</html>

@@ -1,8 +1,4 @@
-*, *::before, *::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
   height: 100vh;
@@ -13,7 +9,6 @@ body {
   font-family: 'Nunito', sans-serif;
 }
 
-/* ── Layout principal ── */
 .wrapper-background {
   display: flex;
   width: 100%;
@@ -23,16 +18,14 @@ body {
   background: white;
 }
 
-/* ── Panel izquierdo: imagen ── */
 .login-image {
   flex: 1;
   border-radius: 20px;
-  background-image: url('https://uni.edu.gt/wp-content/uploads/sites/19/2025/04/Cohesion-de-equipos-usando-sistemas-integrados1.jpg');
+  background-image: url('../../../../assets/images/backgrounds/Fondo-login.png');
   background-size: cover;
   background-position: center;
 }
 
-/* ── Panel derecho ── */
 .login-form {
   flex: 0.9;
   border-radius: 20px;
@@ -41,7 +34,6 @@ body {
   align-items: center;
 }
 
-/* ── Contenedor de logos ── */
 .logos-wrapper {
   width: 100%;
   max-width: 560px;
@@ -55,19 +47,18 @@ body {
 .logo-top {
   width: 100%;
   height: 100px;
-  object-fit: contain;  /* mantiene proporciones sin recortar */
-  background: transparent; 
+  object-fit: contain;
+  background: transparent;
   filter: grayscale(100%) opacity(50%);
 }
 
 .logo-bottom {
   width: 100%;
   height: 100px;
-  object-fit: contain;  /* mantiene proporciones sin recortar */
-  background: transparent;  
+  object-fit: contain;
+  background: transparent;
 }
 
-/* ── Card del formulario ── */
 .form-card {
   background: #ffffff;
   border-radius: 16px;
@@ -79,7 +70,6 @@ body {
   margin-bottom: auto;
 }
 
-/* ── Título ── */
 .form-title {
   text-align: center;
   font-size: 22px;
@@ -88,7 +78,6 @@ body {
   margin-bottom: 24px;
 }
 
-/* ── Select tipo de documento ── */
 .select-wrapper {
   position: relative;
   width: 100%;
@@ -110,22 +99,19 @@ body {
   transition: border-color .2s;
 }
 
-.select-wrapper select:focus {
-  border-color: #6dbf44;
-}
+.select-wrapper select:focus { border-color: #414ba8; }
 
 .select-arrow {
   position: absolute;
   right: 14px;
   top: 50%;
   transform: translateY(-50%);
-  color: #6dbf44;
+  color: #414ba8;
   font-size: 20px;
   font-weight: 700;
   pointer-events: none;
 }
 
-/* ── Labels ── */
 .field-label {
   display: block;
   width: 100%;
@@ -135,7 +121,6 @@ body {
   margin-bottom: 6px;
 }
 
-/* ── Inputs ── */
 .input-wrapper {
   position: relative;
   width: 100%;
@@ -151,17 +136,11 @@ body {
   font-size: 14px;
   color: #374151;
   outline: none;
-  transition: border-color .2s, box-shadow .2s;
+  transition: border-color .2s;
 }
 
-.input-wrapper input::placeholder {
-  color: #b0bec5;
-}
-
-.input-wrapper input:focus {
-  border-color: #6dbf44;
-  box-shadow: 0 0 0 3px rgba(109, 191, 68, .15);
-}
+.input-wrapper input::placeholder { color: #b0bec5; }
+.input-wrapper input:focus { border-color: #414ba8; }
 
 .input-icon-left {
   position: absolute;
@@ -173,9 +152,7 @@ body {
   pointer-events: none;
 }
 
-.input-wrapper.has-icon-left input {
-  padding-left: 38px;
-}
+.input-wrapper.has-icon-left input { padding-left: 38px; }
 
 .toggle-password {
   position: absolute;
@@ -192,17 +169,14 @@ body {
   transition: color .2s;
 }
 
-.toggle-password:hover {
-  color: #6dbf44;
-}
+.toggle-password:hover { color: #414ba8; }
 
-/* ── Checkboxes ── */
 .checkboxes {
   width: 100%;
   display: flex;
   flex-direction: column;
   gap: 8px;
-  margin-bottom: 22px;
+  margin-bottom: 16px;
 }
 
 .checkbox-label {
@@ -218,7 +192,7 @@ body {
 .checkbox-label input[type="checkbox"] {
   width: 15px;
   height: 15px;
-  accent-color: #6dbf44;
+  accent-color: #405de0;
   flex-shrink: 0;
   margin-top: 2px;
   cursor: pointer;
@@ -230,11 +204,32 @@ body {
   font-weight: 600;
 }
 
-/* ── Botón login ── */
+/* ── Error box ── */
+.error-box {
+  display: none;
+  align-items: center;
+  gap: 10px;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 10px;
+  padding: 12px 16px;
+  margin-bottom: 16px;
+  font-size: 13px;
+  color: #b91c1c;
+}
+
+.error-box i {
+  font-size: 16px;
+  flex-shrink: 0;
+  color: #ef4444;
+}
+
+.error-box.visible { display: flex; }
+
 .btn-login {
   width: 100%;
   padding: 14px;
-  background: #6dbf44;
+  background: #414ba8;
   color: #fff;
   border: none;
   border-radius: 10px;
@@ -243,21 +238,13 @@ body {
   font-weight: 700;
   cursor: pointer;
   letter-spacing: .4px;
-  transition: background .2s, transform .1s, box-shadow .2s;
-  box-shadow: 0 4px 14px rgba(109, 191, 68, .35);
+  transition: background .2s, transform .1s;
   margin-bottom: 14px;
 }
 
-.btn-login:hover {
-  background: #5aab35;
-  box-shadow: 0 6px 18px rgba(109, 191, 68, .45);
-}
+.btn-login:hover { background: #3844ac; }
+.btn-login:active { transform: scale(.98); }
 
-.btn-login:active {
-  transform: scale(.98);
-}
-
-/* ── Olvidé contraseña ── */
 .forgot-link {
   text-align: center;
   font-size: 13px;
@@ -267,6 +254,78 @@ body {
   transition: color .2s;
 }
 
-.forgot-link:hover {
-  color: #6dbf44;
+.forgot-link:hover { color: #3441af; }
+
+/* ── Modales ── */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  z-index: 100;
+  align-items: center;
+  justify-content: center;
 }
+
+.modal-overlay.open { display: flex; }
+
+.modal-box {
+  background: #fff;
+  border-radius: 16px;
+  padding: 36px 32px 28px;
+  width: 90%;
+  max-width: 520px;
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.modal-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  color: #64748b;
+  transition: color .2s;
+}
+
+.modal-close:hover { color: #1a2e44; }
+
+.modal-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: #1a2e44;
+  margin-bottom: 16px;
+}
+
+.modal-content {
+  overflow-y: auto;
+  flex: 1;
+  font-size: 13px;
+  color: #64748b;
+  line-height: 1.7;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.modal-btn {
+  width: 100%;
+  padding: 14px;
+  background: #414ba8;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background .2s;
+}
+
+.modal-btn:hover { background: #3844ac; }
