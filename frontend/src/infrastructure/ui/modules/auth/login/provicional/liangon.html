@@ -5,591 +5,338 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>GRH Talentis – Mi Hoja de Vida</title>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Sora:wght@400;600;700&display=swap" rel="stylesheet"/>
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --topnav-h: 62px;
-      --sidebar-w: 200px;
-      --sidebar-collapsed-w: 58px;
-      --profile-w: 224px;
-      --bg: #f0f4f9;
-      --card-bg: #ffffff;
-      --blue-dark: #1a3a5c;
-      --blue-mid: #2563a8;
-      --blue-light: #4a9fd4;
-      --teal: #3cb8b2;
-      --green: #4cbe8e;
-      --text-main: #1e2d3d;
-      --text-soft: #6b7f96;
-      --border: #dde6f0;
-      --radius: 14px;
-      --shadow: 0 2px 16px rgba(37,99,168,0.08);
-      --t: 0.25s cubic-bezier(.4,0,.2,1);
-    }
-
-    html, body { height: 100%; overflow: hidden; }
-    body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text-main); }
-
-    /* ══════════ TOP NAV (FIXED) ══════════ */
-    .topnav {
-      position: fixed; top: 0; left: 0; right: 0;
-      height: var(--topnav-h);
-      background: #fff; border-bottom: 1px solid var(--border);
-      display: flex; align-items: center; justify-content: space-between;
-      padding-right: 24px; z-index: 200;
-    }
-
-    /* Left slot inside topnav — mirrors sidebar width */
-    .topnav-brand {
-      display: flex; align-items: center; gap: 10px;
-      width: var(--sidebar-w); padding-left: 16px;
-      flex-shrink: 0; overflow: hidden;
-      transition: width var(--t);
-    }
-    body.collapsed .topnav-brand { width: var(--sidebar-collapsed-w); }
-
-    .brand-icon {
-      width: 36px; height: 36px; flex-shrink: 0;
-      background: var(--blue-dark); border-radius: 9px;
-      display: flex; flex-direction: column; align-items: center; justify-content: center;
-    }
-    .brand-icon b { font-family:'Sora',sans-serif; font-size:10px; font-weight:700; color:#fff; letter-spacing:.5px; line-height:1; }
-    .brand-icon small { font-size:7px; color:rgba(255,255,255,.6); letter-spacing:.8px; line-height:1; margin-top:1px; }
-
-    .brand-text {
-      font-family:'Sora',sans-serif; font-size:13px; font-weight:700; color:var(--blue-dark);
-      white-space:nowrap; overflow:hidden;
-      transition: opacity var(--t), max-width var(--t);
-      opacity:1; max-width:120px;
-    }
-    body.collapsed .brand-text { opacity:0; max-width:0; }
-
-    .topnav-middle {
-      flex:1; display:flex; align-items:center; gap:0; padding-left:20px; overflow:hidden;
-    }
-    .vline { width:1px; height:30px; background:var(--border); margin-right:18px; flex-shrink:0; }
-    .uni-top { font-family:'Sora',sans-serif; font-size:13px; font-weight:700; color:var(--blue-mid); }
-    .uni-top em { color:var(--teal); font-style:normal; }
-    .uni-sub { font-size:9px; color:var(--text-soft); margin-top:2px; }
-
-    .topnav-user { display:flex; align-items:center; gap:10px; cursor:pointer; flex-shrink:0; }
-    .user-info { text-align:right; }
-    .user-name { font-family:'Sora',sans-serif; font-size:13px; font-weight:600; color:var(--text-main); }
-    .user-role { font-size:11px; color:var(--text-soft); }
-    .avatar {
-      width:36px; height:36px; border-radius:50%;
-      background:linear-gradient(135deg,var(--blue-light),var(--teal));
-      display:flex; align-items:center; justify-content:center;
-      font-family:'Sora',sans-serif; font-weight:700; color:#fff; font-size:13px;
-      border:2px solid var(--border); flex-shrink:0;
-    }
-    .chev { color:var(--text-soft); font-size:18px; }
-
-    /* ══════════ SIDEBAR (FIXED) ══════════ */
-    .sidebar {
-      position:fixed; top:var(--topnav-h); left:0; bottom:0;
-      width:var(--sidebar-w);
-      background:#fff; border-right:1px solid var(--border);
-      display:flex; flex-direction:column;
-      z-index:150; overflow:hidden;
-      transition: width var(--t);
-    }
-    body.collapsed .sidebar { width:var(--sidebar-collapsed-w); }
-
-    .sidebar-nav { flex:1; padding:10px 0; display:flex; flex-direction:column; gap:2px; overflow:hidden; }
-
-    .nav-item {
-      display:flex; align-items:center; gap:12px;
-      padding:11px 18px; cursor:pointer; text-decoration:none;
-      font-size:13.5px; color:var(--text-soft); font-weight:400;
-      white-space:nowrap; overflow:hidden;
-      transition: background .15s, color .15s;
-      position: relative;
-    }
-    .nav-item:hover { background:var(--bg); color:var(--text-main); }
-    .nav-item.active { background:var(--blue-dark); color:#fff; }
-    .nav-icon { width:22px; height:22px; flex-shrink:0; display:flex; align-items:center; justify-content:center; }
-    .nav-label { transition: opacity var(--t), max-width var(--t); opacity:1; max-width:160px; overflow:hidden; }
-    body.collapsed .nav-label { opacity:0; max-width:0; }
-
-    /* tooltip on collapsed */
-    body.collapsed .nav-item::after {
-      content: attr(data-tip);
-      position:absolute; left:calc(var(--sidebar-collapsed-w) + 8px); top:50%;
-      transform:translateY(-50%) scale(.9); opacity:0;
-      background:var(--blue-dark); color:#fff;
-      font-size:11.5px; padding:5px 10px; border-radius:7px;
-      white-space:nowrap; pointer-events:none;
-      transition: opacity .15s, transform .15s;
-    }
-    body.collapsed .nav-item:hover::after { opacity:1; transform:translateY(-50%) scale(1); }
-
-    .sidebar-footer { border-top:1px solid var(--border); padding:10px 0; }
-    .toggle-btn {
-      display:flex; align-items:center; gap:12px;
-      padding:11px 18px; cursor:pointer;
-      color:var(--text-soft); font-size:13px; white-space:nowrap; overflow:hidden;
-      transition: color .15s;
-    }
-    .toggle-btn:hover { color:var(--blue-mid); }
-    .toggle-icon { width:22px; height:22px; flex-shrink:0; display:flex; align-items:center; justify-content:center; transition: transform var(--t); }
-    body.collapsed .toggle-icon { transform:rotate(180deg); }
-    .toggle-label { transition: opacity var(--t), max-width var(--t); opacity:1; max-width:120px; overflow:hidden; }
-    body.collapsed .toggle-label { opacity:0; max-width:0; }
-
-    /* ══════════ MAIN WRAPPER ══════════ */
-    .main-wrapper {
-      position:fixed;
-      top:var(--topnav-h); left:var(--sidebar-w); right:0; bottom:0;
-      display:flex; flex-direction:column;
-      transition: left var(--t);
-      overflow:hidden;
-    }
-    body.collapsed .main-wrapper { left:var(--sidebar-collapsed-w); }
-
-    /* Page header — never scrolls */
-    .page-header {
-      flex-shrink:0;
-      display:flex; align-items:center; justify-content:space-between;
-      padding:20px 30px 16px; background:var(--bg);
-    }
-    .page-title { font-family:'Sora',sans-serif; font-size:22px; font-weight:700; color:var(--blue-dark); }
-    .progress-wrap { display:flex; align-items:center; gap:12px; }
-    .progress-track { width:300px; height:14px; background:#e0ecf8; border-radius:99px; overflow:hidden; }
-    .progress-fill { height:100%; width:82%; background:linear-gradient(90deg,var(--green),#7de8b8); border-radius:99px; }
-    .progress-badge {
-      width:44px; height:44px; border-radius:50%;
-      border:3px solid var(--green); background:#fff;
-      display:flex; align-items:center; justify-content:center;
-      font-family:'Sora',sans-serif; font-weight:700; font-size:12px; color:var(--green); flex-shrink:0;
-    }
-
-    /* Content area */
-    .content-area {
-      flex:1; display:flex; gap:20px;
-      padding:0 30px 24px; overflow:hidden;
-    }
-
-    /* ── PROFILE PANEL — FIXED (no scroll) */
-    .profile-panel {
-      width:var(--profile-w); flex-shrink:0;
-      background:var(--card-bg); border-radius:var(--radius);
-      box-shadow:var(--shadow); border:1px solid var(--border);
-      padding:22px 18px 18px;
-      display:flex; flex-direction:column; align-items:center;
-      overflow:hidden; /* NEVER scrolls */
-      align-self:flex-start; /* height = content, not stretch */
-    }
-
-    .avatar-ring-wrap { position:relative; width:84px; height:84px; margin-bottom:12px; }
-    .avatar-ring {
-      width:84px; height:84px; border-radius:50%;
-      border:3.5px solid transparent;
-      background:linear-gradient(white,white) padding-box,
-                 linear-gradient(135deg,var(--blue-light),var(--teal)) border-box;
-      overflow:hidden; display:flex; align-items:center; justify-content:center;
-    }
-    .edit-btn {
-      position:absolute; bottom:2px; right:2px;
-      width:22px; height:22px; border-radius:50%;
-      background:var(--blue-mid); border:2px solid #fff;
-      display:flex; align-items:center; justify-content:center; cursor:pointer;
-    }
-    .profile-name { font-family:'Sora',sans-serif; font-size:14px; font-weight:700; color:var(--text-main); text-align:center; }
-    .profile-role { font-size:11.5px; color:var(--blue-mid); text-align:center; margin-top:3px; }
-    .profile-email { font-size:10px; color:var(--text-soft); text-align:center; margin-top:3px; }
-    .cv-btn {
-      margin-top:14px; display:flex; align-items:center; gap:6px;
-      background:var(--bg); border:1px solid var(--border); border-radius:8px;
-      padding:7px 14px; font-size:12px; color:var(--text-main); font-weight:500;
-      cursor:pointer; font-family:'DM Sans',sans-serif; transition:background .15s;
-    }
-    .cv-btn:hover { background:#e0ecf8; }
-
-    .steps { margin-top:18px; width:100%; display:flex; flex-direction:column; }
-    .step { display:flex; align-items:center; gap:9px; position:relative; padding:5px 0; }
-    .step:not(:last-child)::after {
-      content:''; position:absolute; left:8px; top:24px;
-      width:2px; height:calc(100% - 6px); background:var(--border); z-index:0;
-    }
-    .step-dot {
-      width:18px; height:18px; border-radius:50%; flex-shrink:0;
-      border:2px solid var(--border); background:#fff;
-      display:flex; align-items:center; justify-content:center; z-index:1;
-    }
-    .step-dot.on { background:var(--blue-mid); border-color:var(--blue-mid); }
-    .step-lbl { font-size:11px; color:var(--text-soft); }
-    .step:first-child .step-lbl { color:var(--text-main); font-weight:500; }
-
-    /* ── SECTIONS PANEL — SCROLLABLE */
-    .sections-panel {
-      flex:1; overflow-y:auto; display:flex; flex-direction:column; gap:11px; padding-right:2px;
-    }
-    .sections-panel::-webkit-scrollbar { width:5px; }
-    .sections-panel::-webkit-scrollbar-track { background:transparent; }
-    .sections-panel::-webkit-scrollbar-thumb { background:#c8d8ea; border-radius:99px; }
-    .sections-panel::-webkit-scrollbar-thumb:hover { background:var(--blue-light); }
-
-    .sec-card {
-      background:var(--card-bg); border:1px solid var(--border);
-      border-radius:var(--radius); box-shadow:var(--shadow);
-      overflow:hidden; flex-shrink:0;
-      transition:box-shadow .18s;
-    }
-    .sec-card:hover { box-shadow:0 4px 20px rgba(37,99,168,.12); }
-
-    .sec-header {
-      display:flex; align-items:center; justify-content:space-between;
-      padding:16px 22px; cursor:pointer; user-select:none;
-    }
-    .sec-left { display:flex; align-items:center; gap:11px; }
-    .sec-check {
-      width:20px; height:20px; border-radius:50%; flex-shrink:0;
-      background:#e8f5f0; border:2px solid var(--green);
-      display:flex; align-items:center; justify-content:center;
-    }
-    .sec-check.grey { background:#f0f4f9; border-color:#c0d4e8; }
-    .sec-title { font-family:'Sora',sans-serif; font-size:14px; font-weight:600; color:var(--text-main); }
-    .sec-chev { color:var(--text-soft); display:flex; align-items:center; transition:transform .22s; }
-    .sec-card.open .sec-chev { transform:rotate(180deg); }
-
-    .sec-body {
-      display:none; padding:0 22px 18px;
-      border-top:1px solid var(--border);
-      animation:fadeSlide .2s ease;
-    }
-    .sec-card.open .sec-body { display:block; }
-
-    @keyframes fadeSlide {
-      from { opacity:0; transform:translateY(-5px); }
-      to   { opacity:1; transform:translateY(0); }
-    }
-
-    .frow { display:flex; gap:14px; margin-top:14px; }
-    .fgrp { flex:1; display:flex; flex-direction:column; gap:4px; }
-    .flbl { font-size:10.5px; color:var(--text-soft); font-weight:500; letter-spacing:.4px; text-transform:uppercase; }
-    .finp {
-      border:1px solid var(--border); border-radius:8px;
-      padding:8px 11px; font-size:13px; color:var(--text-main);
-      background:var(--bg); font-family:'DM Sans',sans-serif;
-      transition:border .15s; outline:none;
-    }
-    .finp:focus { border-color:var(--blue-light); background:#fff; }
-  </style>
+  <link rel="stylesheet" href="provicional.css"/>
 </head>
 <body>
 
-<!-- ════════ TOP NAV ════════ -->
-<nav class="topnav">
-  <div class="topnav-brand">
-    <div class="brand-icon"><b>GRH</b><small>Talentis</small></div>
-    <span class="brand-text">Talentis</span>
-  </div>
-  <div class="topnav-middle">
-    <div class="vline"></div>
-    <div>
-      <div class="uni-top">NI<em>P</em> UNIMINUTO</div>
-      <div class="uni-sub">Corporación Universitaria Minuto de Dios</div>
+<div class="layout">
+
+  <!-- ════════ SIDEBAR — toda la altura ════════ -->
+  <aside class="sidebar">
+
+    <div class="sidebar-brand">
+      <!-- Logo GRH Talentis — reemplaza src con la ruta real de la imagen -->
+      <div class="brand-logo-img">
+        <img src="assets/logo-grh.png" alt="GRH Talentis"
+             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'"/>
+        <span class="img-placeholder" style="display:none">GRH<br>Talentis</span>
+      </div>
+      <span class="brand-text">Talentis</span>
     </div>
-  </div>
-  <div class="topnav-user">
-    <div class="user-info">
-      <div class="user-name">Paola Pérez</div>
-      <div class="user-role">Directora administrativa</div>
-    </div>
-    <div class="avatar">PP</div>
-    <span class="chev">&#8964;</span>
-  </div>
-</nav>
 
-<!-- ════════ SIDEBAR ════════ -->
-<aside class="sidebar">
-  <nav class="sidebar-nav">
+    <nav class="sidebar-nav">
 
-    <a class="nav-item" href="#" data-tip="Mi tablero">
-      <span class="nav-icon">
-        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" width="18" height="18">
-          <rect x="2" y="2" width="7" height="7" rx="1.5"/><rect x="11" y="2" width="7" height="7" rx="1.5"/>
-          <rect x="2" y="11" width="7" height="7" rx="1.5"/><rect x="11" y="11" width="7" height="7" rx="1.5"/>
-        </svg>
-      </span>
-      <span class="nav-label">Mi tablero</span>
-    </a>
-
-    <a class="nav-item active" href="#" data-tip="Mi hoja de vida">
-      <span class="nav-icon">
-        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" width="18" height="18">
-          <circle cx="10" cy="7" r="3.5"/><path d="M3 17c0-3.3 3.1-6 7-6s7 2.7 7 6"/>
-        </svg>
-      </span>
-      <span class="nav-label">Mi hoja de vida</span>
-    </a>
-
-    <a class="nav-item" href="#" data-tip="Funcionarios">
-      <span class="nav-icon">
-        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" width="18" height="18">
-          <circle cx="7" cy="7" r="2.8"/><circle cx="14" cy="7" r="2.8"/>
-          <path d="M1 17c0-2.6 2.5-4.7 6-4.7M13 12.3c3.5.5 6 2.6 6 4.7"/>
-        </svg>
-      </span>
-      <span class="nav-label">Funcionarios</span>
-    </a>
-
-    <a class="nav-item" href="#" data-tip="Candidatos">
-      <span class="nav-icon">
-        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" width="18" height="18">
-          <path d="M3 5h14M3 10h10M3 15h7"/>
-        </svg>
-      </span>
-      <span class="nav-label">Candidatos</span>
-    </a>
-
-    <a class="nav-item" href="#" data-tip="Mi organización">
-      <span class="nav-icon">
-        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" width="18" height="18">
-          <rect x="2" y="4" width="16" height="13" rx="2"/>
-          <path d="M7 4V3M13 4V3M2 9h16"/>
-        </svg>
-      </span>
-      <span class="nav-label">Mi organización</span>
-    </a>
-
-    <a class="nav-item" href="#" data-tip="Grupos">
-      <span class="nav-icon">
-        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" width="18" height="18">
-          <circle cx="10" cy="5" r="2.5"/>
-          <circle cx="4" cy="14" r="2.5"/><circle cx="16" cy="14" r="2.5"/>
-          <path d="M10 7.5V10M10 10L4 11.5M10 10L16 11.5"/>
-        </svg>
-      </span>
-      <span class="nav-label">Grupos</span>
-    </a>
-
-  </nav>
-
-  <!-- Toggle button at bottom -->
-  <div class="sidebar-footer">
-    <div class="toggle-btn" onclick="document.body.classList.toggle('collapsed')" title="Colapsar menú">
-      <span class="toggle-icon">
-        <!-- panel-left collapse icon -->
-        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" width="18" height="18">
-          <rect x="2" y="2" width="16" height="16" rx="2.5"/>
-          <path d="M7 2v16"/>
-          <path d="M11 7.5l-2 2.5 2 2.5" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </span>
-      <span class="toggle-label">Colapsar</span>
-    </div>
-  </div>
-</aside>
-
-<!-- ════════ MAIN ════════ -->
-<div class="main-wrapper">
-
-  <!-- Header — fixed, no scroll -->
-  <div class="page-header">
-    <h1 class="page-title">Mi Hoja de Vida</h1>
-    <div class="progress-wrap">
-      <div class="progress-track"><div class="progress-fill"></div></div>
-      <div class="progress-badge">82%</div>
-    </div>
-  </div>
-
-  <!-- Content -->
-  <div class="content-area">
-
-    <!-- Profile panel — fixed -->
-    <div class="profile-panel">
-      <div class="avatar-ring-wrap">
-        <div class="avatar-ring">
-          <svg viewBox="0 0 84 84" xmlns="http://www.w3.org/2000/svg"
-               style="background:linear-gradient(135deg,#c7ddf8,#a8e6df);width:84px;height:84px">
-            <circle cx="42" cy="32" r="15" fill="#5b9bd5"/>
-            <ellipse cx="42" cy="68" rx="22" ry="15" fill="#5b9bd5"/>
+      <a class="nav-item" href="#" data-tip="Mi tablero">
+        <span class="nav-icon">
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" width="18" height="18">
+            <rect x="2" y="2" width="7" height="7" rx="1.5"/>
+            <rect x="11" y="2" width="7" height="7" rx="1.5"/>
+            <rect x="2" y="11" width="7" height="7" rx="1.5"/>
+            <rect x="11" y="11" width="7" height="7" rx="1.5"/>
           </svg>
-        </div>
-        <div class="edit-btn">
-          <svg viewBox="0 0 12 12" fill="none" stroke="#fff" stroke-width="1.3" width="11" height="11">
-            <path d="M8 2l2 2-6 6H2V8L8 2z"/>
-          </svg>
-        </div>
-      </div>
-      <div class="profile-name">Paola Pérez</div>
-      <div class="profile-role">Directora administrativa</div>
-      <div class="profile-email">paola.perez@dcoas.com.co</div>
-      <button class="cv-btn">
-        <svg viewBox="0 0 16 16" fill="none" stroke="var(--blue-mid)" stroke-width="1.3" width="14" height="14">
-          <path d="M3 2h7l3 3v9H3V2z"/><path d="M10 2v4h4M5 9h6M5 11.5h4" stroke-linecap="round"/>
-        </svg>
-        Hoja de vida
-      </button>
+        </span>
+        <span class="nav-label">Mi tablero</span>
+      </a>
 
-      <div class="steps">
-        <div class="step">
-          <div class="step-dot on">
-            <svg viewBox="0 0 10 10" fill="none" stroke="#fff" stroke-width="2.2" width="9" height="9"><polyline points="2,5 4.5,7.5 8,2.5"/></svg>
-          </div>
-          <span class="step-lbl">Información de perfil</span>
-        </div>
-        <div class="step">
-          <div class="step-dot on">
-            <svg viewBox="0 0 10 10" fill="none" stroke="#fff" stroke-width="2.2" width="9" height="9"><polyline points="2,5 4.5,7.5 8,2.5"/></svg>
-          </div>
-          <span class="step-lbl">Datos personales</span>
-        </div>
-        <div class="step">
-          <div class="step-dot on">
-            <svg viewBox="0 0 10 10" fill="none" stroke="#fff" stroke-width="2.2" width="9" height="9"><polyline points="2,5 4.5,7.5 8,2.5"/></svg>
-          </div>
-          <span class="step-lbl">Formación académica</span>
-        </div>
-        <div class="step">
-          <div class="step-dot on">
-            <svg viewBox="0 0 10 10" fill="none" stroke="#fff" stroke-width="2.2" width="9" height="9"><polyline points="2,5 4.5,7.5 8,2.5"/></svg>
-          </div>
-          <span class="step-lbl">Experiencia laboral</span>
-        </div>
-        <div class="step">
-          <div class="step-dot on">
-            <svg viewBox="0 0 10 10" fill="none" stroke="#fff" stroke-width="2.2" width="9" height="9"><polyline points="2,5 4.5,7.5 8,2.5"/></svg>
-          </div>
-          <span class="step-lbl">Afiliaciones</span>
-        </div>
-        <div class="step">
-          <div class="step-dot">
-            <svg viewBox="0 0 10 10" fill="none" stroke="#c8d8ea" stroke-width="2.2" width="9" height="9"><polyline points="2,5 4.5,7.5 8,2.5"/></svg>
-          </div>
-          <span class="step-lbl">Documentos</span>
-        </div>
+      <a class="nav-item active" href="#" data-tip="Mi hoja de vida">
+        <span class="nav-icon">
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" width="18" height="18">
+            <circle cx="10" cy="7" r="3.5"/>
+            <path d="M3 17c0-3.3 3.1-6 7-6s7 2.7 7 6"/>
+          </svg>
+        </span>
+        <span class="nav-label">Mi hoja de vida</span>
+      </a>
+
+      <a class="nav-item" href="#" data-tip="Funcionarios">
+        <span class="nav-icon">
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" width="18" height="18">
+            <circle cx="7" cy="7" r="2.8"/>
+            <circle cx="14" cy="7" r="2.8"/>
+            <path d="M1 17c0-2.6 2.5-4.7 6-4.7M13 12.3c3.5.5 6 2.6 6 4.7"/>
+          </svg>
+        </span>
+        <span class="nav-label">Funcionarios</span>
+      </a>
+
+      <a class="nav-item" href="#" data-tip="Candidatos">
+        <span class="nav-icon">
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" width="18" height="18">
+            <path d="M3 5h14M3 10h10M3 15h7"/>
+          </svg>
+        </span>
+        <span class="nav-label">Candidatos</span>
+      </a>
+
+      <a class="nav-item" href="#" data-tip="Mi organización">
+        <span class="nav-icon">
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" width="18" height="18">
+            <rect x="2" y="4" width="16" height="13" rx="2"/>
+            <path d="M7 4V3M13 4V3M2 9h16"/>
+          </svg>
+        </span>
+        <span class="nav-label">Mi organización</span>
+      </a>
+
+      <a class="nav-item" href="#" data-tip="Grupos">
+        <span class="nav-icon">
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" width="18" height="18">
+            <circle cx="10" cy="5" r="2.5"/>
+            <circle cx="4" cy="14" r="2.5"/>
+            <circle cx="16" cy="14" r="2.5"/>
+            <path d="M10 7.5V10M10 10L4 11.5M10 10L16 11.5"/>
+          </svg>
+        </span>
+        <span class="nav-label">Grupos</span>
+      </a>
+
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="toggle-btn" onclick="document.body.classList.toggle('collapsed')">
+        <span class="toggle-icon">
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" width="18" height="18">
+            <rect x="2" y="2" width="16" height="16" rx="2.5"/>
+            <path d="M7 2v16"/>
+            <path d="M11 7.5l-2 2.5 2 2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+        <span class="toggle-label">Colapsar</span>
       </div>
     </div>
 
-    <!-- Sections — SCROLLABLE -->
-    <div class="sections-panel">
+  </aside>
 
-      <div class="sec-card open" onclick="toggleSec(this)">
-        <div class="sec-header">
-          <div class="sec-left">
-            <div class="sec-check"><svg viewBox="0 0 12 12" fill="none" stroke="var(--green)" stroke-width="2.5" width="10" height="10"><polyline points="2,6 5,9 10,3"/></svg></div>
-            <span class="sec-title">Información de perfil</span>
-          </div>
-          <span class="sec-chev"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M5 8l5 5 5-5"/></svg></span>
+  <!-- ════════ COLUMNA DERECHA ════════ -->
+  <div class="right-col">
+
+    <!-- TOP NAV -->
+    <nav class="topnav">
+      <div class="topnav-middle">
+        <div class="vline"></div>
+        <!-- Logo UNIMINUTO — reemplaza src con la ruta real de la imagen -->
+        <div class="uni-logo-img">
+          <img src="assets/logo-uniminuto.png" alt="NIP UNIMINUTO"
+               onerror="this.style.display='none'; this.nextElementSibling.style.display='inline'"/>
+          <span class="img-placeholder" style="display:none">NIP UNIMINUTO</span>
         </div>
-        <div class="sec-body">
-          <div class="frow">
-            <div class="fgrp"><label class="flbl">Nombre</label><input class="finp" value="Paola"/></div>
-            <div class="fgrp"><label class="flbl">Apellido</label><input class="finp" value="Pérez"/></div>
-          </div>
-          <div class="frow">
-            <div class="fgrp"><label class="flbl">Cargo</label><input class="finp" value="Directora administrativa"/></div>
-            <div class="fgrp"><label class="flbl">Correo</label><input class="finp" value="paola.perez@dcoas.com.co"/></div>
+      </div>
+      <div class="topnav-user">
+        <div class="user-info">
+          <div class="user-name">Paola Pérez</div>
+          <div class="user-role">Directora administrativa</div>
+        </div>
+        <div class="avatar">PP</div>
+        <span class="chev">&#8964;</span>
+      </div>
+    </nav>
+
+    <!-- MAIN -->
+    <div class="main-wrapper">
+
+      <!-- Page header — card redondeada -->
+      <div class="page-header-wrap">
+        <div class="page-header">
+          <h1 class="page-title">Mi Hoja de Vida</h1>
+          <div class="progress-wrap">
+            <div class="progress-track"><div class="progress-fill"></div></div>
+            <div class="progress-badge">82%</div>
           </div>
         </div>
       </div>
 
-      <div class="sec-card" onclick="toggleSec(this)">
-        <div class="sec-header">
-          <div class="sec-left">
-            <div class="sec-check"><svg viewBox="0 0 12 12" fill="none" stroke="var(--green)" stroke-width="2.5" width="10" height="10"><polyline points="2,6 5,9 10,3"/></svg></div>
-            <span class="sec-title">Datos personales</span>
-          </div>
-          <span class="sec-chev"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M5 8l5 5 5-5"/></svg></span>
-        </div>
-        <div class="sec-body">
-          <div class="frow">
-            <div class="fgrp"><label class="flbl">Fecha de nacimiento</label><input class="finp" type="date" value="1988-03-15"/></div>
-            <div class="fgrp"><label class="flbl">Documento</label><input class="finp" value="52 890 123"/></div>
-          </div>
-          <div class="frow">
-            <div class="fgrp"><label class="flbl">Ciudad</label><input class="finp" value="Bogotá"/></div>
-            <div class="fgrp"><label class="flbl">Teléfono</label><input class="finp" value="+57 300 000 0000"/></div>
-          </div>
-        </div>
-      </div>
+      <!-- Contenido -->
+      <div class="content-area">
 
-      <div class="sec-card" onclick="toggleSec(this)">
-        <div class="sec-header">
-          <div class="sec-left">
-            <div class="sec-check"><svg viewBox="0 0 12 12" fill="none" stroke="var(--green)" stroke-width="2.5" width="10" height="10"><polyline points="2,6 5,9 10,3"/></svg></div>
-            <span class="sec-title">Formación académica</span>
-          </div>
-          <span class="sec-chev"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M5 8l5 5 5-5"/></svg></span>
-        </div>
-        <div class="sec-body">
-          <div class="frow">
-            <div class="fgrp"><label class="flbl">Institución</label><input class="finp" value="UNIMINUTO"/></div>
-            <div class="fgrp"><label class="flbl">Título</label><input class="finp" value="Administración de Empresas"/></div>
-          </div>
-          <div class="frow">
-            <div class="fgrp"><label class="flbl">Año de graduación</label><input class="finp" value="2012"/></div>
-            <div class="fgrp"><label class="flbl">Nivel</label><input class="finp" value="Pregrado"/></div>
-          </div>
-        </div>
-      </div>
+        <!-- Panel izquierdo -->
+        <div class="profile-panel">
 
-      <div class="sec-card" onclick="toggleSec(this)">
-        <div class="sec-header">
-          <div class="sec-left">
-            <div class="sec-check"><svg viewBox="0 0 12 12" fill="none" stroke="var(--green)" stroke-width="2.5" width="10" height="10"><polyline points="2,6 5,9 10,3"/></svg></div>
-            <span class="sec-title">Experiencia laboral</span>
+          <!-- Card azul: foto + info -->
+          <div class="profile-top-card">
+            <div class="avatar-ring-wrap">
+              <div class="avatar-ring">
+                <svg viewBox="0 0 84 84" xmlns="http://www.w3.org/2000/svg"
+                     style="background:linear-gradient(135deg,#c7ddf8,#a8e6df);width:84px;height:84px">
+                  <circle cx="42" cy="32" r="15" fill="#5b9bd5"/>
+                  <ellipse cx="42" cy="68" rx="22" ry="15" fill="#5b9bd5"/>
+                </svg>
+              </div>
+              <div class="edit-btn">
+                <svg viewBox="0 0 12 12" fill="none" stroke="#fff" stroke-width="1.3" width="11" height="11">
+                  <path d="M8 2l2 2-6 6H2V8L8 2z"/>
+                </svg>
+              </div>
+            </div>
+            <div class="profile-name">Paola Pérez</div>
+            <div class="profile-role">Directora administrativa</div>
+            <div class="profile-email">paola.perez@dcoas.com.co</div>
+            <button class="cv-btn">
+              <svg viewBox="0 0 16 16" fill="none" stroke="var(--blue-mid)" stroke-width="1.3" width="14" height="14">
+                <path d="M3 2h7l3 3v9H3V2z"/>
+                <path d="M10 2v4h4M5 9h6M5 11.5h4" stroke-linecap="round"/>
+              </svg>
+              Hoja de vida
+            </button>
           </div>
-          <span class="sec-chev"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M5 8l5 5 5-5"/></svg></span>
-        </div>
-        <div class="sec-body">
-          <div class="frow">
-            <div class="fgrp"><label class="flbl">Empresa</label><input class="finp" value="UNIMINUTO"/></div>
-            <div class="fgrp"><label class="flbl">Cargo</label><input class="finp" value="Directora administrativa"/></div>
-          </div>
-          <div class="frow">
-            <div class="fgrp"><label class="flbl">Fecha inicio</label><input class="finp" type="date" value="2018-01-01"/></div>
-            <div class="fgrp"><label class="flbl">Fecha fin</label><input class="finp" placeholder="Actual"/></div>
-          </div>
-        </div>
-      </div>
 
-      <div class="sec-card" onclick="toggleSec(this)">
-        <div class="sec-header">
-          <div class="sec-left">
-            <div class="sec-check"><svg viewBox="0 0 12 12" fill="none" stroke="var(--green)" stroke-width="2.5" width="10" height="10"><polyline points="2,6 5,9 10,3"/></svg></div>
-            <span class="sec-title">Afiliaciones</span>
+          <!-- Pasos -->
+          <div class="steps">
+            <div class="step">
+              <div class="step-dot on"><svg viewBox="0 0 10 10" fill="none" stroke="#fff" stroke-width="2.2" width="9" height="9"><polyline points="2,5 4.5,7.5 8,2.5"/></svg></div>
+              <span class="step-lbl">Información de perfil</span>
+            </div>
+            <div class="step">
+              <div class="step-dot on"><svg viewBox="0 0 10 10" fill="none" stroke="#fff" stroke-width="2.2" width="9" height="9"><polyline points="2,5 4.5,7.5 8,2.5"/></svg></div>
+              <span class="step-lbl">Datos personales</span>
+            </div>
+            <div class="step">
+              <div class="step-dot on"><svg viewBox="0 0 10 10" fill="none" stroke="#fff" stroke-width="2.2" width="9" height="9"><polyline points="2,5 4.5,7.5 8,2.5"/></svg></div>
+              <span class="step-lbl">Formación académica</span>
+            </div>
+            <div class="step">
+              <div class="step-dot on"><svg viewBox="0 0 10 10" fill="none" stroke="#fff" stroke-width="2.2" width="9" height="9"><polyline points="2,5 4.5,7.5 8,2.5"/></svg></div>
+              <span class="step-lbl">Experiencia laboral</span>
+            </div>
+            <div class="step">
+              <div class="step-dot on"><svg viewBox="0 0 10 10" fill="none" stroke="#fff" stroke-width="2.2" width="9" height="9"><polyline points="2,5 4.5,7.5 8,2.5"/></svg></div>
+              <span class="step-lbl">Afiliaciones</span>
+            </div>
+            <div class="step">
+              <div class="step-dot"><svg viewBox="0 0 10 10" fill="none" stroke="#c8d8ea" stroke-width="2.2" width="9" height="9"><polyline points="2,5 4.5,7.5 8,2.5"/></svg></div>
+              <span class="step-lbl">Documentos</span>
+            </div>
           </div>
-          <span class="sec-chev"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M5 8l5 5 5-5"/></svg></span>
-        </div>
-        <div class="sec-body">
-          <div class="frow">
-            <div class="fgrp"><label class="flbl">EPS</label><input class="finp" value="Sanitas"/></div>
-            <div class="fgrp"><label class="flbl">Pensión</label><input class="finp" value="Porvenir"/></div>
-          </div>
-          <div class="frow">
-            <div class="fgrp"><label class="flbl">ARL</label><input class="finp" value="Positiva"/></div>
-            <div class="fgrp"><label class="flbl">Caja de compensación</label><input class="finp" value="Compensar"/></div>
-          </div>
-        </div>
-      </div>
 
-      <div class="sec-card" onclick="toggleSec(this)">
-        <div class="sec-header">
-          <div class="sec-left">
-            <div class="sec-check grey"><svg viewBox="0 0 12 12" fill="none" stroke="#c0d4e8" stroke-width="2.5" width="10" height="10"><polyline points="2,6 5,9 10,3"/></svg></div>
-            <span class="sec-title">Documentos</span>
-          </div>
-          <span class="sec-chev"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M5 8l5 5 5-5"/></svg></span>
         </div>
-        <div class="sec-body">
-          <div class="frow">
-            <div class="fgrp"><label class="flbl">Cédula de ciudadanía</label><input class="finp" placeholder="Adjuntar archivo..."/></div>
-            <div class="fgrp"><label class="flbl">Hoja de vida firmada</label><input class="finp" placeholder="Adjuntar archivo..."/></div>
-          </div>
-        </div>
-      </div>
 
-    </div><!-- sections-panel -->
-  </div><!-- content-area -->
-</div><!-- main-wrapper -->
+        <!-- Secciones -->
+        <div class="sections-wrapper">
+          <div class="sections-panel">
 
-<script>
-  function toggleSec(card) { card.classList.toggle('open'); }
-</script>
+            <div class="sec-card open" onclick="toggleSec(this)">
+              <div class="sec-header">
+                <div class="sec-left">
+                  <div class="sec-check"><svg viewBox="0 0 12 12" fill="none" stroke="var(--green)" stroke-width="2.5" width="10" height="10"><polyline points="2,6 5,9 10,3"/></svg></div>
+                  <span class="sec-title">Información de perfil</span>
+                </div>
+                <span class="sec-chev"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M5 8l5 5 5-5"/></svg></span>
+              </div>
+              <div class="sec-body">
+                <div class="frow">
+                  <div class="fgrp"><label class="flbl">Nombre</label><input class="finp" value="Paola"/></div>
+                  <div class="fgrp"><label class="flbl">Apellido</label><input class="finp" value="Pérez"/></div>
+                </div>
+                <div class="frow">
+                  <div class="fgrp"><label class="flbl">Cargo</label><input class="finp" value="Directora administrativa"/></div>
+                  <div class="fgrp"><label class="flbl">Correo</label><input class="finp" value="paola.perez@dcoas.com.co"/></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="sec-card" onclick="toggleSec(this)">
+              <div class="sec-header">
+                <div class="sec-left">
+                  <div class="sec-check"><svg viewBox="0 0 12 12" fill="none" stroke="var(--green)" stroke-width="2.5" width="10" height="10"><polyline points="2,6 5,9 10,3"/></svg></div>
+                  <span class="sec-title">Datos personales</span>
+                </div>
+                <span class="sec-chev"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M5 8l5 5 5-5"/></svg></span>
+              </div>
+              <div class="sec-body">
+                <div class="frow">
+                  <div class="fgrp"><label class="flbl">Fecha de nacimiento</label><input class="finp" type="date" value="1988-03-15"/></div>
+                  <div class="fgrp"><label class="flbl">Documento</label><input class="finp" value="52 890 123"/></div>
+                </div>
+                <div class="frow">
+                  <div class="fgrp"><label class="flbl">Ciudad</label><input class="finp" value="Bogotá"/></div>
+                  <div class="fgrp"><label class="flbl">Teléfono</label><input class="finp" value="+57 300 000 0000"/></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="sec-card" onclick="toggleSec(this)">
+              <div class="sec-header">
+                <div class="sec-left">
+                  <div class="sec-check"><svg viewBox="0 0 12 12" fill="none" stroke="var(--green)" stroke-width="2.5" width="10" height="10"><polyline points="2,6 5,9 10,3"/></svg></div>
+                  <span class="sec-title">Formación académica</span>
+                </div>
+                <span class="sec-chev"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M5 8l5 5 5-5"/></svg></span>
+              </div>
+              <div class="sec-body">
+                <div class="frow">
+                  <div class="fgrp"><label class="flbl">Institución</label><input class="finp" value="UNIMINUTO"/></div>
+                  <div class="fgrp"><label class="flbl">Título</label><input class="finp" value="Administración de Empresas"/></div>
+                </div>
+                <div class="frow">
+                  <div class="fgrp"><label class="flbl">Año de graduación</label><input class="finp" value="2012"/></div>
+                  <div class="fgrp"><label class="flbl">Nivel</label><input class="finp" value="Pregrado"/></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="sec-card" onclick="toggleSec(this)">
+              <div class="sec-header">
+                <div class="sec-left">
+                  <div class="sec-check"><svg viewBox="0 0 12 12" fill="none" stroke="var(--green)" stroke-width="2.5" width="10" height="10"><polyline points="2,6 5,9 10,3"/></svg></div>
+                  <span class="sec-title">Experiencia laboral</span>
+                </div>
+                <span class="sec-chev"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M5 8l5 5 5-5"/></svg></span>
+              </div>
+              <div class="sec-body">
+                <div class="frow">
+                  <div class="fgrp"><label class="flbl">Empresa</label><input class="finp" value="UNIMINUTO"/></div>
+                  <div class="fgrp"><label class="flbl">Cargo</label><input class="finp" value="Directora administrativa"/></div>
+                </div>
+                <div class="frow">
+                  <div class="fgrp"><label class="flbl">Fecha inicio</label><input class="finp" type="date" value="2018-01-01"/></div>
+                  <div class="fgrp"><label class="flbl">Fecha fin</label><input class="finp" placeholder="Actual"/></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="sec-card" onclick="toggleSec(this)">
+              <div class="sec-header">
+                <div class="sec-left">
+                  <div class="sec-check"><svg viewBox="0 0 12 12" fill="none" stroke="var(--green)" stroke-width="2.5" width="10" height="10"><polyline points="2,6 5,9 10,3"/></svg></div>
+                  <span class="sec-title">Afiliaciones</span>
+                </div>
+                <span class="sec-chev"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M5 8l5 5 5-5"/></svg></span>
+              </div>
+              <div class="sec-body">
+                <div class="frow">
+                  <div class="fgrp"><label class="flbl">EPS</label><input class="finp" value="Sanitas"/></div>
+                  <div class="fgrp"><label class="flbl">Pensión</label><input class="finp" value="Porvenir"/></div>
+                </div>
+                <div class="frow">
+                  <div class="fgrp"><label class="flbl">ARL</label><input class="finp" value="Positiva"/></div>
+                  <div class="fgrp"><label class="flbl">Caja de compensación</label><input class="finp" value="Compensar"/></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="sec-card" onclick="toggleSec(this)">
+              <div class="sec-header">
+                <div class="sec-left">
+                  <div class="sec-check grey"><svg viewBox="0 0 12 12" fill="none" stroke="#c0d4e8" stroke-width="2.5" width="10" height="10"><polyline points="2,6 5,9 10,3"/></svg></div>
+                  <span class="sec-title">Documentos</span>
+                </div>
+                <span class="sec-chev"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M5 8l5 5 5-5"/></svg></span>
+              </div>
+              <div class="sec-body">
+                <div class="frow">
+                  <div class="fgrp"><label class="flbl">Cédula de ciudadanía</label><input class="finp" placeholder="Adjuntar archivo..."/></div>
+                  <div class="fgrp"><label class="flbl">Hoja de vida firmada</label><input class="finp" placeholder="Adjuntar archivo..."/></div>
+                </div>
+              </div>
+            </div>
+
+          </div><!-- sections-panel -->
+        </div><!-- sections-wrapper -->
+
+      </div><!-- content-area -->
+    </div><!-- main-wrapper -->
+  </div><!-- right-col -->
+</div><!-- layout -->
+
+<script src="provicional.ts"></script>
 </body>
 </html>
