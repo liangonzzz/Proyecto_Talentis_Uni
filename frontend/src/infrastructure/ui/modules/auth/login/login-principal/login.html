@@ -50,11 +50,11 @@
         <div class="checkboxes">
           <label class="checkbox-label">
             <input type="checkbox" id="pol1">
-            <span><a href="#" onclick="abrirModal('modal-seguridad'); return false;">Acepto la política de seguridad de la información.</a></span>
+            <span><a onclick="abrirModal('modal-seguridad'); return false;">Acepto la política de seguridad de la información.</a></span>
           </label>
           <label class="checkbox-label">
             <input type="checkbox" id="pol2">
-            <span><a href="#" onclick="abrirModal('modal-datos'); return false;">Acepto la política de tratamiento de datos personales.</a></span>
+            <span><a onclick="abrirModal('modal-datos'); return false;">Acepto la política de tratamiento de datos personales.</a></span>
           </label>
         </div>
 
@@ -101,58 +101,6 @@
     </div>
   </div>
 
-  <script>
-    function mostrarError(msg) {
-      const box = document.getElementById('error-box');
-      document.getElementById('error-msg').textContent = msg;
-      box.classList.add('visible');
-
-      clearTimeout(window._errorTimer);
-      window._errorTimer = setTimeout(() => ocultarError(), 2000);
-    }
-
-    function ocultarError() {
-      document.getElementById('error-box').classList.remove('visible');
-    }
-
-    function togglePass() {
-      const input = document.getElementById('password');
-      const icon = document.getElementById('eye-icon');
-      if (input.type === 'password') {
-        input.type = 'text';
-        icon.classList.replace('fa-eye', 'fa-eye-low-vision');
-      } else {
-        input.type = 'password';
-        icon.classList.replace('fa-eye-low-vision', 'fa-eye');
-      }
-    }
-
-    function abrirModal(id) {
-      document.getElementById(id).classList.add('open');
-    }
-
-    function cerrarModal(id) {
-      document.getElementById(id).classList.remove('open');
-    }
-
-    function aceptarPolitica(checkId, modalId) {
-      document.getElementById(checkId).checked = true;
-      cerrarModal(modalId);
-    }
-
-    function iniciarSesion() {
-      ocultarError();
-      const tipo = document.getElementById('tipoDoc').value;
-      const num = document.getElementById('numId').value.trim();
-      const pass = document.getElementById('password').value;
-      const pol1 = document.getElementById('pol1').checked;
-      const pol2 = document.getElementById('pol2').checked;
-
-      if (!tipo) return mostrarError('Por favor seleccione el tipo de documento.');
-      if (!num) return mostrarError('Por favor ingrese su número de identificación.');
-      if (!pass) return mostrarError('Por favor ingrese su contraseña.');
-      if (!pol1 || !pol2) return mostrarError('Debe aceptar las políticas para continuar.');
-    }
-  </script>
+  <script type="module" src="./login.ts"></script>
 </body>
 </html>
