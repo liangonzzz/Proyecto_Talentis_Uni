@@ -23,23 +23,13 @@
 html, body { height: 100%; overflow: hidden; }
 body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text-main); }
 
-/*
-  LAYOUT:
-  ┌──────────┬────────────────────────────┐
-  │          │  topnav                    │
-  │ sidebar  ├────────────────────────────┤
-  │ (full h) │  page-header (card)        │
-  │          ├────────────────────────────┤
-  │          │  content-area (gris)       │
-  └──────────┴────────────────────────────┘
-*/
 .layout {
   display: flex;
   height: 100vh;
   overflow: hidden;
 }
 
-/* ══ SIDEBAR — ocupa toda la altura ══ */
+/* ══ SIDEBAR ══ */
 .sidebar {
   width: var(--sidebar-w);
   flex-shrink: 0;
@@ -53,7 +43,6 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
 }
 body.collapsed .sidebar { width: var(--sidebar-collapsed-w); }
 
-/* Logo — misma altura que topnav */
 .sidebar-brand {
   height: var(--topnav-h);
   flex-shrink: 0;
@@ -65,21 +54,19 @@ body.collapsed .sidebar { width: var(--sidebar-collapsed-w); }
   overflow: hidden;
 }
 
-/* Placeholder logo GRH */
+/* Logo GRH — sin fondo, sin borde, solo imagen */
 .brand-logo-img {
-  width: 36px; height: 36px; flex-shrink: 0;
-  border-radius: 9px;
-  border: 1px solid var(--border);
-  background: var(--bg);
-  display: flex; align-items: center; justify-content: center;
+  height: 36px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
   overflow: hidden;
 }
 .brand-logo-img img {
-  width: 100%; height: 100%; object-fit: contain;
-}
-.brand-logo-img .img-placeholder {
-  font-family: 'Sora', sans-serif; font-size: 9px; font-weight: 700;
-  color: var(--text-soft); text-align: center; line-height: 1.2;
+  height: 100%;
+  width: auto;
+  object-fit: contain;
+  display: block;
 }
 
 .brand-text {
@@ -155,7 +142,7 @@ body.collapsed .toggle-label { opacity: 0; max-width: 0; }
 .topnav-middle { display: flex; align-items: center; flex: 1; overflow: hidden; gap: 0; }
 .vline { width: 1px; height: 30px; background: var(--border); margin-right: 18px; flex-shrink: 0; }
 
-/* Placeholder logo UNIMINUTO */
+/* Logo UNIMINUTO — con borde y fondo pill */
 .uni-logo-img {
   height: 36px;
   display: flex; align-items: center;
@@ -167,17 +154,22 @@ body.collapsed .toggle-label { opacity: 0; max-width: 0; }
   flex-shrink: 0;
 }
 .uni-logo-img img {
-  height: 100%; width: auto; object-fit: contain;
-}
-.uni-logo-img .img-placeholder {
-  font-family: 'Sora', sans-serif; font-size: 10px; font-weight: 700;
-  color: var(--blue-mid); white-space: nowrap;
+  height: 100%; width: auto; object-fit: contain; display: block;
 }
 
-.topnav-user { display: flex; align-items: center; gap: 10px; cursor: pointer; flex-shrink: 0; }
+/* Usuario */
+.topnav-user {
+  display: flex; align-items: center; gap: 10px;
+  cursor: pointer; flex-shrink: 0;
+  padding: 6px 10px; border-radius: 10px;
+  transition: background .15s;
+}
+.topnav-user:hover { background: var(--bg); }
+
 .user-info { text-align: right; }
 .user-name { font-family: 'Sora', sans-serif; font-size: 13px; font-weight: 600; color: var(--text-main); }
 .user-role { font-size: 11px; color: var(--text-soft); }
+
 .avatar {
   width: 36px; height: 36px; border-radius: 50%;
   background: linear-gradient(135deg, var(--blue-light), var(--teal));
@@ -185,7 +177,14 @@ body.collapsed .toggle-label { opacity: 0; max-width: 0; }
   font-family: 'Sora', sans-serif; font-weight: 700; color: #fff; font-size: 13px;
   border: 2px solid var(--border); flex-shrink: 0;
 }
-.chev { color: var(--text-soft); font-size: 18px; }
+
+/* Chevron Font Awesome */
+.chev-icon {
+  font-size: 12px;
+  color: var(--text-soft);
+  transition: transform var(--t);
+}
+.topnav-user:hover .chev-icon { color: var(--blue-mid); }
 
 /* MAIN */
 .main-wrapper {
@@ -196,7 +195,6 @@ body.collapsed .toggle-label { opacity: 0; max-width: 0; }
   overflow: hidden;
 }
 
-/* Page header — card redondeada sobre fondo gris */
 .page-header-wrap {
   flex-shrink: 0;
   background: var(--bg);
@@ -232,7 +230,7 @@ body.collapsed .toggle-label { opacity: 0; max-width: 0; }
   overflow: hidden;
 }
 
-/* ── PROFILE PANEL — card blanca exterior ── */
+/* ── PROFILE PANEL ── */
 .profile-panel {
   width: var(--profile-w); flex-shrink: 0;
   background: var(--card-bg); border-radius: var(--radius);
@@ -247,7 +245,6 @@ body.collapsed .toggle-label { opacity: 0; max-width: 0; }
 .profile-panel::-webkit-scrollbar-track { background: transparent; }
 .profile-panel::-webkit-scrollbar-thumb { background: #c8d8ea; border-radius: 99px; }
 
-/* Card azul interna */
 .profile-top-card {
   background: #e8f2fc;
   border-radius: 12px;
@@ -309,7 +306,6 @@ body.collapsed .toggle-label { opacity: 0; max-width: 0; }
   align-self: stretch;
 }
 
-/* ── SECTIONS PANEL — scrollable ── */
 .sections-panel {
   flex: 1;
   overflow-y: auto;
@@ -365,3 +361,188 @@ body.collapsed .toggle-label { opacity: 0; max-width: 0; }
   transition: border .15s; outline: none;
 }
 .finp:focus { border-color: var(--blue-light); background: #fff; }
+
+/* ══ MODAL CERRAR SESIÓN ══ */
+.modal-overlay {
+  position: fixed; inset: 0; z-index: 1000;
+  background: rgba(15, 30, 50, 0.35);
+  backdrop-filter: blur(4px);
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; pointer-events: none;
+  transition: opacity .22s var(--t);
+}
+.modal-overlay.active {
+  opacity: 1; pointer-events: all;
+}
+
+.modal-box {
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0 20px 60px rgba(26, 58, 92, 0.18);
+  border: 1px solid var(--border);
+  padding: 32px 28px 24px;
+  width: 320px;
+  display: flex; flex-direction: column; align-items: center;
+  transform: translateY(12px) scale(0.97);
+  transition: transform .22s var(--t);
+}
+.modal-overlay.active .modal-box {
+  transform: translateY(0) scale(1);
+}
+
+.modal-avatar {
+  width: 60px; height: 60px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--blue-light), var(--teal));
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Sora', sans-serif; font-weight: 700; color: #fff; font-size: 20px;
+  border: 3px solid var(--border);
+  margin-bottom: 14px;
+}
+.modal-name {
+  font-family: 'Sora', sans-serif; font-size: 16px; font-weight: 700;
+  color: var(--text-main); margin-bottom: 3px;
+}
+.modal-role {
+  font-size: 12px; color: var(--blue-mid); font-weight: 500; margin-bottom: 4px;
+}
+.modal-email {
+  font-size: 11px; color: var(--text-soft);
+}
+.modal-divider {
+  width: 100%; height: 1px; background: var(--border); margin: 20px 0;
+}
+.modal-logout-btn {
+  width: 100%; padding: 12px;
+  background: #fff3f3; border: 1.5px solid #fca5a5;
+  border-radius: 10px; color: #dc2626;
+  font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 600;
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  gap: 8px; transition: background .15s, border-color .15s;
+  margin-bottom: 10px;
+}
+.modal-logout-btn:hover {
+  background: #fee2e2; border-color: #ef4444;
+}
+.modal-logout-btn i { font-size: 14px; }
+
+.modal-cancel-btn {
+  width: 100%; padding: 10px;
+  background: transparent; border: 1px solid var(--border);
+  border-radius: 10px; color: var(--text-soft);
+  font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500;
+  cursor: pointer; transition: background .15s, color .15s;
+}
+.modal-cancel-btn:hover {
+  background: var(--bg); color: var(--text-main);
+}
+
+/* ══ SECCIÓN: textarea y habilidades ══ */
+.ftextarea {
+  resize: vertical;
+  min-height: 76px;
+  line-height: 1.5;
+}
+.full-width { flex: 1 1 100%; }
+.flbl-hint { font-weight: 400; color: var(--text-soft); text-transform: none; letter-spacing: 0; font-size: 10px; }
+
+.skills-row {
+  display: flex;
+  gap: 10px;
+}
+.skill-inp { flex: 1; }
+
+/* ══ BOTONES CANCELAR / GUARDAR ══ */
+.sec-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+}
+.btn-cancel {
+  padding: 9px 22px;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: #fff;
+  color: var(--text-soft);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px; font-weight: 500;
+  cursor: pointer;
+  transition: background .15s, color .15s;
+}
+.btn-cancel:hover { background: var(--bg); color: var(--text-main); }
+
+.btn-save {
+  padding: 9px 22px;
+  border: none;
+  border-radius: 9px;
+  background: var(--blue-dark);
+  color: #fff;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px; font-weight: 600;
+  cursor: pointer;
+  transition: background .15s;
+}
+.btn-save:hover { background: var(--blue-mid); }
+
+/* ══ TABS DATOS PERSONALES ══ */
+.dp-tabs {
+  display: flex;
+  gap: 0;
+  border-bottom: 2px solid var(--border);
+  margin-bottom: 16px;
+  margin-top: 4px;
+}
+.dp-tab {
+  background: none;
+  border: none;
+  border-bottom: 2.5px solid transparent;
+  margin-bottom: -2px;
+  padding: 8px 18px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px; font-weight: 500;
+  color: var(--text-soft);
+  cursor: pointer;
+  transition: color .15s, border-color .15s;
+}
+.dp-tab:hover { color: var(--blue-mid); }
+.dp-tab.active { color: var(--blue-mid); border-bottom-color: var(--blue-mid); font-weight: 600; }
+
+.dp-panel { display: none; }
+.dp-panel.active { display: block; }
+
+/* ══ UPLOAD BUTTON ══ */
+.fdoc-upload-row { margin-top: 14px; }
+.fdoc-upload-wrap { display: flex; flex-direction: column; gap: 6px; }
+.btn-upload {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 8px 16px;
+  border: 1.5px solid var(--border);
+  border-radius: 9px;
+  background: #fff;
+  color: var(--text-main);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px; font-weight: 500;
+  cursor: pointer;
+  width: fit-content;
+  transition: background .15s, border-color .15s;
+}
+.btn-upload:hover { background: var(--bg); border-color: var(--blue-light); }
+.btn-upload i { color: var(--blue-mid); font-size: 13px; }
+
+.fdoc-hint {
+  font-size: 10.5px;
+  color: var(--blue-mid);
+}
+
+/* select styling */
+.fsel {
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 20 20' fill='none' stroke='%236b7f96' stroke-width='2'%3E%3Cpath d='M5 8l5 5 5-5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  padding-right: 30px;
+  cursor: pointer;
+}
