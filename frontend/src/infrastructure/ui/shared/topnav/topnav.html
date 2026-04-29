@@ -1,0 +1,33 @@
+<nav class="topnav">
+
+  <div class="topnav-middle">
+    <div class="uni-logo-img">
+      <img src="/src/infrastructure/ui/assets/images/logos/Uniminuto.png" alt="NIP UNIMINUTO"/>
+    </div>
+  </div>
+
+  <div class="topnav-user" onclick="openModal()">
+    <div class="user-info">
+      <div class="user-name" id="topnav-nombre"></div>
+      <div class="user-role" id="topnav-rol"></div>
+    </div>
+    <div class="avatar" id="topnav-avatar"></div>
+    <i class="fa-solid fa-chevron-down chev-icon"></i>
+  </div>
+
+</nav>
+
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal()">
+  <div class="modal-box" onclick="event.stopPropagation()">
+    <div class="modal-avatar" id="modal-avatar"></div>
+    <div class="modal-name" id="modal-nombre"></div>
+    <div class="modal-role" id="modal-rol"></div>
+    <div class="modal-email" id="modal-correo"></div>
+    <div class="modal-divider"></div>
+    <button class="modal-logout-btn" onclick="cerrarSesion()">
+      <i class="fa-solid fa-right-from-bracket"></i>
+      Cerrar sesión
+    </button>
+    <button class="modal-cancel-btn" onclick="closeModal()">Cancelar</button>
+  </div>
+</div>

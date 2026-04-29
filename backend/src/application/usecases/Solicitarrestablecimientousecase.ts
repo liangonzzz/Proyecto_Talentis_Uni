@@ -1,5 +1,5 @@
-import { IUsuarioRepository } from '../../domain/ports/IUsuarioRepository.ts';
-import { IPasswordResetRepository } from '../../domain/ports/IPasswordResetRepository.ts';
+import { IUsuarioRepository } from '../../domain/ports/IUsuarioRepository';
+import { IPasswordResetRepository } from '../../domain/ports/IPasswordResetRepository';
 import crypto from 'crypto';
 
 export class SolicitarRestablecimientoUseCase {

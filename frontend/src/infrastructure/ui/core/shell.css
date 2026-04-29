@@ -1,0 +1,44 @@
+:root {
+  --topnav-h: 62px;
+  --sidebar-w: 280px;
+  --sidebar-collapsed-w: 58px;
+  --bg: #f0f4f9;
+  --card-bg: #ffffff;
+  --blue-dark: #1a3a5c;
+  --blue-mid: #2563a8;
+  --blue-light: #4a9fd4;
+  --teal: #3cb8b2;
+  --green: #4cbe8e;
+  --text-main: #1e2d3d;
+  --text-soft: #6b7f96;
+  --border: #dde6f0;
+  --radius: 14px;
+  --shadow: 0 2px 16px rgba(37,99,168,0.08);
+  --t: 0.25s cubic-bezier(.4,0,.2,1);
+}
+
+html, body { height: 100%; overflow: hidden; margin: 0; padding: 0; }
+body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text-main); }
+
+.layout {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+}
+
+
+.right-col {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.content {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}

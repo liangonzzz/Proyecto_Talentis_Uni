@@ -1,6 +1,6 @@
-import { IUsuarioRepository } from '../../domain/ports/IUsuarioRepository.ts';
-import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
+import { IUsuarioRepository } from '../../domain/ports/IUsuarioRepository';
+import { JwtUtil } from '../../infrastructure/util/jwt.util';
+import { BcryptUtil } from '../../infrastructure/util/bcrypt.util';
 
 export class LoginUseCase {
   constructor(private usuarioRepository: IUsuarioRepository) {}
@@ -8,26 +8,14 @@ export class LoginUseCase {
   async execute(tipo_documento: string, numero_documento: string, password: string) {
     const usuario = await this.usuarioRepository.findByDocumento(tipo_documento, numero_documento);
 
-    if (!usuario) {
-      throw new Error('Credenciales incorrectas');
-    }
+    if (!usuario) throw new Error('Credenciales incorrectas');
 
-    const passwordValida = await bcrypt.compare(password, usuario.password);
+    const passwordValida = await BcryptUtil.compare(password, usuario.password);
 
-    if (!passwordValida) {
-      throw new Error('Credenciales incorrectas');
-    }
+    if (!passwordValida) throw new Error('Credenciales incorrectas');
 
-    const token = jwt.sign(
-      { id: usuario.id, rol: usuario.rol },
-      process.env.JWT_SECRET as string,
-      { expiresIn: '8h' }
-    );
+    const token = JwtUtil.sign({ id: usuario.id, rol: usuario.rol });
 
-    return {
-      token,
-      rol: usuario.rol,
-      nombre: usuario.nombre,
-    };
+    return { token, rol: usuario.rol, nombre: `${usuario.nombre} ${usuario.apellidos}`, correo: usuario.correo, tipo_documento: usuario.tipo_documento, numero_documento: usuario.numero_documento };
   }
 }

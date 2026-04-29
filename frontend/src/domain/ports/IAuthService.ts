@@ -2,6 +2,9 @@ export interface LoginResponse {
   token: string;
   rol: string;
   nombre: string;
+  correo: string;
+  tipo_documento: string;
+  numero_documento: string;
 }
 
 export interface IAuthService {

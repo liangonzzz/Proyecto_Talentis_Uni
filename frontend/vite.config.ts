@@ -7,6 +7,7 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: resolve(__dirname, 'index.html'),
+        shell: resolve(__dirname, 'src/infrastructure/ui/core/shell.html'),
         login: resolve(__dirname, 'src/infrastructure/ui/modules/auth/login/login-principal/login.html'),
         forgotPassword: resolve(__dirname, 'src/infrastructure/ui/modules/auth/login/forgot-password/forgot-password.html'),
         resetPassword: resolve(__dirname, 'src/infrastructure/ui/modules/auth/login/reset-password/reset-password.html'),

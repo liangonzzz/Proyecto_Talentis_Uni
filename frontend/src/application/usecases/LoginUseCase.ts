@@ -6,7 +6,7 @@ export class LoginUseCase {
 
   async execute(tipo_documento: string, numero_documento: string, password: string): Promise<string> {
     const data = await this.authService.login(tipo_documento, numero_documento, password);
-    SessionStorageService.guardarSesion(data.token, data.rol, data.nombre);
+    SessionStorageService.guardarSesion(data.token, data.rol, data.nombre, data.correo, data.tipo_documento, data.numero_documento);
     return data.rol;
   }
 }

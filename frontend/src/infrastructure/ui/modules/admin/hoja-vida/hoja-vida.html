@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>GRH Talentis – Mi Hoja de Vida</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Sora:wght@400;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+  <link rel="stylesheet" href="/src/infrastructure/ui/shared/sidebar/sidebar.css"/>
+  <link rel="stylesheet" href="/src/infrastructure/ui/shared/topnav/topnav.css"/>
+  <link rel="stylesheet" href="hoja-vida.css"/>
+</head>
+<body>
+
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <div id="sidebar-container"></div>
+
+  <div class="right-col">
+
+    <!-- TOPNAV -->
+    <div id="topnav-container"></div>
+
+    <!-- MAIN -->
+        <div class="main-wrapper">
+
+      <div class="page-header-wrap">
+        <div class="page-header">
+          <h1 class="page-title">Mi Hoja de Vida</h1>
+          <div class="progress-wrap">
+            <div class="progress-track"><div class="progress-fill" style="width:0%"></div></div>
+            <div class="progress-badge">0%</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="content-area">
+
+        <!-- Panel izquierdo -->
+        <div class="profile-panel">
+          <div class="profile-top-card">
+            <div class="avatar-ring-wrap">
+              <div class="avatar-ring">
+                <div id="panel-avatar" style="font-family:'Sora',sans-serif;font-weight:700;color:#5b9bd5;font-size:28px;width:84px;height:84px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#c7ddf8,#a8e6df)"></div>
+              </div>
+              <div class="edit-btn">
+                <svg viewBox="0 0 12 12" fill="none" stroke="#fff" stroke-width="1.3" width="11" height="11"><path d="M8 2l2 2-6 6H2V8L8 2z"/></svg>
+              </div>
+            </div>
+            <div class="profile-name" id="panel-nombre"></div>
+            <div class="profile-role" id="panel-role"></div>
+            <div class="profile-email" id="panel-email"></div>
+            <button class="cv-btn">
+              <svg viewBox="0 0 16 16" fill="none" stroke="var(--blue-mid)" stroke-width="1.3" width="14" height="14"><path d="M3 2h7l3 3v9H3V2z"/><path d="M10 2v4h4M5 9h6M5 11.5h4" stroke-linecap="round"/></svg>
+              Hoja de vida
+            </button>
+          </div>
+
+          <div class="steps">
+            <div class="step"><div class="step-dot" id="step-perfil"><svg viewBox="0 0 10 10" fill="none" stroke="#c8d8ea" stroke-width="2.2" width="9" height="9"><polyline points="2,5 4.5,7.5 8,2.5"/></svg></div><span class="step-lbl">Información de perfil</span></div>
+            <div class="step"><div class="step-dot" id="step-personal"><svg viewBox="0 0 10 10" fill="none" stroke="#c8d8ea" stroke-width="2.2" width="9" height="9"><polyline points="2,5 4.5,7.5 8,2.5"/></svg></div><span class="step-lbl">Datos personales</span></div>
+            <div class="step"><div class="step-dot" id="step-formacion"><svg viewBox="0 0 10 10" fill="none" stroke="#c8d8ea" stroke-width="2.2" width="9" height="9"><polyline points="2,5 4.5,7.5 8,2.5"/></svg></div><span class="step-lbl">Formación académica</span></div>
+            <div class="step"><div class="step-dot" id="step-experiencia"><svg viewBox="0 0 10 10" fill="none" stroke="#c8d8ea" stroke-width="2.2" width="9" height="9"><polyline points="2,5 4.5,7.5 8,2.5"/></svg></div><span class="step-lbl">Experiencia laboral</span></div>
+            <div class="step"><div class="step-dot" id="step-afiliaciones"><svg viewBox="0 0 10 10" fill="none" stroke="#c8d8ea" stroke-width="2.2" width="9" height="9"><polyline points="2,5 4.5,7.5 8,2.5"/></svg></div><span class="step-lbl">Afiliaciones</span></div>
+            <div class="step"><div class="step-dot" id="step-documentos"><svg viewBox="0 0 10 10" fill="none" stroke="#c8d8ea" stroke-width="2.2" width="9" height="9"><polyline points="2,5 4.5,7.5 8,2.5"/></svg></div><span class="step-lbl">Documentos</span></div>
+          </div>
+        </div>
+
+        <!-- Secciones -->
+        <div class="sections-wrapper">
+          <div class="sections-panel">
+
+            <!-- Información de perfil -->
+            <div class="sec-card open" onclick="toggleSec(this)">
+              <div class="sec-header">
+                <div class="sec-left">
+                  <div class="sec-check"><svg viewBox="0 0 12 12" fill="none" stroke="var(--green)" stroke-width="2.5" width="10" height="10"><polyline points="2,6 5,9 10,3"/></svg></div>
+                  <span class="sec-title">Información de perfil</span>
+                </div>
+                <span class="sec-chev"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M5 8l5 5 5-5"/></svg></span>
+              </div>
+              <div class="sec-body" onclick="event.stopPropagation()">
+                <div class="frow">
+                  <!-- FIJO: nombre completo desde localStorage -->
+                  <div class="fgrp">
+                    <label class="flbl">Nombre completo</label>
+                    <input class="finp finp-readonly" id="perfil-nombre" readonly/>
+                  </div>
+                  <div class="fgrp">
+                    <label class="flbl">Cargo actual</label>
+                    <input class="finp" id="perfil-cargo" placeholder="Escriba su cargo actual"/>
+                  </div>
+                </div>
+                <div class="frow">
+                  <div class="fgrp full-width">
+                    <label class="flbl">Descripción breve</label>
+                    <textarea class="finp ftextarea" id="perfil-descripcion" placeholder="Descríbase brevemente..."></textarea>
+                  </div>
+                </div>
+                <div class="frow">
+                  <div class="fgrp full-width">
+                    <label class="flbl">Habilidades <span class="flbl-hint">(máximo 3)</span></label>
+                    <div class="skills-row">
+                      <input class="finp skill-inp" id="perfil-habilidad1" placeholder="Habilidad 1"/>
+                      <input class="finp skill-inp" id="perfil-habilidad2" placeholder="Habilidad 2"/>
+                      <input class="finp skill-inp" id="perfil-habilidad3" placeholder="Habilidad 3"/>
+                    </div>
+                  </div>
+                </div>
+                <div class="sec-actions">
+                  <button class="btn-cancel">Cancelar</button>
+                  <button class="btn-save" id="btn-guardar-perfil">Guardar</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Datos personales -->
+            <div class="sec-card" onclick="toggleSec(this)">
+              <div class="sec-header">
+                <div class="sec-left">
+                  <div class="sec-check"><svg viewBox="0 0 12 12" fill="none" stroke="var(--green)" stroke-width="2.5" width="10" height="10"><polyline points="2,6 5,9 10,3"/></svg></div>
+                  <span class="sec-title">Datos personales</span>
+                </div>
+                <span class="sec-chev"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M5 8l5 5 5-5"/></svg></span>
+              </div>
+              <div class="sec-body" onclick="event.stopPropagation()">
+                <div class="dp-tabs">
+                  <button class="dp-tab active" onclick="switchTab(this,'dp-personal')">Datos personales</button>
+                  <button class="dp-tab" onclick="switchTab(this,'dp-contacto')">Datos de contacto</button>
+                  <button class="dp-tab" onclick="switchTab(this,'dp-familiar')">Datos familiares</button>
+                </div>
+
+                <!-- Datos personales -->
+                <div class="dp-panel active" id="dp-personal">
+                  <div class="frow">
+                    <!-- FIJO: nombres y apellidos -->
+                    <div class="fgrp">
+                      <label class="flbl">Nombres</label>
+                      <input class="finp finp-readonly" id="dp-nombres" readonly/>
+                    </div>
+                    <div class="fgrp">
+                      <label class="flbl">Apellidos</label>
+                      <input class="finp finp-readonly" id="dp-apellidos" readonly/>
+                    </div>
+                  </div>
+                  <div class="frow">
+                    <div class="fgrp"><label class="flbl">Sexo</label><select class="finp fsel" id="dp-sexo"><option value="">Elija su género</option><option>Femenino</option><option>Masculino</option><option>Otro</option></select></div>
+                    <div class="fgrp"><label class="flbl">Rh</label><select class="finp fsel" id="dp-rh"><option value="">Elija su tipo de sangre</option><option>A+</option><option>A-</option><option>B+</option><option>B-</option><option>O+</option><option>O-</option><option>AB+</option><option>AB-</option></select></div>
+                  </div>
+                  <div class="frow">
+                    <div class="fgrp"><label class="flbl">Lugar de nacimiento</label><select class="finp fsel" id="dp-lugar-nacimiento"><option value="">Elija su lugar de nacimiento</option><option>Bogotá</option><option>Medellín</option><option>Cali</option><option>Barranquilla</option></select></div>
+                    <div class="fgrp"><label class="flbl">Fecha de nacimiento</label><input class="finp" type="date" id="dp-fecha-nacimiento"/></div>
+                  </div>
+                  <div class="frow">
+                    <div class="fgrp"><label class="flbl">Nacionalidad</label><select class="finp fsel" id="dp-nacionalidad"><option value="">Elija su nacionalidad</option><option>Colombiana</option><option>Otra</option></select></div>
+                    <!-- FIJO: tipo de documento -->
+                    <div class="fgrp">
+                      <label class="flbl">Tipo de documento</label>
+                      <input class="finp finp-readonly" id="dp-tipo-documento" readonly/>
+                    </div>
+                  </div>
+                  <div class="frow">
+                    <!-- FIJO: número de documento -->
+                    <div class="fgrp">
+                      <label class="flbl">Número de documento</label>
+                      <input class="finp finp-readonly" id="dp-numero-documento" readonly/>
+                    </div>
+                    <div class="fgrp"><label class="flbl">Fecha de expedición</label><input class="finp" type="date" id="dp-fecha-expedicion"/></div>
+                  </div>
+                  <div class="frow">
+                    <div class="fgrp"><label class="flbl">Lugar de expedición</label><select class="finp fsel" id="dp-lugar-expedicion"><option value="">Elija su lugar de expedición</option><option>Bogotá</option><option>Medellín</option><option>Cali</option></select></div>
+                    <div class="fgrp"></div>
+                  </div>
+                  <div class="frow fdoc-upload-row">
+                    <div class="fdoc-upload-wrap">
+                      <button class="btn-upload"><i class="fa-solid fa-upload"></i> Seleccione el documento</button>
+                      <span class="fdoc-hint">Seleccione un documento en formato PDF que tenga un peso inferior o igual a 2 MB</span>
+                    </div>
+                  </div>
+                  <div class="sec-actions">
+                    <button class="btn-cancel">Cancelar</button>
+                    <button class="btn-save" id="btn-guardar-personal">Guardar</button>
+                  </div>
+                </div>
+
+                <!-- Datos de contacto -->
+                <div class="dp-panel" id="dp-contacto">
+                  <div class="frow">
+                    <div class="fgrp"><label class="flbl">Dirección de domicilio</label><input class="finp" id="ct-direccion" placeholder="Escriba aquí su dirección"/></div>
+                    <div class="fgrp"><label class="flbl">Departamento</label><select class="finp fsel" id="ct-departamento"><option value="">Elija su departamento</option><option>Cundinamarca</option><option>Antioquia</option><option>Valle del Cauca</option><option>Atlántico</option><option>Santander</option></select></div>
+                  </div>
+                  <div class="frow">
+                    <div class="fgrp"><label class="flbl">Ciudad</label><select class="finp fsel" id="ct-ciudad"><option value="">Elija su ciudad</option><option>Bogotá</option><option>Medellín</option><option>Cali</option><option>Barranquilla</option><option>Bucaramanga</option></select></div>
+                    <div class="fgrp"><label class="flbl">¿Tiene casa propia?</label><select class="finp fsel" id="ct-casa-propia"><option value="">Elija una opción</option><option value="si">Sí</option><option value="no">No</option><option value="arriendo">En arriendo</option><option value="familiar">Vivienda familiar</option></select></div>
+                  </div>
+                  <div class="frow">
+                    <div class="fgrp"><label class="flbl">Correo electrónico</label><input class="finp" type="email" placeholder="Escriba aquí su correo"/></div>
+                    <div class="fgrp"><label class="flbl">Número de celular</label><input class="finp" type="tel" id="ct-celular" placeholder="Escriba aquí su número"/></div>
+                  </div>
+                  <div class="frow">
+                    <div class="fgrp"><label class="flbl">Número de celular 2 <span class="flbl-hint">(opcional)</span></label><input class="finp" type="tel" id="ct-celular2" placeholder="Escriba aquí su número"/></div>
+                    <div class="fgrp"></div>
+                  </div>
+                  <div class="sec-actions">
+                    <button class="btn-cancel">Cancelar</button>
+                    <button class="btn-save" id="btn-guardar-contacto">Guardar</button>
+                  </div>
+                </div>
+
+                <!-- Datos familiares -->
+                <div class="dp-panel" id="dp-familiar">
+                  <div class="familiares-tabla-wrap">
+                    <table class="familiares-tabla">
+                      <thead>
+                        <tr>
+                          <th>Nombre</th><th>Parentesco</th><th>Número de contacto</th><th>Acciones</th>
+                        </tr>
+                      </thead>
+                      <tbody id="familiares-tbody"></tbody>
+                    </table>
+                    <div class="familiares-empty" id="familiares-empty">No hay familiares registrados.</div>
+                  </div>
+                  <button class="btn-agregar-familiar" onclick="abrirModalFamiliar()">
+                    <i class="fa-solid fa-user-plus"></i> Agregar familiar
+                  </button>
+                </div>
+
+              </div>
+            </div>
+
+            <!-- Formación académica -->
+            <div class="sec-card" onclick="toggleSec(this)">
+              <div class="sec-header">
+                <div class="sec-left">
+                  <div class="sec-check"><svg viewBox="0 0 12 12" fill="none" stroke="var(--green)" stroke-width="2.5" width="10" height="10"><polyline points="2,6 5,9 10,3"/></svg></div>
+                  <span class="sec-title">Formación académica</span>
+                </div>
+                <span class="sec-chev"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M5 8l5 5 5-5"/></svg></span>
+              </div>
+              <div class="sec-body" onclick="event.stopPropagation()">
+                <div class="frow">
+                  <div class="fgrp"><label class="flbl">Institución</label><input class="finp" id="form-institucion" placeholder="Nombre de la institución"/></div>
+                  <div class="fgrp"><label class="flbl">Título obtenido</label><input class="finp" id="form-titulo" placeholder="Título obtenido"/></div>
+                </div>
+                <div class="frow">
+                  <div class="fgrp"><label class="flbl">Nivel de estudios</label><select class="finp fsel" id="form-nivel"><option value="">Seleccione nivel</option><option>Bachillerato</option><option>Técnico</option><option>Tecnólogo</option><option>Pregrado</option><option>Posgrado</option></select></div>
+                  <div class="fgrp"><label class="flbl">¿Graduado?</label><select class="finp fsel" id="form-graduado"><option value="">Seleccione</option><option value="si">Sí</option><option value="no">No</option></select></div>
+                </div>
+                <div class="frow">
+                  <div class="fgrp"><label class="flbl">Fecha inicio</label><input class="finp" type="date" id="form-fecha-inicio"/></div>
+                  <div class="fgrp"><label class="flbl">Fecha fin</label><input class="finp" type="date" id="form-fecha-fin"/></div>
+                </div>
+                <div class="frow fdoc-upload-row">
+                  <div class="fdoc-upload-wrap">
+                    <button class="btn-upload"><i class="fa-solid fa-upload"></i> Subir diploma / título</button>
+                    <span class="fdoc-hint">PDF, máximo 2 MB</span>
+                  </div>
+                </div>
+                <div class="sec-actions">
+                  <button class="btn-cancel">Cancelar</button>
+                  <button class="btn-save" id="btn-guardar-formacion">Guardar</button>
+                </div>
+                <!-- Lista de formaciones guardadas -->
+                <div id="lista-formacion"></div>
+              </div>
+            </div>
+
+            <!-- Experiencia laboral -->
+            <div class="sec-card" onclick="toggleSec(this)">
+              <div class="sec-header">
+                <div class="sec-left">
+                  <div class="sec-check"><svg viewBox="0 0 12 12" fill="none" stroke="var(--green)" stroke-width="2.5" width="10" height="10"><polyline points="2,6 5,9 10,3"/></svg></div>
+                  <span class="sec-title">Experiencia laboral</span>
+                </div>
+                <span class="sec-chev"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M5 8l5 5 5-5"/></svg></span>
+              </div>
+              <div class="sec-body" onclick="event.stopPropagation()">
+                <div class="frow">
+                  <div class="fgrp"><label class="flbl">Empresa</label><input class="finp" id="exp-empresa" placeholder="Nombre de la empresa"/></div>
+                  <div class="fgrp"><label class="flbl">Cargo</label><input class="finp" id="exp-cargo" placeholder="Cargo desempeñado"/></div>
+                </div>
+                <div class="frow">
+                  <div class="fgrp"><label class="flbl">Fecha inicio</label><input class="finp" type="date" id="exp-fecha-inicio"/></div>
+                  <div class="fgrp"><label class="flbl">Fecha fin</label><input class="finp" type="date" id="exp-fecha-fin"/></div>
+                </div>
+                <div class="frow">
+                  <div class="fgrp"><label class="flbl">¿Trabajo actual?</label><select class="finp fsel" id="exp-trabajo-actual"><option value="">Seleccione</option><option value="si">Sí</option><option value="no">No</option></select></div>
+                  <div class="fgrp"></div>
+                </div>
+                <div class="frow">
+                  <div class="fgrp full-width"><label class="flbl">Descripción de funciones</label><textarea class="finp ftextarea" id="exp-descripcion" placeholder="Describa las funciones desempeñadas..."></textarea></div>
+                </div>
+                <div class="sec-actions">
+                  <button class="btn-cancel">Cancelar</button>
+                  <button class="btn-save" id="btn-guardar-experiencia">Guardar</button>
+                </div>
+                <!-- Lista de experiencias guardadas -->
+                <div id="lista-experiencia"></div>
+              </div>
+            </div>
+
+            <!-- Afiliaciones -->
+            <div class="sec-card" onclick="toggleSec(this)">
+              <div class="sec-header">
+                <div class="sec-left">
+                  <div class="sec-check"><svg viewBox="0 0 12 12" fill="none" stroke="var(--green)" stroke-width="2.5" width="10" height="10"><polyline points="2,6 5,9 10,3"/></svg></div>
+                  <span class="sec-title">Afiliaciones</span>
+                </div>
+                <span class="sec-chev"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M5 8l5 5 5-5"/></svg></span>
+              </div>
+              <div class="sec-body" onclick="event.stopPropagation()">
+                <div class="frow">
+                  <div class="fgrp"><label class="flbl">EPS</label><input class="finp" id="af-eps" placeholder="Nombre de la EPS"/></div>
+                  <div class="fgrp"><label class="flbl">Fondo de pensión</label><input class="finp" id="af-pension" placeholder="Nombre del fondo"/></div>
+                </div>
+                <div class="frow">
+                  <div class="fgrp"><label class="flbl">ARL</label><input class="finp" id="af-arl" placeholder="Nombre de la ARL"/></div>
+                  <div class="fgrp"><label class="flbl">Caja de compensación</label><input class="finp" id="af-caja" placeholder="Nombre de la caja"/></div>
+                </div>
+                <div class="sec-actions">
+                  <button class="btn-cancel">Cancelar</button>
+                  <button class="btn-save" id="btn-guardar-afiliaciones">Guardar</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Documentos -->
+            <div class="sec-card" onclick="toggleSec(this)">
+              <div class="sec-header">
+                <div class="sec-left">
+                  <div class="sec-check grey"><svg viewBox="0 0 12 12" fill="none" stroke="#c0d4e8" stroke-width="2.5" width="10" height="10"><polyline points="2,6 5,9 10,3"/></svg></div>
+                  <span class="sec-title">Documentos</span>
+                </div>
+                <span class="sec-chev"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M5 8l5 5 5-5"/></svg></span>
+              </div>
+              <div class="sec-body" onclick="event.stopPropagation()">
+                <div class="frow">
+                  <div class="fgrp">
+                    <label class="flbl">Cédula de ciudadanía</label>
+                    <button class="btn-upload"><i class="fa-solid fa-upload"></i> Seleccionar archivo</button>
+                    <span class="fdoc-hint">PDF, máximo 2 MB</span>
+                  </div>
+                  <div class="fgrp">
+                    <label class="flbl">Hoja de vida firmada</label>
+                    <button class="btn-upload"><i class="fa-solid fa-upload"></i> Seleccionar archivo</button>
+                    <span class="fdoc-hint">PDF, máximo 2 MB</span>
+                  </div>
+                </div>
+                <div class="sec-actions">
+                  <button class="btn-cancel">Cancelar</button>
+                  <button class="btn-save" id="btn-guardar-documentos">Guardar</button>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Modal familiar -->
+    <div class="modal-overlay" id="modalFamiliar" onclick="cerrarModalFamiliar()">
+      <div class="modal-box" onclick="event.stopPropagation()">
+        <div class="modal-name">Agregar familiar</div>
+        <div class="modal-divider"></div>
+        <div class="fgrp" style="width:100%;margin-bottom:12px">
+          <label class="flbl">Nombre completo</label>
+          <input class="finp" id="fam-nombre" placeholder="Nombre del familiar"/>
+        </div>
+        <div class="fgrp" style="width:100%;margin-bottom:12px">
+          <label class="flbl">Parentesco</label>
+          <select class="finp fsel" id="fam-parentesco">
+            <option value="">Seleccione parentesco</option>
+            <option>Cónyuge</option>
+            <option>Padre/Madre</option>
+            <option>Hijo/a</option>
+            <option>Hermano/a</option>
+            <option>Otro</option>
+          </select>
+        </div>
+        <div class="fgrp" style="width:100%;margin-bottom:20px">
+          <label class="flbl">Número de contacto</label>
+          <input class="finp" id="fam-contacto" placeholder="+57 300 000 0000"/>
+        </div>
+        <div class="modal-divider"></div>
+        <button class="btn-save" style="width:100%;margin-bottom:10px" onclick="guardarFamiliar()">Guardar</button>
+        <button class="btn-cancel" style="width:100%" onclick="cerrarModalFamiliar()">Cancelar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal familiar -->
+<div class="modal-overlay" id="modalFamiliar" onclick="cerrarModalFamiliar()">
+  <div class="modal-familiar-box" onclick="event.stopPropagation()">
+    <div class="modal-familiar-header">
+      <span class="modal-familiar-title">Información del familiar</span>
+      <button class="modal-familiar-close" onclick="cerrarModalFamiliar()"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="modal-familiar-body">
+      <div class="frow">
+        <div class="fgrp"><label class="flbl">Nombre completo</label><input class="finp" id="fam-nombre" placeholder="Nombre completo"/></div>
+        <div class="fgrp"><label class="flbl">Parentesco</label><select class="finp fsel" id="fam-parentesco"><option value="">Seleccione</option><option>Cónyuge</option><option>Hijo/a</option><option>Padre</option><option>Madre</option><option>Hermano/a</option><option>Otro</option></select></div>
+      </div>
+      <div class="frow">
+        <div class="fgrp"><label class="flbl">Sexo</label><select class="finp fsel" id="fam-sexo"><option value="">Seleccione</option><option>Femenino</option><option>Masculino</option><option>Otro</option></select></div>
+        <div class="fgrp"><label class="flbl">Fecha de nacimiento</label><input class="finp" type="date" id="fam-fecha"/></div>
+      </div>
+      <div class="frow">
+        <div class="fgrp"><label class="flbl">Nivel educativo</label><select class="finp fsel" id="fam-nivel"><option value="">Seleccione</option><option>Ninguno</option><option>Primaria</option><option>Bachillerato</option><option>Técnico</option><option>Pregrado</option><option>Posgrado</option></select></div>
+        <div class="fgrp"><label class="flbl">Número de contacto</label><input class="finp" id="fam-contacto" placeholder="+57 300 000 0000"/></div>
+      </div>
+    </div>
+    <div class="modal-familiar-actions">
+      <button class="btn-cancel" onclick="cerrarModalFamiliar()">Cancelar</button>
+      <button class="btn-save" onclick="guardarFamiliar()">Guardar</button>
+    </div>
+  </div>
+</div>
+
+<script type="module" src="hoja-vida.ts"></script>
+</body>
+</html>
