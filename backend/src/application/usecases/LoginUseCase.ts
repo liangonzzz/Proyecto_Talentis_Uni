@@ -14,7 +14,7 @@ export class LoginUseCase {
 
     if (!passwordValida) throw new Error('Credenciales incorrectas');
 
-    const token = JwtUtil.sign({ id: usuario.id, rol: usuario.rol });
+    const token = JwtUtil.sign({ id: usuario.id, rol: usuario.rol, nombre: `${usuario.nombre} ${usuario.apellidos}` });
 
     return { token, rol: usuario.rol, nombre: `${usuario.nombre} ${usuario.apellidos}`, correo: usuario.correo, tipo_documento: usuario.tipo_documento, numero_documento: usuario.numero_documento };
   }

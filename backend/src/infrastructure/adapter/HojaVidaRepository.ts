@@ -254,14 +254,19 @@ export class HojaVidaRepository implements IHojaVidaRepository {
   async upsertDocumentos(data: HvDocumentos): Promise<void> {
     await AppDataSource.query(
       `INSERT INTO hv_documentos
-         (usuario_id, cedula_url, hoja_vida_url, diploma_url)
-       VALUES ($1,$2,$3,$4)
-       ON CONFLICT (usuario_id) DO UPDATE SET
-         cedula_url    = EXCLUDED.cedula_url,
-         hoja_vida_url = EXCLUDED.hoja_vida_url,
-         diploma_url   = EXCLUDED.diploma_url,
-         updated_at    = NOW()`,
-      [data.usuario_id, data.cedula_url, data.hoja_vida_url, data.diploma_url]
+        (usuario_id, cedula_url, hoja_vida_url, diploma_url, policia_url, procuraduria_url, contrato_url, referencia_url)
+      VALUES ($1,$2,$3,$4,$5,$6,$7,$8)
+      ON CONFLICT (usuario_id) DO UPDATE SET
+        cedula_url        = COALESCE(EXCLUDED.cedula_url,        hv_documentos.cedula_url),
+        hoja_vida_url     = COALESCE(EXCLUDED.hoja_vida_url,     hv_documentos.hoja_vida_url),
+        diploma_url       = COALESCE(EXCLUDED.diploma_url,       hv_documentos.diploma_url),
+        policia_url       = COALESCE(EXCLUDED.policia_url,       hv_documentos.policia_url),
+        procuraduria_url  = COALESCE(EXCLUDED.procuraduria_url,  hv_documentos.procuraduria_url),
+        contrato_url      = COALESCE(EXCLUDED.contrato_url,      hv_documentos.contrato_url),
+        referencia_url    = COALESCE(EXCLUDED.referencia_url,    hv_documentos.referencia_url),
+        updated_at        = NOW()`,
+      [data.usuario_id, data.cedula_url, data.hoja_vida_url, data.diploma_url,
+      data.policia_url, data.procuraduria_url, data.contrato_url, data.referencia_url]
     );
   }
 }

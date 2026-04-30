@@ -46,7 +46,6 @@ function cargarPanel(): void {
   const nombre = localStorage.getItem('nombre') ?? 'Usuario';
   const rol    = localStorage.getItem('rol')    ?? '';
   const correo = localStorage.getItem('correo') ?? '';
-
   document.getElementById('panel-avatar')!.textContent = obtenerIniciales(nombre);
   document.getElementById('panel-nombre')!.textContent = nombre;
   document.getElementById('panel-role')!.textContent   = rol;
@@ -61,6 +60,16 @@ const completados = new Set<string>();
 function marcarStep(stepId: string): void {
   completados.add(stepId);
   document.getElementById(stepId)?.classList.add('on');
+  const card = document.querySelector<HTMLElement>(`.sec-card[data-step="${stepId}"]`);
+  card?.querySelector('.sec-check')?.classList.add('on');
+  actualizarProgreso();
+}
+
+function desmarcarStep(stepId: string): void {
+  completados.delete(stepId);
+  document.getElementById(stepId)?.classList.remove('on');
+  const card = document.querySelector<HTMLElement>(`.sec-card[data-step="${stepId}"]`);
+  card?.querySelector('.sec-check')?.classList.remove('on');
   actualizarProgreso();
 }
 
@@ -75,10 +84,8 @@ function actualizarProgreso(): void {
 // ── PERFIL ──────────────────────────────────────────────────
 
 async function cargarPerfil(): Promise<void> {
-  // Nombre completo fijo desde localStorage
   const nombre = localStorage.getItem('nombre') ?? '';
   setVal('perfil-nombre', nombre);
-
   const res  = await fetch(`${API}/perfil`, { headers: headers() });
   const data = await res.json();
   setVal('perfil-cargo',       data.cargo_actual ?? '');
@@ -107,15 +114,14 @@ async function guardarPerfil(): Promise<void> {
 // ── DATOS PERSONALES ────────────────────────────────────────
 
 async function cargarDatosPersonales(): Promise<void> {
-  // Campos fijos desde localStorage
-  const nombre   = localStorage.getItem('nombre') ?? '';
-  const partes   = nombre.split(' ');
-  const nombres  = partes.slice(0, Math.ceil(partes.length / 2)).join(' ');
+  const nombre    = localStorage.getItem('nombre') ?? '';
+  const partes    = nombre.split(' ');
+  const nombres   = partes.slice(0, Math.ceil(partes.length / 2)).join(' ');
   const apellidos = partes.slice(Math.ceil(partes.length / 2)).join(' ');
   setVal('dp-nombres',   nombres);
   setVal('dp-apellidos', apellidos);
 
-  // Tipo y número de documento también fijos — los traemos del backend
+
   const res  = await fetch(`${API}/datos-personales`, { headers: headers() });
   const data = await res.json();
   setVal('dp-sexo',             data.sexo             ?? '');
@@ -125,12 +131,7 @@ async function cargarDatosPersonales(): Promise<void> {
   setVal('dp-nacionalidad',     data.nacionalidad     ?? '');
   setVal('dp-fecha-expedicion', data.fecha_expedicion ?? '');
   setVal('dp-lugar-expedicion', data.lugar_expedicion ?? '');
-
-  // Tipo y número de documento fijos desde usuarios — por ahora desde localStorage
-  const tipoDoc = localStorage.getItem('tipo_documento') ?? '';
-  const numDoc  = localStorage.getItem('numero_documento') ?? '';
-  setVal('dp-tipo-documento',   tipoDoc);
-  setVal('dp-numero-documento', numDoc);
+  setVal('dp-tipo-documento',   localStorage.getItem('tipo_documento')   ?? '');  setVal('dp-numero-documento', localStorage.getItem('numero_documento') ?? '');
 
   if (data.sexo) marcarStep('step-personal');
 }
@@ -143,12 +144,25 @@ async function guardarDatosPersonales(): Promise<void> {
       sexo:             val('dp-sexo'),
       rh:               val('dp-rh'),
       lugar_nacimiento: val('dp-lugar-nacimiento'),
-      fecha_nacimiento: val('dp-fecha-nacimiento'),
+      fecha_nacimiento: val('dp-fecha-nacimiento') || null,
       nacionalidad:     val('dp-nacionalidad'),
-      fecha_expedicion: val('dp-fecha-expedicion'),
+      fecha_expedicion: val('dp-fecha-expedicion') || null,
       lugar_expedicion: val('dp-lugar-expedicion'),
     }),
   });
+
+  // Si hay cédula seleccionada la sube también
+  const cedulaInput = document.getElementById('doc-cedula-input') as HTMLInputElement;
+  if (cedulaInput?.files?.[0]) {
+    const formData = new FormData();
+    formData.append('cedula', cedulaInput.files[0]);
+    await fetch(`${API}/documentos`, {
+      method: 'POST',
+      headers: { 'Authorization': `Bearer ${token()}` },
+      body: formData,
+    });
+  }
+
   marcarStep('step-personal');
 }
 
@@ -157,12 +171,13 @@ async function guardarDatosPersonales(): Promise<void> {
 async function cargarContacto(): Promise<void> {
   const res  = await fetch(`${API}/contacto`, { headers: headers() });
   const data = await res.json();
-  setVal('ct-direccion',    data.direccion    ?? '');
-  setVal('ct-departamento', data.departamento ?? '');
-  setVal('ct-ciudad',       data.ciudad       ?? '');
-  setVal('ct-casa-propia',  data.casa_propia  ?? '');
-  setVal('ct-celular',      data.celular      ?? '');
-  setVal('ct-celular2',     data.celular_2    ?? '');
+  setVal('ct-correo',      localStorage.getItem('correo') ?? '');
+  setVal('ct-direccion',   data.direccion    ?? '');
+  setVal('ct-departamento',data.departamento ?? '');
+  setVal('ct-ciudad',      data.ciudad       ?? '');
+  setVal('ct-casa-propia', data.casa_propia  ?? '');
+  setVal('ct-celular',     data.celular      ?? '');
+  setVal('ct-celular2',    data.celular_2    ?? '');
 }
 
 async function guardarContacto(): Promise<void> {
@@ -272,11 +287,23 @@ async function guardarFormacion(): Promise<void> {
       titulo:       val('form-titulo'),
       nivel:        val('form-nivel'),
       graduado:     val('form-graduado') === 'si',
-      fecha_inicio: val('form-fecha-inicio'),
-      fecha_fin:    val('form-fecha-fin'),
+      fecha_inicio: val('form-fecha-inicio') || null,
+      fecha_fin:    val('form-fecha-fin') || null,
     }),
   });
-  // Limpiar formulario
+
+  // Si hay diploma seleccionado lo sube también
+  const diplomaInput = document.getElementById('doc-diploma-input') as HTMLInputElement;
+  if (diplomaInput?.files?.[0]) {
+    const formData = new FormData();
+    formData.append('diploma', diplomaInput.files[0]);
+    await fetch(`${API}/documentos`, {
+      method: 'POST',
+      headers: { 'Authorization': `Bearer ${token()}` },
+      body: formData,
+    });
+  }
+
   ['form-institucion','form-titulo','form-nivel','form-graduado','form-fecha-inicio','form-fecha-fin']
     .forEach(id => setVal(id, ''));
   await cargarFormacion();
@@ -286,8 +313,7 @@ async function guardarFormacion(): Promise<void> {
 async function eliminarFormacion(id: number): Promise<void> {
   await fetch(`${API}/formacion/${id}`, { method: 'DELETE', headers: headers() });
   await cargarFormacion();
-  if (formaciones.length === 0) completados.delete('step-formacion');
-  actualizarProgreso();
+  if (formaciones.length === 0) desmarcarStep('step-formacion');
 }
 
 // ── EXPERIENCIA ─────────────────────────────────────────────
@@ -341,8 +367,7 @@ async function guardarExperiencia(): Promise<void> {
 async function eliminarExperiencia(id: number): Promise<void> {
   await fetch(`${API}/experiencia/${id}`, { method: 'DELETE', headers: headers() });
   await cargarExperiencia();
-  if (experiencias.length === 0) completados.delete('step-experiencia');
-  actualizarProgreso();
+  if (experiencias.length === 0) desmarcarStep('step-experiencia');
 }
 
 // ── AFILIACIONES ────────────────────────────────────────────
@@ -371,6 +396,103 @@ async function guardarAfiliaciones(): Promise<void> {
   marcarStep('step-afiliaciones');
 }
 
+// ── DOCUMENTOS ──────────────────────────────────────────────
+
+function formatBytes(bytes: number): string {
+  if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
+  return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
+}
+
+function initDocumentoVisual(
+  inputId: string, btnId: string, previewId: string,
+  nameId: string, sizeId: string, deleteId: string, downloadId: string
+): void {
+  const input     = document.getElementById(inputId)   as HTMLInputElement;
+  const btn       = document.getElementById(btnId)     as HTMLButtonElement;
+  const preview   = document.getElementById(previewId) as HTMLElement;
+  const nameEl    = document.getElementById(nameId)    as HTMLElement;
+  const sizeEl    = document.getElementById(sizeId)    as HTMLElement;
+  const deleteBtn = document.getElementById(deleteId)  as HTMLButtonElement;
+  const downloadBtn = downloadId ? document.getElementById(downloadId) as HTMLButtonElement : null;
+
+  if (!input || !btn) return;
+
+  btn.addEventListener('click', () => input.click());
+
+  input.addEventListener('change', () => {
+    const file = input.files?.[0];
+    if (!file) return;
+    if (file.size > 5 * 1024 * 1024) { alert('El archivo no puede superar 5 MB'); input.value = ''; return; }
+    nameEl.textContent    = file.name;
+    sizeEl.textContent    = formatBytes(file.size);
+    btn.style.display     = 'none';
+    preview.style.display = 'flex';
+  });
+
+  deleteBtn?.addEventListener('click', () => {
+    input.value           = '';
+    preview.style.display = 'none';
+    btn.style.display     = '';
+  });
+
+  downloadBtn?.addEventListener('click', () => {
+    const url = downloadBtn.dataset.url;
+    if (!url) return;
+    window.open(url, '_blank');
+  });
+}
+
+function mostrarDocumentoGuardado(prefix: string, url: string | null, downloadId: string): void {
+  if (!url) return;
+  const preview     = document.getElementById(`${prefix}-preview`);
+  const nameEl      = document.getElementById(`${prefix}-name`);
+  const btn         = document.getElementById(`${prefix}-btn`);
+  const downloadBtn = downloadId ? document.getElementById(downloadId) as HTMLButtonElement : null;
+  if (preview && nameEl) {
+    nameEl.textContent    = url.split('/').pop() ?? 'documento';
+    preview.style.display = 'flex';
+    if (btn) btn.style.display = 'none';
+    if (downloadBtn) downloadBtn.dataset.url = url;
+  }
+}
+
+async function cargarDocumentos(): Promise<void> {
+  const res  = await fetch(`${API}/documentos`, { headers: headers() });
+  const data = await res.json();
+  mostrarDocumentoGuardado('doc-cedula',       data.cedula_url,       'doc-cedula-download');
+  mostrarDocumentoGuardado('doc-diploma',      data.diploma_url,      'doc-diploma-download');
+  mostrarDocumentoGuardado('doc-policia',      data.policia_url,      '');
+  mostrarDocumentoGuardado('doc-procuraduria', data.procuraduria_url, '');
+  mostrarDocumentoGuardado('doc-contrato',     data.contrato_url,     '');
+  mostrarDocumentoGuardado('doc-referencia',   data.referencia_url,   '');
+  if (data.cedula_url || data.policia_url) marcarStep('step-documentos');
+}
+
+async function guardarDocumentos(): Promise<void> {
+  const formData = new FormData();
+  const campos: Record<string, string> = {
+    cedula:       'doc-cedula-input',
+    diploma:      'doc-diploma-input',
+    policia:      'doc-policia-input',
+    procuraduria: 'doc-procuraduria-input',
+    contrato:     'doc-contrato-input',
+    referencia:   'doc-referencia-input',
+  };
+  let hayArchivos = false;
+  Object.entries(campos).forEach(([campo, inputId]) => {
+    const file = (document.getElementById(inputId) as HTMLInputElement)?.files?.[0];
+    if (file) { formData.append(campo, file); hayArchivos = true; }
+  });
+  if (!hayArchivos) return;
+  await fetch(`${API}/documentos`, {
+    method: 'POST',
+    headers: { 'Authorization': `Bearer ${token()}` },
+    body: formData,
+  });
+  marcarStep('step-documentos');
+  await cargarDocumentos();
+}
+
 // ── BIND BOTONES ────────────────────────────────────────────
 
 function bindBotones(): void {
@@ -380,6 +502,7 @@ function bindBotones(): void {
   document.getElementById('btn-guardar-formacion')   ?.addEventListener('click', guardarFormacion);
   document.getElementById('btn-guardar-experiencia') ?.addEventListener('click', guardarExperiencia);
   document.getElementById('btn-guardar-afiliaciones')?.addEventListener('click', guardarAfiliaciones);
+  document.getElementById('btn-guardar-documentos')  ?.addEventListener('click', guardarDocumentos);
 }
 
 // ── INIT ────────────────────────────────────────────────────
@@ -396,6 +519,7 @@ export async function initHojaDeVida(): Promise<void> {
     cargarFormacion(),
     cargarExperiencia(),
     cargarAfiliaciones(),
+    cargarDocumentos(),
   ]);
 
   (window as any).toggleSec           = toggleSec;
@@ -406,4 +530,11 @@ export async function initHojaDeVida(): Promise<void> {
   (window as any).eliminarFamiliar    = eliminarFamiliar;
   (window as any).eliminarFormacion   = eliminarFormacion;
   (window as any).eliminarExperiencia = eliminarExperiencia;
+
+  initDocumentoVisual('doc-cedula-input',      'doc-cedula-btn',      'doc-cedula-preview',      'doc-cedula-name',      'doc-cedula-size',      'doc-cedula-delete',      'doc-cedula-download');
+  initDocumentoVisual('doc-diploma-input',     'doc-diploma-btn',     'doc-diploma-preview',     'doc-diploma-name',     'doc-diploma-size',     'doc-diploma-delete',     'doc-diploma-download');
+  initDocumentoVisual('doc-policia-input',     'drop-policia',        'doc-policia-preview',     'doc-policia-name',     'doc-policia-size',     'doc-policia-delete',     '');
+  initDocumentoVisual('doc-procuraduria-input','drop-procuraduria',   'doc-procuraduria-preview','doc-procuraduria-name','doc-procuraduria-size','doc-procuraduria-delete','');
+  initDocumentoVisual('doc-contrato-input',    'drop-contrato',       'doc-contrato-preview',    'doc-contrato-name',    'doc-contrato-size',    'doc-contrato-delete',    '');
+  initDocumentoVisual('doc-referencia-input',  'drop-referencia',     'doc-referencia-preview',  'doc-referencia-name',  'doc-referencia-size',  'doc-referencia-delete',  '');
 }

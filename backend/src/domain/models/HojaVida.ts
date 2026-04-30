@@ -76,7 +76,11 @@ export interface HvAfiliaciones {
 export interface HvDocumentos {
   id?: number;
   usuario_id: number;
-  cedula_url: string;
-  hoja_vida_url: string;
-  diploma_url: string;
+  cedula_url?: string;
+  hoja_vida_url?: string;
+  diploma_url?: string;
+  policia_url?: string;
+  procuraduria_url?: string;
+  contrato_url?: string;
+  referencia_url?: string;
 }

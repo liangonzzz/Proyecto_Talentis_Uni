@@ -72,7 +72,7 @@
           <div class="sections-panel">
 
             <!-- Información de perfil -->
-            <div class="sec-card open" onclick="toggleSec(this)">
+            <div class="sec-card open" data-step="step-perfil" onclick="toggleSec(this)">
               <div class="sec-header">
                 <div class="sec-left">
                   <div class="sec-check"><svg viewBox="0 0 12 12" fill="none" stroke="var(--green)" stroke-width="2.5" width="10" height="10"><polyline points="2,6 5,9 10,3"/></svg></div>
@@ -116,7 +116,7 @@
             </div>
 
             <!-- Datos personales -->
-            <div class="sec-card" onclick="toggleSec(this)">
+           <div class="sec-card" data-step="step-personal" onclick="toggleSec(this)">
               <div class="sec-header">
                 <div class="sec-left">
                   <div class="sec-check"><svg viewBox="0 0 12 12" fill="none" stroke="var(--green)" stroke-width="2.5" width="10" height="10"><polyline points="2,6 5,9 10,3"/></svg></div>
@@ -128,7 +128,7 @@
                 <div class="dp-tabs">
                   <button class="dp-tab active" onclick="switchTab(this,'dp-personal')">Datos personales</button>
                   <button class="dp-tab" onclick="switchTab(this,'dp-contacto')">Datos de contacto</button>
-                  <button class="dp-tab" onclick="switchTab(this,'dp-familiar')">Datos familiares</button>
+                  <!-- <button class="dp-tab" onclick="switchTab(this,'dp-familiar')">Datos familiares</button> -->
                 </div>
 
                 <!-- Datos personales -->
@@ -173,9 +173,25 @@
                     <div class="fgrp"></div>
                   </div>
                   <div class="frow fdoc-upload-row">
-                    <div class="fdoc-upload-wrap">
-                      <button class="btn-upload"><i class="fa-solid fa-upload"></i> Seleccione el documento</button>
+                    <div class="fdoc-upload-wrap" id="doc-cedula-wrap">
+                      <input type="file" id="doc-cedula-input" accept=".pdf" style="display:none"/>
+                      <button class="btn-upload" id="doc-cedula-btn">
+                        <i class="fa-solid fa-upload"></i> Seleccione el documento
+                      </button>
                       <span class="fdoc-hint">Seleccione un documento en formato PDF que tenga un peso inferior o igual a 2 MB</span>
+                      <div class="fdoc-preview" id="doc-cedula-preview" style="display:none">
+                        <div class="fdoc-preview-left">
+                          <i class="fa-solid fa-file-pdf fdoc-pdf-icon"></i>
+                          <div class="fdoc-preview-info">
+                            <span class="fdoc-preview-name" id="doc-cedula-name"></span>
+                            <span class="fdoc-preview-size" id="doc-cedula-size"></span>
+                          </div>
+                        </div>
+                        <div class="fdoc-preview-actions">
+                          <button class="fdoc-action-btn" id="doc-cedula-delete"><i class="fa-solid fa-trash"></i></button>
+                          <button class="fdoc-action-btn" id="doc-cedula-download"><i class="fa-solid fa-download"></i></button>
+                        </div>
+                      </div>
                     </div>
                   </div>
                   <div class="sec-actions">
@@ -195,7 +211,7 @@
                     <div class="fgrp"><label class="flbl">¿Tiene casa propia?</label><select class="finp fsel" id="ct-casa-propia"><option value="">Elija una opción</option><option value="si">Sí</option><option value="no">No</option><option value="arriendo">En arriendo</option><option value="familiar">Vivienda familiar</option></select></div>
                   </div>
                   <div class="frow">
-                    <div class="fgrp"><label class="flbl">Correo electrónico</label><input class="finp" type="email" placeholder="Escriba aquí su correo"/></div>
+                    <div class="fgrp"><label class="flbl">Correo electrónico</label><input class="finp finp-readonly" id="ct-correo" readonly/></div>
                     <div class="fgrp"><label class="flbl">Número de celular</label><input class="finp" type="tel" id="ct-celular" placeholder="Escriba aquí su número"/></div>
                   </div>
                   <div class="frow">
@@ -209,7 +225,7 @@
                 </div>
 
                 <!-- Datos familiares -->
-                <div class="dp-panel" id="dp-familiar">
+                 <div class="dp-panel" id="dp-familiar">
                   <div class="familiares-tabla-wrap">
                     <table class="familiares-tabla">
                       <thead>
@@ -230,7 +246,7 @@
             </div>
 
             <!-- Formación académica -->
-            <div class="sec-card" onclick="toggleSec(this)">
+            <div class="sec-card" data-step="step-formacion" onclick="toggleSec(this)">
               <div class="sec-header">
                 <div class="sec-left">
                   <div class="sec-check"><svg viewBox="0 0 12 12" fill="none" stroke="var(--green)" stroke-width="2.5" width="10" height="10"><polyline points="2,6 5,9 10,3"/></svg></div>
@@ -252,9 +268,25 @@
                   <div class="fgrp"><label class="flbl">Fecha fin</label><input class="finp" type="date" id="form-fecha-fin"/></div>
                 </div>
                 <div class="frow fdoc-upload-row">
-                  <div class="fdoc-upload-wrap">
-                    <button class="btn-upload"><i class="fa-solid fa-upload"></i> Subir diploma / título</button>
+                  <div class="fdoc-upload-wrap" id="doc-diploma-wrap">
+                    <input type="file" id="doc-diploma-input" accept=".pdf" style="display:none"/>
+                    <button class="btn-upload" id="doc-diploma-btn">
+                      <i class="fa-solid fa-upload"></i> Subir diploma / título
+                    </button>
                     <span class="fdoc-hint">PDF, máximo 2 MB</span>
+                    <div class="fdoc-preview" id="doc-diploma-preview" style="display:none">
+                      <div class="fdoc-preview-left">
+                        <i class="fa-solid fa-file-pdf fdoc-pdf-icon"></i>
+                        <div class="fdoc-preview-info">
+                          <span class="fdoc-preview-name" id="doc-diploma-name"></span>
+                          <span class="fdoc-preview-size" id="doc-diploma-size"></span>
+                        </div>
+                      </div>
+                      <div class="fdoc-preview-actions">
+                        <button class="fdoc-action-btn" id="doc-diploma-delete"><i class="fa-solid fa-trash"></i></button>
+                        <button class="fdoc-action-btn" id="doc-diploma-download"><i class="fa-solid fa-download"></i></button>
+                      </div>
+                    </div>
                   </div>
                 </div>
                 <div class="sec-actions">
@@ -267,7 +299,7 @@
             </div>
 
             <!-- Experiencia laboral -->
-            <div class="sec-card" onclick="toggleSec(this)">
+            <div class="sec-card" data-step="step-experiencia" onclick="toggleSec(this)">
               <div class="sec-header">
                 <div class="sec-left">
                   <div class="sec-check"><svg viewBox="0 0 12 12" fill="none" stroke="var(--green)" stroke-width="2.5" width="10" height="10"><polyline points="2,6 5,9 10,3"/></svg></div>
@@ -301,7 +333,7 @@
             </div>
 
             <!-- Afiliaciones -->
-            <div class="sec-card" onclick="toggleSec(this)">
+            <div class="sec-card" data-step="step-afiliaciones" onclick="toggleSec(this)">
               <div class="sec-header">
                 <div class="sec-left">
                   <div class="sec-check"><svg viewBox="0 0 12 12" fill="none" stroke="var(--green)" stroke-width="2.5" width="10" height="10"><polyline points="2,6 5,9 10,3"/></svg></div>
@@ -326,27 +358,100 @@
             </div>
 
             <!-- Documentos -->
-            <div class="sec-card" onclick="toggleSec(this)">
+            <div class="sec-card" data-step="step-documentos" onclick="toggleSec(this)">
               <div class="sec-header">
                 <div class="sec-left">
-                  <div class="sec-check grey"><svg viewBox="0 0 12 12" fill="none" stroke="#c0d4e8" stroke-width="2.5" width="10" height="10"><polyline points="2,6 5,9 10,3"/></svg></div>
+                  <div class="sec-check"><svg viewBox="0 0 12 12" fill="none" stroke="var(--green)" stroke-width="2.5" width="10" height="10"><polyline points="2,6 5,9 10,3"/></svg></div>
                   <span class="sec-title">Documentos</span>
                 </div>
                 <span class="sec-chev"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M5 8l5 5 5-5"/></svg></span>
               </div>
               <div class="sec-body" onclick="event.stopPropagation()">
-                <div class="frow">
-                  <div class="fgrp">
-                    <label class="flbl">Cédula de ciudadanía</label>
-                    <button class="btn-upload"><i class="fa-solid fa-upload"></i> Seleccionar archivo</button>
-                    <span class="fdoc-hint">PDF, máximo 2 MB</span>
+
+                <!-- Antecedentes de Policía -->
+                <div class="doc-bloque">
+                  <label class="flbl">Antecedentes de Policía <span class="fdoc-hint">(vigencia máxima 30 días)</span></label>
+                  <div class="fdoc-dropzone" id="drop-policia" onclick="document.getElementById('doc-policia-input').click()">
+                    <input type="file" id="doc-policia-input" accept=".pdf,.jpg,.jpeg,.png" style="display:none"/>
+                    <i class="fa-solid fa-upload fdoc-drop-icon"></i>
+                    <span class="fdoc-drop-txt">Haga clic para seleccionar o arrastre el archivo aquí</span>
+                    <span class="fdoc-hint">Formatos permitidos: PDF, JPG, PNG. Máximo 5MB</span>
                   </div>
-                  <div class="fgrp">
-                    <label class="flbl">Hoja de vida firmada</label>
-                    <button class="btn-upload"><i class="fa-solid fa-upload"></i> Seleccionar archivo</button>
-                    <span class="fdoc-hint">PDF, máximo 2 MB</span>
+                  <div class="fdoc-preview" id="doc-policia-preview" style="display:none">
+                    <div class="fdoc-preview-left">
+                      <i class="fa-solid fa-file-pdf fdoc-pdf-icon"></i>
+                      <div class="fdoc-preview-info">
+                        <span class="fdoc-preview-name" id="doc-policia-name"></span>
+                        <span class="fdoc-preview-size" id="doc-policia-size"></span>
+                      </div>
+                    </div>
+                    <button class="fdoc-action-btn" id="doc-policia-delete"><i class="fa-solid fa-trash"></i></button>
                   </div>
                 </div>
+
+                <!-- Antecedentes de Procuraduría -->
+                <div class="doc-bloque">
+                  <label class="flbl">Antecedentes de Procuraduría <span class="fdoc-hint">(vigencia máxima 30 días)</span></label>
+                  <div class="fdoc-dropzone" id="drop-procuraduria" onclick="document.getElementById('doc-procuraduria-input').click()">
+                    <input type="file" id="doc-procuraduria-input" accept=".pdf,.jpg,.jpeg,.png" style="display:none"/>
+                    <i class="fa-solid fa-upload fdoc-drop-icon"></i>
+                    <span class="fdoc-drop-txt">Haga clic para seleccionar o arrastre el archivo aquí</span>
+                    <span class="fdoc-hint">Formatos permitidos: PDF, JPG, PNG. Máximo 5MB</span>
+                  </div>
+                  <div class="fdoc-preview" id="doc-procuraduria-preview" style="display:none">
+                    <div class="fdoc-preview-left">
+                      <i class="fa-solid fa-file-pdf fdoc-pdf-icon"></i>
+                      <div class="fdoc-preview-info">
+                        <span class="fdoc-preview-name" id="doc-procuraduria-name"></span>
+                        <span class="fdoc-preview-size" id="doc-procuraduria-size"></span>
+                      </div>
+                    </div>
+                    <button class="fdoc-action-btn" id="doc-procuraduria-delete"><i class="fa-solid fa-trash"></i></button>
+                  </div>
+                </div>
+
+                <!-- Contrato -->
+                <div class="doc-bloque">
+                  <label class="flbl">Contrato</label>
+                  <div class="fdoc-dropzone" id="drop-contrato" onclick="document.getElementById('doc-contrato-input').click()">
+                    <input type="file" id="doc-contrato-input" accept=".pdf,.jpg,.jpeg,.png" style="display:none"/>
+                    <i class="fa-solid fa-upload fdoc-drop-icon"></i>
+                    <span class="fdoc-drop-txt">Haga clic para seleccionar o arrastre el archivo aquí</span>
+                    <span class="fdoc-hint">Formatos permitidos: PDF, JPG, PNG. Máximo 5MB</span>
+                  </div>
+                  <div class="fdoc-preview" id="doc-contrato-preview" style="display:none">
+                    <div class="fdoc-preview-left">
+                      <i class="fa-solid fa-file-pdf fdoc-pdf-icon"></i>
+                      <div class="fdoc-preview-info">
+                        <span class="fdoc-preview-name" id="doc-contrato-name"></span>
+                        <span class="fdoc-preview-size" id="doc-contrato-size"></span>
+                      </div>
+                    </div>
+                    <button class="fdoc-action-btn" id="doc-contrato-delete"><i class="fa-solid fa-trash"></i></button>
+                  </div>
+                </div>
+
+                <!-- Referencia Personal -->
+                <div class="doc-bloque">
+                  <label class="flbl">Referencia Personal</label>
+                  <div class="fdoc-dropzone" id="drop-referencia" onclick="document.getElementById('doc-referencia-input').click()">
+                    <input type="file" id="doc-referencia-input" accept=".pdf,.jpg,.jpeg,.png" style="display:none"/>
+                    <i class="fa-solid fa-upload fdoc-drop-icon"></i>
+                    <span class="fdoc-drop-txt">Haga clic para seleccionar o arrastre el archivo aquí</span>
+                    <span class="fdoc-hint">Formatos permitidos: PDF, JPG, PNG. Máximo 5MB</span>
+                  </div>
+                  <div class="fdoc-preview" id="doc-referencia-preview" style="display:none">
+                    <div class="fdoc-preview-left">
+                      <i class="fa-solid fa-file-pdf fdoc-pdf-icon"></i>
+                      <div class="fdoc-preview-info">
+                        <span class="fdoc-preview-name" id="doc-referencia-name"></span>
+                        <span class="fdoc-preview-size" id="doc-referencia-size"></span>
+                      </div>
+                    </div>
+                    <button class="fdoc-action-btn" id="doc-referencia-delete"><i class="fa-solid fa-trash"></i></button>
+                  </div>
+                </div>
+
                 <div class="sec-actions">
                   <button class="btn-cancel">Cancelar</button>
                   <button class="btn-save" id="btn-guardar-documentos">Guardar</button>

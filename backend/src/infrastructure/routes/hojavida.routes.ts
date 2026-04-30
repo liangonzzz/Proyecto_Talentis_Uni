@@ -10,7 +10,23 @@ import {
   getAfiliaciones, upsertAfiliaciones,
   getDocumentos, upsertDocumentos,
 } from '../controller/HojaVidaController';
+import multer from 'multer';
+import path from 'path';
+import fs from 'fs';
 
+const uploadsDir = path.join(__dirname, '..', '..', '..', 'uploads');
+if (!fs.existsSync(uploadsDir)) fs.mkdirSync(uploadsDir, { recursive: true });
+
+const storage = multer.diskStorage({
+  destination: (_req, _file, cb) => cb(null, uploadsDir),
+    filename: (req, file, cb) => {
+    const usuario = (req as any).usuario;
+    const nombre  = usuario?.nombre?.toLowerCase().replace(/\s+/g, '-') ?? 'usuario';
+    cb(null, `${file.fieldname}-${nombre}${path.extname(file.originalname)}`);
+  },
+});
+
+const upload = multer({ storage, limits: { fileSize: 5 * 1024 * 1024 } });
 const router = Router();
 
 router.use(verificarToken);
@@ -51,6 +67,13 @@ router.post('/afiliaciones',     upsertAfiliaciones);
 
 // Documentos
 router.get ('/documentos',       getDocumentos);
-router.post('/documentos',       upsertDocumentos);
+router.post('/documentos', upload.fields([
+  { name: 'cedula',       maxCount: 1 },
+  { name: 'diploma',      maxCount: 1 },
+  { name: 'policia',      maxCount: 1 },
+  { name: 'procuraduria', maxCount: 1 },
+  { name: 'contrato',     maxCount: 1 },
+  { name: 'referencia',   maxCount: 1 },
+]), upsertDocumentos);
 
 export default router;

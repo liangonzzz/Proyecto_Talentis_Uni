@@ -282,8 +282,18 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
 .dp-panel.active { display: block; }
 
 /* ══ UPLOAD BUTTON ══ */
-.fdoc-upload-row { margin-top: 14px; }
-.fdoc-upload-wrap { display: flex; flex-direction: column; gap: 6px; }
+.fdoc-upload-row { 
+  margin-top: 14px; 
+  
+}
+
+.fdoc-upload-wrap { 
+  display: flex; 
+  flex-direction: column; 
+  gap: 6px; 
+  width: 100%;
+}
+
 .btn-upload {
   display: inline-flex; align-items: center; gap: 8px;
   padding: 8px 16px;
@@ -299,6 +309,10 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
 }
 .btn-upload:hover { background: var(--bg); border-color: var(--blue-light); }
 .btn-upload i { color: var(--blue-mid); font-size: 13px; }
+
+.fdoc-upload-row {
+  width: 100%;
+}
 
 .fdoc-hint {
   font-size: 10.5px;
@@ -370,4 +384,109 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
   background: #f0f4f9 !important;
   color: var(--text-soft) !important;
   cursor: not-allowed;
+}
+
+/* Círculo apagado (sin datos) */
+.sec-check {
+  border: 2px solid #c0d4e8;
+  background: transparent;
+}
+
+/* Círculo prendido (con datos) */
+.sec-check.on {
+  border: 2px solid var(--green);
+  background: #eaf7f0; /* o el color de fondo verde claro que uses en los steps */
+}
+
+.fdoc-preview {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid #dde8f5;
+  border-radius: 10px;
+  padding: 10px 14px;
+  background: #f7faff;
+  width: 100%;
+}
+
+.fdoc-preview-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.fdoc-pdf-icon {
+  font-size: 28px;
+  color: #5b9bd5;
+}
+
+.fdoc-preview-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.fdoc-preview-name {
+  font-size: 13px;
+  font-weight: 500;
+  color: #2d4a6e;
+}
+
+.fdoc-preview-size {
+  font-size: 11px;
+  color: #8aa5c0;
+}
+
+.fdoc-preview-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.fdoc-action-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #8aa5c0;
+  font-size: 15px;
+  transition: color .2s;
+}
+
+.fdoc-action-btn:hover {
+  color: #2d4a6e;
+}
+
+.doc-bloque {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 20px;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.fdoc-dropzone {
+  border: 2px dashed #c0d4e8;
+  border-radius: 10px;
+  padding: 28px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: border-color .2s;
+  width: 100%;
+}
+
+.fdoc-dropzone:hover {
+  border-color: #5b9bd5;
+}
+
+.fdoc-drop-icon {
+  font-size: 22px;
+  color: #5b9bd5;
+}
+
+.fdoc-drop-txt {
+  font-size: 13px;
+  font-weight: 500;
+  color: #2d4a6e;
 }

@@ -50,9 +50,20 @@ export const getDatosPersonales = async (req: Request, res: Response): Promise<v
 export const upsertDatosPersonales = async (req: Request, res: Response): Promise<void> => {
   try {
     const usuario_id = (req as any).usuario.id;
-    await new UpsertDatosPersonalesUseCase(repo).execute({ ...req.body, usuario_id });
+    const body = req.body;
+
+    // Convertir fechas vacías a null
+    const datos = {
+      ...body,
+      usuario_id,
+      fecha_nacimiento: body.fecha_nacimiento || null,
+      fecha_expedicion: body.fecha_expedicion || null,
+    };
+
+    await new UpsertDatosPersonalesUseCase(repo).execute(datos);
     res.json({ message: 'Datos personales guardados' });
   } catch (e) {
+    console.error('Error upsertDatosPersonales:', e);
     res.status(500).json({ message: 'Error al guardar datos personales' });
   }
 };
@@ -239,8 +250,19 @@ export const getDocumentos = async (req: Request, res: Response): Promise<void> 
 export const upsertDocumentos = async (req: Request, res: Response): Promise<void> => {
   try {
     const usuario_id = (req as any).usuario.id;
-    await new UpsertDocumentosUseCase(repo).execute({ ...req.body, usuario_id });
-    res.json({ message: 'Documentos guardados' });
+    const files = req.files as { [fieldname: string]: Express.Multer.File[] };
+    const baseUrl = `${req.protocol}://${req.get('host')}/uploads`;
+
+    const data: any = { usuario_id };
+    if (files?.cedula?.[0])       data.cedula_url       = `${baseUrl}/${files.cedula[0].filename}`;
+    if (files?.diploma?.[0])      data.diploma_url      = `${baseUrl}/${files.diploma[0].filename}`;
+    if (files?.policia?.[0])      data.policia_url      = `${baseUrl}/${files.policia[0].filename}`;
+    if (files?.procuraduria?.[0]) data.procuraduria_url = `${baseUrl}/${files.procuraduria[0].filename}`;
+    if (files?.contrato?.[0])     data.contrato_url     = `${baseUrl}/${files.contrato[0].filename}`;
+    if (files?.referencia?.[0])   data.referencia_url   = `${baseUrl}/${files.referencia[0].filename}`;
+
+    await new UpsertDocumentosUseCase(repo).execute(data);
+    res.json({ message: 'Documentos guardados', data });
   } catch (e) {
     res.status(500).json({ message: 'Error al guardar documentos' });
   }
