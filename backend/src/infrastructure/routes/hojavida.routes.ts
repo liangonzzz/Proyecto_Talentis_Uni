@@ -13,6 +13,8 @@ import {
 import multer from 'multer';
 import path from 'path';
 import fs from 'fs';
+import { deleteDocumento } from '../controller/HojaVidaController';
+
 
 const uploadsDir = path.join(__dirname, '..', '..', '..', 'uploads');
 if (!fs.existsSync(uploadsDir)) fs.mkdirSync(uploadsDir, { recursive: true });
@@ -76,4 +78,11 @@ router.post('/documentos', upload.fields([
   { name: 'referencia',   maxCount: 1 },
 ]), upsertDocumentos);
 
+// Documentos
+router.delete('/documentos/:campo', deleteDocumento);
+
 export default router;
+
+
+
+

@@ -97,6 +97,11 @@ async function cargarPerfil(): Promise<void> {
 }
 
 async function guardarPerfil(): Promise<void> {
+  const camposObligatorios = ['perfil-cargo', 'perfil-descripcion', 'perfil-habilidad1', 'perfil-habilidad2', 'perfil-habilidad3'];
+  if (!validarCampos(camposObligatorios)) {
+    mostrarToast('toast-perfil', 'Por favor complete todos los campos obligatorios.', 'error');
+    return;
+  }
   await fetch(`${API}/perfil`, {
     method: 'POST',
     headers: headers(),
@@ -109,6 +114,7 @@ async function guardarPerfil(): Promise<void> {
     }),
   });
   marcarStep('step-perfil');
+  mostrarToast('toast-perfil', 'Información de perfil guardada correctamente.', 'success');
 }
 
 // ── DATOS PERSONALES ────────────────────────────────────────
@@ -121,22 +127,27 @@ async function cargarDatosPersonales(): Promise<void> {
   setVal('dp-nombres',   nombres);
   setVal('dp-apellidos', apellidos);
 
-
   const res  = await fetch(`${API}/datos-personales`, { headers: headers() });
   const data = await res.json();
   setVal('dp-sexo',             data.sexo             ?? '');
   setVal('dp-rh',               data.rh               ?? '');
   setVal('dp-lugar-nacimiento', data.lugar_nacimiento ?? '');
-  setVal('dp-fecha-nacimiento', data.fecha_nacimiento ?? '');
+  setVal('dp-fecha-nacimiento', data.fecha_nacimiento?.split('T')[0] ?? '');
   setVal('dp-nacionalidad',     data.nacionalidad     ?? '');
-  setVal('dp-fecha-expedicion', data.fecha_expedicion ?? '');
+  setVal('dp-fecha-expedicion', data.fecha_expedicion?.split('T')[0] ?? '');
   setVal('dp-lugar-expedicion', data.lugar_expedicion ?? '');
-  setVal('dp-tipo-documento',   localStorage.getItem('tipo_documento')   ?? '');  setVal('dp-numero-documento', localStorage.getItem('numero_documento') ?? '');
+  setVal('dp-tipo-documento',   localStorage.getItem('tipo_documento')   ?? '');
+  setVal('dp-numero-documento', localStorage.getItem('numero_documento') ?? '');
 
   if (data.sexo) marcarStep('step-personal');
 }
 
 async function guardarDatosPersonales(): Promise<void> {
+  const camposObligatorios = ['dp-sexo', 'dp-rh', 'dp-lugar-nacimiento', 'dp-fecha-nacimiento', 'dp-nacionalidad', 'dp-fecha-expedicion', 'dp-lugar-expedicion'];
+  if (!validarCampos(camposObligatorios)) {
+    mostrarToast('toast-personal', 'Por favor complete todos los campos obligatorios.', 'error');
+    return;
+  }
   await fetch(`${API}/datos-personales`, {
     method: 'POST',
     headers: headers(),
@@ -150,8 +161,6 @@ async function guardarDatosPersonales(): Promise<void> {
       lugar_expedicion: val('dp-lugar-expedicion'),
     }),
   });
-
-  // Si hay cédula seleccionada la sube también
   const cedulaInput = document.getElementById('doc-cedula-input') as HTMLInputElement;
   if (cedulaInput?.files?.[0]) {
     const formData = new FormData();
@@ -162,8 +171,8 @@ async function guardarDatosPersonales(): Promise<void> {
       body: formData,
     });
   }
-
   marcarStep('step-personal');
+  mostrarToast('toast-personal', 'Datos personales guardados correctamente.', 'success');
 }
 
 // ── CONTACTO ────────────────────────────────────────────────
@@ -181,6 +190,11 @@ async function cargarContacto(): Promise<void> {
 }
 
 async function guardarContacto(): Promise<void> {
+  const camposObligatorios = ['ct-direccion', 'ct-departamento', 'ct-ciudad', 'ct-casa-propia', 'ct-celular'];
+  if (!validarCampos(camposObligatorios)) {
+    mostrarToast('toast-contacto', 'Por favor complete todos los campos obligatorios.', 'error');
+    return;
+  }
   await fetch(`${API}/contacto`, {
     method: 'POST',
     headers: headers(),
@@ -193,6 +207,7 @@ async function guardarContacto(): Promise<void> {
       celular_2:    val('ct-celular2'),
     }),
   });
+  mostrarToast('toast-contacto', 'Datos de contacto guardados correctamente.', 'success');
 }
 
 // ── FAMILIARES ──────────────────────────────────────────────
@@ -279,6 +294,11 @@ function renderFormacion(): void {
 }
 
 async function guardarFormacion(): Promise<void> {
+  const camposObligatorios = ['form-institucion', 'form-titulo', 'form-nivel', 'form-graduado', 'form-fecha-inicio'];
+  if (!validarCampos(camposObligatorios)) {
+    mostrarToast('toast-formacion', 'Por favor complete todos los campos obligatorios.', 'error');
+    return;
+  }
   await fetch(`${API}/formacion`, {
     method: 'POST',
     headers: headers(),
@@ -291,8 +311,6 @@ async function guardarFormacion(): Promise<void> {
       fecha_fin:    val('form-fecha-fin') || null,
     }),
   });
-
-  // Si hay diploma seleccionado lo sube también
   const diplomaInput = document.getElementById('doc-diploma-input') as HTMLInputElement;
   if (diplomaInput?.files?.[0]) {
     const formData = new FormData();
@@ -303,11 +321,11 @@ async function guardarFormacion(): Promise<void> {
       body: formData,
     });
   }
-
   ['form-institucion','form-titulo','form-nivel','form-graduado','form-fecha-inicio','form-fecha-fin']
     .forEach(id => setVal(id, ''));
   await cargarFormacion();
   marcarStep('step-formacion');
+  mostrarToast('toast-formacion', 'Formación académica guardada correctamente.', 'success');
 }
 
 async function eliminarFormacion(id: number): Promise<void> {
@@ -315,6 +333,7 @@ async function eliminarFormacion(id: number): Promise<void> {
   await cargarFormacion();
   if (formaciones.length === 0) desmarcarStep('step-formacion');
 }
+
 
 // ── EXPERIENCIA ─────────────────────────────────────────────
 
@@ -346,15 +365,22 @@ function renderExperiencia(): void {
 }
 
 async function guardarExperiencia(): Promise<void> {
+  const trabajoActual = val('exp-trabajo-actual') === 'si';
+  const camposObligatorios = ['exp-empresa', 'exp-cargo', 'exp-fecha-inicio', 'exp-trabajo-actual'];
+  if (!trabajoActual) camposObligatorios.push('exp-fecha-fin');
+  if (!validarCampos(camposObligatorios)) {
+    mostrarToast('toast-experiencia', 'Por favor complete todos los campos obligatorios.', 'error');
+    return;
+  }
   await fetch(`${API}/experiencia`, {
     method: 'POST',
     headers: headers(),
     body: JSON.stringify({
       empresa:        val('exp-empresa'),
       cargo:          val('exp-cargo'),
-      fecha_inicio:   val('exp-fecha-inicio'),
-      fecha_fin:      val('exp-fecha-fin'),
-      trabajo_actual: val('exp-trabajo-actual') === 'si',
+      fecha_inicio:   val('exp-fecha-inicio') || null,
+      fecha_fin:      val('exp-fecha-fin') || null,
+      trabajo_actual: trabajoActual,
       descripcion:    val('exp-descripcion'),
     }),
   });
@@ -362,6 +388,7 @@ async function guardarExperiencia(): Promise<void> {
     .forEach(id => setVal(id, ''));
   await cargarExperiencia();
   marcarStep('step-experiencia');
+  mostrarToast('toast-experiencia', 'Experiencia laboral guardada correctamente.', 'success');
 }
 
 async function eliminarExperiencia(id: number): Promise<void> {
@@ -383,6 +410,11 @@ async function cargarAfiliaciones(): Promise<void> {
 }
 
 async function guardarAfiliaciones(): Promise<void> {
+  const camposObligatorios = ['af-eps', 'af-pension', 'af-arl', 'af-caja'];
+  if (!validarCampos(camposObligatorios)) {
+    mostrarToast('toast-afiliaciones', 'Por favor complete todos los campos obligatorios.', 'error');
+    return;
+  }
   await fetch(`${API}/afiliaciones`, {
     method: 'POST',
     headers: headers(),
@@ -394,7 +426,10 @@ async function guardarAfiliaciones(): Promise<void> {
     }),
   });
   marcarStep('step-afiliaciones');
+  mostrarToast('toast-afiliaciones', 'Afiliaciones guardadas correctamente.', 'success');
 }
+
+
 
 // ── DOCUMENTOS ──────────────────────────────────────────────
 
@@ -447,12 +482,25 @@ function mostrarDocumentoGuardado(prefix: string, url: string | null, downloadId
   const preview     = document.getElementById(`${prefix}-preview`);
   const nameEl      = document.getElementById(`${prefix}-name`);
   const btn         = document.getElementById(`${prefix}-btn`);
+  const drop        = document.getElementById(`drop-${prefix.replace('doc-', '')}`);
+  const input       = document.getElementById(`${prefix}-input`) as HTMLInputElement;
   const downloadBtn = downloadId ? document.getElementById(downloadId) as HTMLButtonElement : null;
+
   if (preview && nameEl) {
     nameEl.textContent    = url.split('/').pop() ?? 'documento';
     preview.style.display = 'flex';
     if (btn) btn.style.display = 'none';
     if (downloadBtn) downloadBtn.dataset.url = url;
+
+    // Deshabilitar el dropzone y el input para que no se pueda subir otro
+    if (input) {
+      input.disabled = true;
+      input.value    = '';
+    }
+    if (drop) {
+      drop.style.pointerEvents = 'none';
+      drop.style.opacity       = '0.5';
+    }
   }
 }
 
@@ -471,8 +519,6 @@ async function cargarDocumentos(): Promise<void> {
 async function guardarDocumentos(): Promise<void> {
   const formData = new FormData();
   const campos: Record<string, string> = {
-    cedula:       'doc-cedula-input',
-    diploma:      'doc-diploma-input',
     policia:      'doc-policia-input',
     procuraduria: 'doc-procuraduria-input',
     contrato:     'doc-contrato-input',
@@ -483,7 +529,10 @@ async function guardarDocumentos(): Promise<void> {
     const file = (document.getElementById(inputId) as HTMLInputElement)?.files?.[0];
     if (file) { formData.append(campo, file); hayArchivos = true; }
   });
-  if (!hayArchivos) return;
+  if (!hayArchivos) {
+    mostrarToast('toast-documentos', 'Seleccione al menos un documento para guardar.', 'error');
+    return;
+  }
   await fetch(`${API}/documentos`, {
     method: 'POST',
     headers: { 'Authorization': `Bearer ${token()}` },
@@ -491,6 +540,78 @@ async function guardarDocumentos(): Promise<void> {
   });
   marcarStep('step-documentos');
   await cargarDocumentos();
+  mostrarToast('toast-documentos', 'Documentos guardados correctamente.', 'success');
+}
+
+// ── TOAST ───────────────────────────────────────────────────
+
+function mostrarToast(id: string, msg: string, tipo: 'error' | 'success'): void {
+  const toast = document.getElementById(id)!;
+  const msgEl = document.getElementById(`${id}-msg`)!;
+  const icon  = toast.querySelector('i')!;
+
+  msgEl.textContent = msg;
+  toast.className   = `hv-toast ${tipo} visible`;
+  icon.className    = tipo === 'error'
+    ? 'fa-solid fa-circle-xmark'
+    : 'fa-solid fa-circle-check';
+
+  clearTimeout((window as any)[`_timer_${id}`]);
+  (window as any)[`_timer_${id}`] = setTimeout(() => {
+    toast.classList.remove('visible');
+  }, 3000);
+}
+
+// ── VALIDACIÓN ──────────────────────────────────────────────
+
+function validarCampos(ids: string[]): boolean {
+  let valido = true;
+  ids.forEach(id => {
+    const el = document.getElementById(id) as HTMLInputElement;
+    if (!el) return;
+    if (!el.value.trim()) {
+      el.classList.add('input-error');
+      valido = false;
+    } else {
+      el.classList.remove('input-error');
+    }
+    // Quitar error al escribir
+    el.addEventListener('input', () => el.classList.remove('input-error'), { once: true });
+  });
+  return valido;
+}
+
+// ── MODAL CONFIRMAR BORRAR DOCUMENTO ────────────────────────
+let campoPendienteEliminar: string | null = null;
+let prefijoPendienteEliminar: string | null = null;
+
+function confirmarBorrarDocumento(campo: string, prefix: string): void {
+  campoPendienteEliminar   = campo;
+  prefijoPendienteEliminar = prefix;
+  document.getElementById('modal-borrar-doc')!.classList.add('active');
+}
+
+function cerrarModalBorrarDoc(): void {
+  document.getElementById('modal-borrar-doc')!.classList.remove('active');
+  campoPendienteEliminar   = null;
+  prefijoPendienteEliminar = null;
+}
+
+async function confirmarEliminarDocumento(): Promise<void> {
+  if (!campoPendienteEliminar || !prefijoPendienteEliminar) return;
+  await fetch(`${API}/documentos/${campoPendienteEliminar}`, {
+    method: 'DELETE',
+    headers: headers(),
+  });
+  const preview = document.getElementById(`${prefijoPendienteEliminar}-preview`);
+  const btn     = document.getElementById(`${prefijoPendienteEliminar}-btn`);
+  const input   = document.getElementById(`${prefijoPendienteEliminar}-input`) as HTMLInputElement;
+  const drop    = document.getElementById(`drop-${prefijoPendienteEliminar.replace('doc-', '')}`);
+  if (preview) preview.style.display = 'none';
+  if (btn)     btn.style.display     = '';
+  if (input)   { input.disabled = false; input.value = ''; }
+  if (drop)    { drop.style.pointerEvents = ''; drop.style.opacity = ''; }
+  cerrarModalBorrarDoc();
 }
 
 // ── BIND BOTONES ────────────────────────────────────────────
@@ -530,6 +651,9 @@ export async function initHojaDeVida(): Promise<void> {
   (window as any).eliminarFamiliar    = eliminarFamiliar;
   (window as any).eliminarFormacion   = eliminarFormacion;
   (window as any).eliminarExperiencia = eliminarExperiencia;
+  (window as any).confirmarBorrarDocumento   = confirmarBorrarDocumento;
+  (window as any).cerrarModalBorrarDoc       = cerrarModalBorrarDoc;
+  (window as any).confirmarEliminarDocumento = confirmarEliminarDocumento;
 
   initDocumentoVisual('doc-cedula-input',      'doc-cedula-btn',      'doc-cedula-preview',      'doc-cedula-name',      'doc-cedula-size',      'doc-cedula-delete',      'doc-cedula-download');
   initDocumentoVisual('doc-diploma-input',     'doc-diploma-btn',     'doc-diploma-preview',     'doc-diploma-name',     'doc-diploma-size',     'doc-diploma-delete',     'doc-diploma-download');

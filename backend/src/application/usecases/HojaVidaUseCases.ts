@@ -135,3 +135,12 @@ export class UpsertDocumentosUseCase {
   constructor(private repo: IHojaVidaRepository) {}
   execute(data: HvDocumentos) { return this.repo.upsertDocumentos(data); }
 }
+
+//Borrar documentos
+
+export class DeleteDocumentoUseCase {
+  constructor(private repo: IHojaVidaRepository) {}
+  async execute(usuario_id: number, campo: string): Promise<void> {
+    await this.repo.deleteDocumento(usuario_id, campo);
+  }
+}

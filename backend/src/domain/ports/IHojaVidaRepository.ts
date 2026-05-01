@@ -47,4 +47,7 @@ export interface IHojaVidaRepository {
   // Documentos
   getDocumentos(usuario_id: number): Promise<HvDocumentos | null>;
   upsertDocumentos(data: HvDocumentos): Promise<void>;
+
+  //Borrar documentos
+  deleteDocumento(usuario_id: number, campo: string): Promise<void>;
 }

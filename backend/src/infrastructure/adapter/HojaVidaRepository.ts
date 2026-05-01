@@ -269,4 +269,15 @@ export class HojaVidaRepository implements IHojaVidaRepository {
       data.policia_url, data.procuraduria_url, data.contrato_url, data.referencia_url]
     );
   }
+
+  async deleteDocumento(usuario_id: number, campo: string): Promise<void> {
+  const camposPermitidos = ['cedula_url', 'hoja_vida_url', 'diploma_url', 'policia_url', 'procuraduria_url', 'contrato_url', 'referencia_url'];
+  if (!camposPermitidos.includes(campo)) throw new Error('Campo no permitido');
+  await AppDataSource.query(
+    `UPDATE hv_documentos SET ${campo} = NULL, updated_at = NOW() WHERE usuario_id = $1`,
+    [usuario_id]
+  );
+  }
+
 }
+

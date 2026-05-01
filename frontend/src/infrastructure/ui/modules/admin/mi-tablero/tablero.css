@@ -1,0 +1,132 @@
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --topnav-h: 62px;
+  --sidebar-w: 280px;
+  --sidebar-collapsed-w: 58px;
+  --bg: #f0f4f9;
+  --card-bg: #ffffff;
+  --blue-dark: #1a3a5c;
+  --blue-mid: #2563a8;
+  --blue-light: #4a9fd4;
+  --teal: #3cb8b2;
+  --green: #4cbe8e;
+  --text-main: #1e2d3d;
+  --text-soft: #6b7f96;
+  --border: #dde6f0;
+  --radius: 14px;
+  --shadow: 0 2px 16px rgba(37,99,168,0.08);
+  --t: 0.25s cubic-bezier(.4,0,.2,1);
+}
+
+html, body { height: 100%; overflow: hidden; }
+body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text-main); }
+
+.main-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.page-header-wrap {
+  padding: 20px 30px 0;
+}
+
+.page-header {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 16px 24px;
+}
+
+.page-title {
+  font-family: 'Sora', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--blue-dark);
+}
+
+/* DASHBOARD */
+
+.dashboard-content {
+  padding: 20px 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* cards arriba */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 20px;
+}
+
+.card-title {
+  color: var(--text-soft);
+  font-size: 14px;
+}
+
+.card-value {
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--blue-mid);
+}
+
+/* grid inferior */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.big-card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.section-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--blue-dark);
+}
+
+/* listas */
+.activity-list,
+.task-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  color: var(--text-soft);
+}
+
+/* estado candidatos */
+.estado-item {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.barra {
+  width: 100%;
+  height: 8px;
+  background: var(--border);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.fill {
+  height: 100%;
+  background: var(--blue-mid);
+}

@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Candidatos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Sora:wght@600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="stylesheet" href="candidatos.css" />
+</head>
+<body>
+
+<div class="main-wrapper">
+
+  <!-- Header — mismo patrón que funcionarios -->
+  <div class="page-header-wrap">
+    <div class="page-header">
+      <h1 class="page-title">Candidatos</h1>
+      <button class="btn-agregar" id="btn-agregar">Agregar candidato <span>+</span></button>
+    </div>
+  </div>
+
+  <div class="candidatos-content">
+
+    <!-- Filtros -->
+    <div class="filtros-card">
+      <div class="filtro-group wide">
+        <label class="filtro-label">Buscar candidato</label>
+        <div class="search-wrap">
+          <i class="fa-solid fa-magnifying-glass search-icon"></i>
+          <input class="search-input" id="buscar-input" type="text" placeholder="Buscar por palabra" />
+        </div>
+      </div>
+      <div class="filtro-group">
+        <label class="filtro-label">Estado Hoja de vida</label>
+        <div class="select-wrap">
+          <select class="filtro-select" id="filtro-estado">
+            <option value="">Todos</option>
+            <option value="completa">Completa</option>
+            <option value="incompleta">Incompleta</option>
+          </select>
+          <svg class="select-arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M5 8l5 5 5-5"/></svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tabla -->
+    <div class="tabla-card">
+      <table class="cand-tabla">
+        <thead>
+          <tr>
+            <th>Nombre completo <span class="sort-icon">⇅</span></th>
+            <th>Correo <span class="sort-icon">⇅</span></th>
+            <th>Celular <span class="sort-icon">⇅</span></th>
+            <th>Cargo al que aspira <span class="sort-icon">⇅</span></th>
+            <th>Proceso fase de contratación <span class="sort-icon">⇅</span></th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody id="candidatos-tbody"></tbody>
+      </table>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===================== MODAL CREAR ===================== -->
+<div class="modal-overlay" id="modal-crear">
+  <div class="modal-box">
+    <button class="modal-close" id="close-crear"><i class="fa-solid fa-xmark"></i></button>
+    <div id="crear-form-content">
+      <h2 class="modal-title">Crear nuevo candidato</h2>
+      <p class="modal-subtitle">Completa el formulario para crear un nuevo usuario candidato</p>
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Nombre(s)</label>
+          <input type="text" id="c-nombres" placeholder="Maria Camila" />
+        </div>
+        <div class="form-group">
+          <label>Apellido(s)</label>
+          <input type="text" id="c-apellidos" placeholder="Navarrete Gomez" />
+        </div>
+        <div class="form-group">
+          <label>Tipo de documento</label>
+          <div class="select-wrap">
+            <select id="c-tipo-doc">
+              <option value="CC">Cédula de ciudadanía</option>
+              <option value="CE">Cédula de extranjería</option>
+              <option value="Pasaporte">Pasaporte</option>
+            </select>
+            <svg class="select-arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M5 8l5 5 5-5"/></svg>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Documento de identificación</label>
+          <input type="text" id="c-documento" placeholder="1029154738" />
+        </div>
+        <div class="form-group full">
+          <label>Correo</label>
+          <input type="email" id="c-correo" placeholder="maria.navarrete@empresa.com.co" />
+        </div>
+      </div>
+      <p class="form-error" id="crear-error"></p>
+      <div class="modal-actions">
+        <button class="btn-cancelar" id="cancel-crear">Cancelar</button>
+        <button class="btn-guardar" id="guardar-candidato">Guardar</button>
+      </div>
+    </div>
+    <div id="crear-success-content" class="success-content" style="display:none">
+      <div class="success-icon"><i class="fa-solid fa-circle-check"></i></div>
+      <h3 class="success-title">¡Candidato creado exitosamente!</h3>
+      <p class="success-text">El link de invitación ha sido generado.</p>
+      <button class="btn-guardar" id="close-crear-success">Cerrar</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== MODAL VER HV ===================== -->
+<div class="modal-overlay" id="modal-hv">
+  <div class="modal-box">
+    <button class="modal-close" id="close-hv"><i class="fa-solid fa-xmark"></i></button>
+    <h2 class="modal-title" id="hv-nombre">Hoja de vida</h2>
+    <div class="hv-progreso-wrap">
+      <div class="hv-progreso-track">
+        <div class="hv-progreso-fill" id="hv-barra"></div>
+      </div>
+      <span class="hv-progreso-label" id="hv-porcentaje">0%</span>
+    </div>
+    <div class="hv-secciones" id="hv-secciones"></div>
+  </div>
+</div>
+
+<!-- ===================== MODAL CLASIFICAR ===================== -->
+<div class="modal-overlay" id="modal-clasificar">
+  <div class="modal-box">
+    <button class="modal-close" id="close-clasificar"><i class="fa-solid fa-xmark"></i></button>
+    <div id="clasificar-opciones">
+      <h2 class="modal-title">¿Clasificar candidato?</h2>
+      <p class="modal-subtitle" id="clasificar-nombre-sub"></p>
+      <div class="clasificar-btns">
+        <button class="btn-clasificado" id="btn-clasificado"><span>✅</span> Clasificado</button>
+        <button class="btn-no-clasificado" id="btn-no-clasificado"><span>❌</span> No clasificado</button>
+      </div>
+    </div>
+    <div id="clasificar-motivo" style="display:none">
+      <h2 class="modal-title">Motivo de no clasificación</h2>
+      <textarea class="modal-textarea" id="motivo-textarea" placeholder="Escriba el motivo..."></textarea>
+      <div class="modal-actions">
+        <button class="btn-cancelar" id="cancel-motivo">Cancelar</button>
+        <button class="btn-guardar" id="enviar-motivo">Enviar</button>
+      </div>
+    </div>
+    <div id="clasificar-success" class="success-content" style="display:none">
+      <div class="success-icon"><i class="fa-solid fa-circle-check"></i></div>
+      <h3 class="success-title">¡Candidato clasificado exitosamente!</h3>
+      <p class="success-text">El candidato ha sido registrado como nuevo funcionario.</p>
+      <button class="btn-guardar" id="close-clasificar-success">Cerrar</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== MODAL MENSAJE ===================== -->
+<div class="modal-overlay" id="modal-mensaje">
+  <div class="modal-box">
+    <button class="modal-close" id="close-mensaje"><i class="fa-solid fa-xmark"></i></button>
+    <h2 class="modal-title" id="mensaje-titulo">Enviar mensaje</h2>
+    <textarea class="modal-textarea tall" id="mensaje-textarea" placeholder="Escriba su mensaje aquí..."></textarea>
+    <div class="modal-actions">
+      <button class="btn-cancelar" id="cancel-mensaje">Cancelar</button>
+      <button class="btn-guardar" id="enviar-mensaje">Enviar</button>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,181 @@
+<div class="main-wrapper">
+
+  <!-- Header -->
+  <div class="page-header-wrap">
+    <div class="page-header">
+      <h1 class="page-title">Mis Tareas</h1>
+      <div class="tareas-filtros">
+        <div class="filtro-group">
+          <label class="filtro-label">Buscar tarea</label>
+          <div class="search-wrap">
+            <i class="fa-solid fa-magnifying-glass search-icon"></i>
+            <input class="search-input" id="buscar-tarea" type="text" placeholder="Buscar por palabra" />
+          </div>
+        </div>
+        <div class="filtro-group">
+          <label class="filtro-label">Proyecto</label>
+          <div class="select-wrap">
+            <select class="filtro-select" id="filtro-proyecto">
+              <option value="">Todos</option>
+              <option value="Soluciones">Soluciones</option>
+              <option value="Talentis">Talentis</option>
+            </select>
+            <svg class="select-arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M5 8l5 5 5-5"/></svg>
+          </div>
+        </div>
+        <div class="filtro-group">
+          <label class="filtro-label">Actividad</label>
+          <div class="select-wrap">
+            <select class="filtro-select" id="filtro-actividad">
+              <option value="">Todas</option>
+              <option value="Desarrollo Frontend">Desarrollo Frontend</option>
+              <option value="Desarrollo Backend">Desarrollo Backend</option>
+              <option value="Diseño">Diseño</option>
+            </select>
+            <svg class="select-arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M5 8l5 5 5-5"/></svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Contenido principal -->
+  <div class="tareas-content">
+
+    <!-- Estado vacío -->
+    <div class="tareas-empty" id="tareas-empty">
+      <i class="fa-solid fa-table-list tareas-empty-icon"></i>
+      <p class="tareas-empty-text">No tienes tareas asignadas.</p>
+      <button class="btn-crear-tarea" id="btn-crear-empty">Crear tarea y registrar horas</button>
+    </div>
+
+    <!-- Layout lista + detalle -->
+    <div class="tareas-layout" id="tareas-layout" style="display:none">
+
+      <!-- Lista de tareas -->
+      <div class="tareas-lista-wrap">
+        <div class="tareas-lista" id="tareas-lista"></div>
+        <div class="tareas-crear-wrap">
+          <i class="fa-solid fa-circle-info tareas-info-icon"></i>
+          <span>Haz clic en el siguiente botón si necesitas registrar horas sobre una tarea diferente.</span>
+          <button class="btn-crear-tarea outline" id="btn-crear-lista">Crear tarea y registrar horas</button>
+        </div>
+      </div>
+
+      <!-- Panel detalle -->
+      <div class="tarea-detalle" id="tarea-detalle">
+        <div class="detalle-fechas">
+          <div class="detalle-campo">
+            <span class="detalle-label">Fecha inicio actividad:</span>
+            <span class="detalle-valor" id="detalle-fecha-inicio">—</span>
+          </div>
+          <div class="detalle-campo">
+            <span class="detalle-label">Fecha finalización actividad:</span>
+            <span class="detalle-valor" id="detalle-fecha-fin">—</span>
+          </div>
+          <div class="detalle-campo">
+            <span class="detalle-label">Horas planeadas:</span>
+            <span class="detalle-valor" id="detalle-horas-plan">—</span>
+          </div>
+          <div class="detalle-campo">
+            <span class="detalle-label">Horas ejecutadas:</span>
+            <span class="detalle-valor" id="detalle-horas-exec">—</span>
+          </div>
+          <div class="detalle-campo">
+            <span class="detalle-label">Horas pendientes:</span>
+            <span class="detalle-valor" id="detalle-horas-pend">—</span>
+          </div>
+          <div class="detalle-campo avance-campo">
+            <span class="detalle-label">Avance:</span>
+            <div class="avance-track">
+              <div class="avance-fill" id="detalle-avance-fill"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="registro-horas-card">
+          <h3 class="registro-title">Registro de horas</h3>
+          <div class="registro-grid">
+            <div class="form-group">
+              <label>Cantidad de horas</label>
+              <input type="number" id="reg-horas" placeholder="0" min="0" />
+            </div>
+            <div class="form-group">
+              <label>Fecha de ejecución</label>
+              <input type="date" id="reg-fecha" />
+            </div>
+            <div class="form-group full">
+              <label>Comentarios (opcional)</label>
+              <textarea id="reg-comentario" placeholder="Escribe aquí comentarios sobre la actividad"></textarea>
+            </div>
+          </div>
+          <div class="registro-acciones">
+            <button class="btn-finalizar" id="btn-finalizar">Finalizar tarea</button>
+            <button class="btn-registrar" id="btn-registrar">Registrar horas</button>
+          </div>
+          <label class="impedimento-check">
+            <input type="checkbox" id="chk-impedimento" />
+            <span>Tengo un impedimento</span>
+          </label>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ===================== MODAL CREAR TAREA ===================== -->
+<div class="modal-overlay" id="modal-crear-tarea">
+  <div class="modal-box">
+    <button class="modal-close" id="close-crear-tarea"><i class="fa-solid fa-xmark"></i></button>
+    <h2 class="modal-title">Crear tarea</h2>
+    <p class="modal-subtitle">Completa los datos para registrar una nueva tarea</p>
+    <div class="form-grid">
+      <div class="form-group full">
+        <label>Nombre de la tarea</label>
+        <input type="text" id="nueva-nombre" placeholder="Ej: Hacer la maquetación" />
+      </div>
+      <div class="form-group full">
+        <label>Descripción</label>
+        <textarea id="nueva-desc" placeholder="Describe la tarea..."></textarea>
+      </div>
+      <div class="form-group">
+        <label>Proyecto</label>
+        <div class="select-wrap">
+          <select id="nueva-proyecto">
+            <option value="Soluciones">Soluciones</option>
+            <option value="Talentis">Talentis</option>
+          </select>
+          <svg class="select-arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M5 8l5 5 5-5"/></svg>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Actividad</label>
+        <div class="select-wrap">
+          <select id="nueva-actividad">
+            <option value="Desarrollo Frontend">Desarrollo Frontend</option>
+            <option value="Desarrollo Backend">Desarrollo Backend</option>
+            <option value="Diseño">Diseño</option>
+          </select>
+          <svg class="select-arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M5 8l5 5 5-5"/></svg>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Fecha inicio</label>
+        <input type="date" id="nueva-inicio" />
+      </div>
+      <div class="form-group">
+        <label>Fecha fin</label>
+        <input type="date" id="nueva-fin" />
+      </div>
+      <div class="form-group">
+        <label>Horas planeadas</label>
+        <input type="number" id="nueva-horas" placeholder="0" min="0" />
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-cancelar" id="cancel-crear-tarea">Cancelar</button>
+      <button class="btn-guardar" id="guardar-tarea">Guardar</button>
+    </div>
+  </div>
+</div>

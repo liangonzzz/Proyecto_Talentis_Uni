@@ -109,6 +109,10 @@
                   </div>
                 </div>
                 <div class="sec-actions">
+                  <div class="hv-toast" id="toast-perfil">
+                    <i class="fa-solid fa-circle-xmark"></i>
+                    <span id="toast-perfil-msg"></span>
+                  </div>
                   <button class="btn-cancel">Cancelar</button>
                   <button class="btn-save" id="btn-guardar-perfil">Guardar</button>
                 </div>
@@ -188,13 +192,20 @@
                           </div>
                         </div>
                         <div class="fdoc-preview-actions">
-                          <button class="fdoc-action-btn" id="doc-cedula-delete"><i class="fa-solid fa-trash"></i></button>
+                          <button class="fdoc-action-btn" id="doc-cedula-delete" 
+                            onclick="confirmarBorrarDocumento('cedula_url', 'doc-cedula')">
+                            <i class="fa-solid fa-trash"></i>
+                          </button>
                           <button class="fdoc-action-btn" id="doc-cedula-download"><i class="fa-solid fa-download"></i></button>
                         </div>
                       </div>
                     </div>
                   </div>
                   <div class="sec-actions">
+                    <div class="hv-toast" id="toast-personal">
+                      <i class="fa-solid fa-circle-xmark"></i>
+                      <span id="toast-personal-msg"></span>
+                    </div>
                     <button class="btn-cancel">Cancelar</button>
                     <button class="btn-save" id="btn-guardar-personal">Guardar</button>
                   </div>
@@ -219,6 +230,10 @@
                     <div class="fgrp"></div>
                   </div>
                   <div class="sec-actions">
+                    <div class="hv-toast" id="toast-contacto">
+                      <i class="fa-solid fa-circle-xmark"></i>
+                      <span id="toast-contacto-msg"></span>
+                    </div>
                     <button class="btn-cancel">Cancelar</button>
                     <button class="btn-save" id="btn-guardar-contacto">Guardar</button>
                   </div>
@@ -283,13 +298,20 @@
                         </div>
                       </div>
                       <div class="fdoc-preview-actions">
-                        <button class="fdoc-action-btn" id="doc-diploma-delete"><i class="fa-solid fa-trash"></i></button>
+                        <button class="fdoc-action-btn" id="doc-diploma-delete" 
+                          onclick="confirmarBorrarDocumento('diploma_url', 'doc-diploma')">
+                          <i class="fa-solid fa-trash"></i>
+                        </button>
                         <button class="fdoc-action-btn" id="doc-diploma-download"><i class="fa-solid fa-download"></i></button>
                       </div>
                     </div>
                   </div>
                 </div>
                 <div class="sec-actions">
+                  <div class="hv-toast" id="toast-formacion">
+                    <i class="fa-solid fa-circle-xmark"></i>
+                    <span id="toast-formacion-msg"></span>
+                  </div>
                   <button class="btn-cancel">Cancelar</button>
                   <button class="btn-save" id="btn-guardar-formacion">Guardar</button>
                 </div>
@@ -324,6 +346,10 @@
                   <div class="fgrp full-width"><label class="flbl">Descripción de funciones</label><textarea class="finp ftextarea" id="exp-descripcion" placeholder="Describa las funciones desempeñadas..."></textarea></div>
                 </div>
                 <div class="sec-actions">
+                  <div class="hv-toast" id="toast-experiencia">
+                    <i class="fa-solid fa-circle-xmark"></i>
+                    <span id="toast-experiencia-msg"></span>
+                  </div>
                   <button class="btn-cancel">Cancelar</button>
                   <button class="btn-save" id="btn-guardar-experiencia">Guardar</button>
                 </div>
@@ -350,10 +376,14 @@
                   <div class="fgrp"><label class="flbl">ARL</label><input class="finp" id="af-arl" placeholder="Nombre de la ARL"/></div>
                   <div class="fgrp"><label class="flbl">Caja de compensación</label><input class="finp" id="af-caja" placeholder="Nombre de la caja"/></div>
                 </div>
-                <div class="sec-actions">
-                  <button class="btn-cancel">Cancelar</button>
-                  <button class="btn-save" id="btn-guardar-afiliaciones">Guardar</button>
-                </div>
+                  <div class="sec-actions">
+                    <div class="hv-toast" id="toast-afiliaciones">
+                      <i class="fa-solid fa-circle-xmark"></i>
+                      <span id="toast-afiliaciones-msg"></span>
+                    </div>
+                    <button class="btn-cancel">Cancelar</button>
+                    <button class="btn-save" id="btn-guardar-afiliaciones">Guardar</button>
+                  </div>
               </div>
             </div>
 
@@ -385,7 +415,10 @@
                         <span class="fdoc-preview-size" id="doc-policia-size"></span>
                       </div>
                     </div>
-                    <button class="fdoc-action-btn" id="doc-policia-delete"><i class="fa-solid fa-trash"></i></button>
+                    <button class="fdoc-action-btn" id="doc-policia-delete" 
+                      onclick="confirmarBorrarDocumento('policia_url', 'doc-policia')">
+                      <i class="fa-solid fa-trash"></i>
+                    </button>
                   </div>
                 </div>
 
@@ -406,7 +439,10 @@
                         <span class="fdoc-preview-size" id="doc-procuraduria-size"></span>
                       </div>
                     </div>
-                    <button class="fdoc-action-btn" id="doc-procuraduria-delete"><i class="fa-solid fa-trash"></i></button>
+                    <button class="fdoc-action-btn" id="doc-procuraduria-delete" 
+                      onclick="confirmarBorrarDocumento('procuraduria_url', 'doc-procuraduria')">
+                      <i class="fa-solid fa-trash"></i>
+                    </button>
                   </div>
                 </div>
 
@@ -427,7 +463,10 @@
                         <span class="fdoc-preview-size" id="doc-contrato-size"></span>
                       </div>
                     </div>
-                    <button class="fdoc-action-btn" id="doc-contrato-delete"><i class="fa-solid fa-trash"></i></button>
+                    <button class="fdoc-action-btn" id="doc-contrato-delete" 
+                      onclick="confirmarBorrarDocumento('contrato_url', 'doc-contrato')">
+                      <i class="fa-solid fa-trash"></i>
+                    </button>
                   </div>
                 </div>
 
@@ -448,11 +487,18 @@
                         <span class="fdoc-preview-size" id="doc-referencia-size"></span>
                       </div>
                     </div>
-                    <button class="fdoc-action-btn" id="doc-referencia-delete"><i class="fa-solid fa-trash"></i></button>
+                    <button class="fdoc-action-btn" id="doc-referencia-delete" 
+                      onclick="confirmarBorrarDocumento('referencia_url', 'doc-referencia')">
+                      <i class="fa-solid fa-trash"></i>
+                    </button>
                   </div>
                 </div>
 
                 <div class="sec-actions">
+                  <div class="hv-toast" id="toast-documentos">
+                    <i class="fa-solid fa-circle-xmark"></i>
+                    <span id="toast-documentos-msg"></span>
+                  </div>
                   <button class="btn-cancel">Cancelar</button>
                   <button class="btn-save" id="btn-guardar-documentos">Guardar</button>
                 </div>
@@ -524,6 +570,22 @@
     </div>
   </div>
 </div>
+  <div class="modal-overlay" id="modal-borrar-doc" onclick="cerrarModalBorrarDoc()">
+    <div class="modal-box" onclick="event.stopPropagation()">
+      <div class="modal-avatar" style="background:linear-gradient(135deg,#fee2e2,#fca5a5)">
+        <i class="fa-solid fa-trash" style="color:#dc2626;font-size:20px"></i>
+      </div>
+      <div class="modal-name">¿Eliminar documento?</div>
+      <div class="modal-role" style="color:var(--text-soft);font-size:13px;text-align:center;margin-top:6px">
+        Este documento se eliminará permanentemente y no podrá recuperarse.
+      </div>
+      <div class="modal-divider"></div>
+      <button class="modal-logout-btn" onclick="confirmarEliminarDocumento()">
+        <i class="fa-solid fa-trash"></i> Eliminar permanentemente
+      </button>
+      <button class="modal-cancel-btn" onclick="cerrarModalBorrarDoc()">Cancelar</button>
+    </div>
+  </div>
 
 <script type="module" src="hoja-vida.ts"></script>
 </body>

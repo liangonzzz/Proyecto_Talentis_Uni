@@ -2,8 +2,11 @@ const LOGIN_URL = '/src/infrastructure/ui/modules/auth/login/login-principal/log
 const ACTIVE_KEY = 'sidebar-active';
 
 const MODULOS: Record<string, string> = {
+  'Mi tablero':      '../modules/admin/mi-tablero/tablero.html',
   'Mi hoja de vida': '../modules/admin/hoja-vida/hoja-vida.html',
-  // los demás los vas agregando aquí cuando los tengas
+  'Candidatos':      '../modules/candidato/candidato.html',
+  'Funcionarios':    '../modules/empleado/funcionario.html',
+  'Mis tareas':      '../modules/admin/mis-tareas/tareas.html',
 };
 
 async function cargarModulo(nombre: string): Promise<void> {
@@ -25,9 +28,25 @@ async function cargarModulo(nombre: string): Promise<void> {
       const { initHojaDeVida } = await import('../../modules/admin/hoja-vida/hoja-vida');
       initHojaDeVida();
     }
-  } catch {
-    container.innerHTML = '';
-  }
+    if (nombre === 'Candidatos') {
+      const { initCandidatos } = await import('../../modules/candidato/candidato');
+      initCandidatos();
+    }
+    if (nombre === 'Funcionarios') {
+      const { initFuncionarios } = await import('../../modules/empleado/funcionario');
+      initFuncionarios();
+    }
+    if (nombre === 'Mi tablero') {
+  const { initTablero } = await import('../../modules/admin/mi-tablero/tablero');
+  initTablero();
+    }
+    if (nombre === 'Mis tareas') {
+      const { initTareas } = await import('../../modules/admin/mis-tareas/tareas');
+      initTareas();
+    }
+      } catch {
+        container.innerHTML = '';
+      }
 }
 
 function aplicarRoles(): void {
@@ -72,7 +91,7 @@ function toggleSidebar(): void {
 
 async function verificarSesion(): Promise<void> {
   const token = localStorage.getItem('token');
-  const rol = localStorage.getItem('rol');
+  const rol   = localStorage.getItem('rol');
   if (!token || !rol) {
     window.location.href = LOGIN_URL;
     return;
