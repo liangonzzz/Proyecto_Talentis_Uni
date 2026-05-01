@@ -4,6 +4,7 @@ import { envs } from '../config/environment-vars';
 import authRoutes from '../routes/auth.routes';
 import hojaVidaRoutes from '../routes/hojavida.routes';  
 import path from 'path';
+import tareaRoutes from '../infrastructure/routes/tarea.routes';
 
 const app = express();
 
@@ -18,6 +19,7 @@ app.use(express.json());
 app.use('/api/auth',       authRoutes);
 app.use('/api/hoja-vida',  hojaVidaRoutes); 
 app.use('/uploads', express.static(path.join(__dirname, '..', '..', 'uploads')));
+app.use('/api/tareas', tareaRoutes);
 
 app.get('/', (_, res) => {
   res.json({ message: 'Talentis API funcionando' });

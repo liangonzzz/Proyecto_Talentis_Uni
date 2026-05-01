@@ -2,6 +2,7 @@ import { DataSource } from 'typeorm';
 import { envs } from './environment-vars';
 import { UsuarioEntity } from '../entities/UsuarioEntity';
 import { PasswordResetTokenEntity } from '../entities/PasswordResetTokenEntity';
+import { TareaEntity } from '../entities/TareaEntity';
 
 export const AppDataSource = new DataSource({
   type: 'postgres',
@@ -12,5 +13,5 @@ export const AppDataSource = new DataSource({
   password: envs.DB_PASSWORD,
   synchronize: true,
   ssl: false,
-  entities: [UsuarioEntity, PasswordResetTokenEntity],
+  entities: [UsuarioEntity, PasswordResetTokenEntity, TareaEntity],
 });
