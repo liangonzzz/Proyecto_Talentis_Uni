@@ -1,0 +1,876 @@
+{
+  "info": {
+    "_postman_id": "632d0119-c3cc-4ac7-9595-8b5ad3fd148a",
+    "name": "Talentis",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "42406896"
+  },
+  "item": [
+    {
+      "name": "Login",
+      "item": [
+        {
+          "name": "Login-principal",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJkb2N1bWVudE51bWJlciI6IjEwNjc3MzAzODUiLCJyb2xlcyI6WyJBZG1pbiJdLCJzdWIiOiIxMDY3NzMwMzg1IiwiaWF0IjoxNzQxMjk5Mzk4LCJleHAiOjE3NDEzODU3OTh9.9dBWkMF197AU5V8cJ-M7mm0Eo5D1ad9JwbsqQKN-3iM",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"firstName\": \"Care verga\",\r\n    \"lastName\": \"Pérez\",\r\n    \"documentNumber\": \"111111111\",\r\n    \"password\": \"miPassword123\",\r\n    \"email\": \"xdreyveringx15@gmail.com\",\r\n    \"role\": \"Candidato\"\r\n}\r\n\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8085/api/users/register",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8085",
+              "path": [
+                "api",
+                "users",
+                "register"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "restablecer-correo",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJkb2N1bWVudE51bWJlciI6IjEwNjc3MzAzODUiLCJyb2xlcyI6WyJBZG1pbiJdLCJzdWIiOiIxMDY3NzMwMzg1IiwiaWF0IjoxNzQxMjk5Mzk4LCJleHAiOjE3NDEzODU3OTh9.9dBWkMF197AU5V8cJ-M7mm0Eo5D1ad9JwbsqQKN-3iM",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"firstName\": \"Care verga\",\r\n    \"lastName\": \"Pérez\",\r\n    \"documentNumber\": \"111111111\",\r\n    \"password\": \"miPassword123\",\r\n    \"email\": \"xdreyveringx15@gmail.com\",\r\n    \"role\": \"Candidato\"\r\n}\r\n\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8085/api/users/register",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8085",
+              "path": [
+                "api",
+                "users",
+                "register"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "restablecer-contra",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJkb2N1bWVudE51bWJlciI6IjEwNjc3MzAzODUiLCJyb2xlcyI6WyJBZG1pbiJdLCJzdWIiOiIxMDY3NzMwMzg1IiwiaWF0IjoxNzQxMjk5Mzk4LCJleHAiOjE3NDEzODU3OTh9.9dBWkMF197AU5V8cJ-M7mm0Eo5D1ad9JwbsqQKN-3iM",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"firstName\": \"Care verga\",\r\n    \"lastName\": \"Pérez\",\r\n    \"documentNumber\": \"111111111\",\r\n    \"password\": \"miPassword123\",\r\n    \"email\": \"xdreyveringx15@gmail.com\",\r\n    \"role\": \"Candidato\"\r\n}\r\n\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8085/api/users/register",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8085",
+              "path": [
+                "api",
+                "users",
+                "register"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Hoja de vida",
+      "item": [
+        {
+          "name": "Consulta perfil",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/api/hoja-vida/perfil",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "hoja-vida",
+                "perfil"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Ingresar Perfil",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJkb2N1bWVudE51bWJlciI6IjEwNjc3MzAzODUiLCJyb2xlcyI6WyJBZG1pbiJdLCJzdWIiOiIxMDY3NzMwMzg1IiwiaWF0IjoxNzQxMjk5Mzk4LCJleHAiOjE3NDEzODU3OTh9.9dBWkMF197AU5V8cJ-M7mm0Eo5D1ad9JwbsqQKN-3iM",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"firstName\": \"Care verga\",\r\n    \"lastName\": \"Pérez\",\r\n    \"documentNumber\": \"111111111\",\r\n    \"password\": \"miPassword123\",\r\n    \"email\": \"xdreyveringx15@gmail.com\",\r\n    \"role\": \"Candidato\"\r\n}\r\n\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8085/api/users/register",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8085",
+              "path": [
+                "api",
+                "users",
+                "register"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Consulta Datos personales",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/api/hoja-vida/perfil",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "hoja-vida",
+                "perfil"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Ingresar Datos personales",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJkb2N1bWVudE51bWJlciI6IjEwNjc3MzAzODUiLCJyb2xlcyI6WyJBZG1pbiJdLCJzdWIiOiIxMDY3NzMwMzg1IiwiaWF0IjoxNzQxMjk5Mzk4LCJleHAiOjE3NDEzODU3OTh9.9dBWkMF197AU5V8cJ-M7mm0Eo5D1ad9JwbsqQKN-3iM",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"firstName\": \"Care verga\",\r\n    \"lastName\": \"Pérez\",\r\n    \"documentNumber\": \"111111111\",\r\n    \"password\": \"miPassword123\",\r\n    \"email\": \"xdreyveringx15@gmail.com\",\r\n    \"role\": \"Candidato\"\r\n}\r\n\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8085/api/users/register",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8085",
+              "path": [
+                "api",
+                "users",
+                "register"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Consulta Datos contecto",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/api/hoja-vida/perfil",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "hoja-vida",
+                "perfil"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Ingresar Datos contacto",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJkb2N1bWVudE51bWJlciI6IjEwNjc3MzAzODUiLCJyb2xlcyI6WyJBZG1pbiJdLCJzdWIiOiIxMDY3NzMwMzg1IiwiaWF0IjoxNzQxMjk5Mzk4LCJleHAiOjE3NDEzODU3OTh9.9dBWkMF197AU5V8cJ-M7mm0Eo5D1ad9JwbsqQKN-3iM",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"firstName\": \"Care verga\",\r\n    \"lastName\": \"Pérez\",\r\n    \"documentNumber\": \"111111111\",\r\n    \"password\": \"miPassword123\",\r\n    \"email\": \"xdreyveringx15@gmail.com\",\r\n    \"role\": \"Candidato\"\r\n}\r\n\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8085/api/users/register",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8085",
+              "path": [
+                "api",
+                "users",
+                "register"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Consulta Datos Academicos",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/api/hoja-vida/perfil",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "hoja-vida",
+                "perfil"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Ingresar Datos Academicos",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJkb2N1bWVudE51bWJlciI6IjEwNjc3MzAzODUiLCJyb2xlcyI6WyJBZG1pbiJdLCJzdWIiOiIxMDY3NzMwMzg1IiwiaWF0IjoxNzQxMjk5Mzk4LCJleHAiOjE3NDEzODU3OTh9.9dBWkMF197AU5V8cJ-M7mm0Eo5D1ad9JwbsqQKN-3iM",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"firstName\": \"Care verga\",\r\n    \"lastName\": \"Pérez\",\r\n    \"documentNumber\": \"111111111\",\r\n    \"password\": \"miPassword123\",\r\n    \"email\": \"xdreyveringx15@gmail.com\",\r\n    \"role\": \"Candidato\"\r\n}\r\n\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8085/api/users/register",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8085",
+              "path": [
+                "api",
+                "users",
+                "register"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Eliminar Datos Academicos",
+          "request": {
+            "method": "DELETE",
+            "header": []
+          },
+          "response": []
+        },
+        {
+          "name": "Consulta Datos Laboral",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/api/hoja-vida/perfil",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "hoja-vida",
+                "perfil"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Ingresar Datos Laboral",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJkb2N1bWVudE51bWJlciI6IjEwNjc3MzAzODUiLCJyb2xlcyI6WyJBZG1pbiJdLCJzdWIiOiIxMDY3NzMwMzg1IiwiaWF0IjoxNzQxMjk5Mzk4LCJleHAiOjE3NDEzODU3OTh9.9dBWkMF197AU5V8cJ-M7mm0Eo5D1ad9JwbsqQKN-3iM",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"firstName\": \"Care verga\",\r\n    \"lastName\": \"Pérez\",\r\n    \"documentNumber\": \"111111111\",\r\n    \"password\": \"miPassword123\",\r\n    \"email\": \"xdreyveringx15@gmail.com\",\r\n    \"role\": \"Candidato\"\r\n}\r\n\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8085/api/users/register",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8085",
+              "path": [
+                "api",
+                "users",
+                "register"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Eliminar Datos Laboral",
+          "request": {
+            "method": "DELETE",
+            "header": []
+          },
+          "response": []
+        },
+        {
+          "name": "Consulta Datos Afiliacion",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/api/hoja-vida/perfil",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "hoja-vida",
+                "perfil"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Ingresar Datos Afiliacion",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJkb2N1bWVudE51bWJlciI6IjEwNjc3MzAzODUiLCJyb2xlcyI6WyJBZG1pbiJdLCJzdWIiOiIxMDY3NzMwMzg1IiwiaWF0IjoxNzQxMjk5Mzk4LCJleHAiOjE3NDEzODU3OTh9.9dBWkMF197AU5V8cJ-M7mm0Eo5D1ad9JwbsqQKN-3iM",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"firstName\": \"Care verga\",\r\n    \"lastName\": \"Pérez\",\r\n    \"documentNumber\": \"111111111\",\r\n    \"password\": \"miPassword123\",\r\n    \"email\": \"xdreyveringx15@gmail.com\",\r\n    \"role\": \"Candidato\"\r\n}\r\n\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8085/api/users/register",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8085",
+              "path": [
+                "api",
+                "users",
+                "register"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Consulta Datos Documentos",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/api/hoja-vida/perfil",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "hoja-vida",
+                "perfil"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Ingresar Datos Documentos",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJkb2N1bWVudE51bWJlciI6IjEwNjc3MzAzODUiLCJyb2xlcyI6WyJBZG1pbiJdLCJzdWIiOiIxMDY3NzMwMzg1IiwiaWF0IjoxNzQxMjk5Mzk4LCJleHAiOjE3NDEzODU3OTh9.9dBWkMF197AU5V8cJ-M7mm0Eo5D1ad9JwbsqQKN-3iM",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"firstName\": \"Care verga\",\r\n    \"lastName\": \"Pérez\",\r\n    \"documentNumber\": \"111111111\",\r\n    \"password\": \"miPassword123\",\r\n    \"email\": \"xdreyveringx15@gmail.com\",\r\n    \"role\": \"Candidato\"\r\n}\r\n\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8085/api/users/register",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8085",
+              "path": [
+                "api",
+                "users",
+                "register"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Consultas",
+      "item": [
+        {
+          "name": "Consulta De Empleados",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/api/hoja-vida/perfil",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "hoja-vida",
+                "perfil"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Consulta De Candidatos",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/api/hoja-vida/perfil",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "hoja-vida",
+                "perfil"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Ingresar Perfil",
+      "item": [
+        {
+          "name": "ingresa candidato",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJkb2N1bWVudE51bWJlciI6IjEwNjc3MzAzODUiLCJyb2xlcyI6WyJBZG1pbiJdLCJzdWIiOiIxMDY3NzMwMzg1IiwiaWF0IjoxNzQxMjk5Mzk4LCJleHAiOjE3NDEzODU3OTh9.9dBWkMF197AU5V8cJ-M7mm0Eo5D1ad9JwbsqQKN-3iM",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"firstName\": \"Care verga\",\r\n    \"lastName\": \"Pérez\",\r\n    \"documentNumber\": \"111111111\",\r\n    \"password\": \"miPassword123\",\r\n    \"email\": \"xdreyveringx15@gmail.com\",\r\n    \"role\": \"Candidato\"\r\n}\r\n\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8085/api/users/register",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8085",
+              "path": [
+                "api",
+                "users",
+                "register"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Tareas",
+      "item": [
+        {
+          "name": "consulta taea",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": []
+        },
+        {
+          "name": "Crear tareas",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sIjoiYWRtaW4iLCJub21icmUiOiJMaWFuIEdvbnphbGV6IiwiaWF0IjoxNzc3NzQxMTc5LCJleHAiOjE3Nzc3Njk5Nzl9.yMUqv4Tzp6LKQ1RP_R_Sas8caxqLeWT5n8tH88udz1Y",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"nombre\": \"Hacer la maquetación\",\r\n  \"descripcion\": \"Descripción de la tarea\",\r\n  \"actividad\": \"Desarrollo Frontend\",\r\n  \"fecha_inicio\": \"2026-05-02\",\r\n  \"fecha_fin\": \"2026-05-30\",\r\n  \"horas_planeadas\": 8\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/api/tareas",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "tareas"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Registar horas",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sIjoiYWRtaW4iLCJub21icmUiOiJMaWFuIEdvbnphbGV6IiwiaWF0IjoxNzc3NzQxMTc5LCJleHAiOjE3Nzc3Njk5Nzl9.yMUqv4Tzp6LKQ1RP_R_Sas8caxqLeWT5n8tH88udz1Y",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{ \"horas\": 4 }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/api/tareas/1/horas",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "tareas",
+                "1",
+                "horas"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Finalizar tareas",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sIjoiYWRtaW4iLCJub21icmUiOiJMaWFuIEdvbnphbGV6IiwiaWF0IjoxNzc3NzQxMTc5LCJleHAiOjE3Nzc3Njk5Nzl9.yMUqv4Tzp6LKQ1RP_R_Sas8caxqLeWT5n8tH88udz1Y",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/api/tareas/1/finalizar",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "tareas",
+                "1",
+                "finalizar"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Tarea completadas",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": []
+        },
+        {
+          "name": "Eliminar tarea",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sIjoiYWRtaW4iLCJub21icmUiOiJMaWFuIEdvbnphbGV6IiwiaWF0IjoxNzc3NzQxMTc5LCJleHAiOjE3Nzc3Njk5Nzl9.yMUqv4Tzp6LKQ1RP_R_Sas8caxqLeWT5n8tH88udz1Y",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:3000/api/tareas/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "tareas",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
