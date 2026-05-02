@@ -1,0 +1,140 @@
+<div class="main-wrapper">
+
+  <div class="page-header-wrap">
+    <div class="page-header">
+      <h1 class="page-title">Funcionarios</h1>
+    </div>
+  </div>
+
+  <div class="funcionarios-content">
+
+    <!-- Filtros -->
+    <div class="filtros-card">
+      <div class="filtro-group">
+        <label class="filtro-label">Buscar Funcionario</label>
+        <div class="search-wrap">
+          <i class="fa-solid fa-magnifying-glass search-icon"></i>
+          <input class="search-input" id="buscar-input" type="text" placeholder="Buscar por palabra"/>
+        </div>
+      </div>
+      <div class="filtro-group">
+        <label class="filtro-label">Estado</label>
+        <div class="select-wrap">
+          <select class="filtro-select" id="filtro-estado">
+            <option value="">Todos</option>
+            <option value="Activo">Activo</option>
+            <option value="Inactivo">Inactivo</option>
+            <option value="Incapacidad">Incapacidad</option>
+            <option value="Vacaciones">Vacaciones</option>
+          </select>
+          <svg class="select-arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M5 8l5 5 5-5"/></svg>
+        </div>
+      </div>
+      <div class="filtro-group">
+        <label class="filtro-label">Tipo de documento</label>
+        <div class="select-wrap">
+          <select class="filtro-select" id="filtro-tipo">
+            <option value="">Todos</option>
+            <option value="CC">CC</option>
+            <option value="CE">CE</option>
+            <option value="Pasaporte">Pasaporte</option>
+          </select>
+          <svg class="select-arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M5 8l5 5 5-5"/></svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tabla -->
+    <div class="tabla-card">
+      <table class="func-tabla">
+        <thead>
+          <tr>
+            <th>Nombre completo <span class="sort-icon">⇅</span></th>
+            <th>Correo electrónico <span class="sort-icon">⇅</span></th>
+            <th>Tipo <span class="sort-icon">⇅</span></th>
+            <th>Documento <span class="sort-icon">⇅</span></th>
+            <th>Estado <span class="sort-icon">⇅</span></th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody id="funcionarios-tbody"></tbody>
+      </table>
+    </div>
+
+  </div>
+
+  <!-- Dropdown estado inline -->
+  <div class="estado-dropdown" id="estado-dropdown" style="display:none">
+    <div class="estado-option" data-estado="Activo"><span class="estado-punto activo"></span>Activo</div>
+    <div class="estado-option" data-estado="Inactivo"><span class="estado-punto inactivo"></span>Inactivo</div>
+    <div class="estado-option" data-estado="Incapacidad"><span class="estado-punto incapacidad"></span>Incapacidad</div>
+    <div class="estado-option" data-estado="Vacaciones"><span class="estado-punto vacaciones"></span>Vacaciones</div>
+  </div>
+
+</div>
+
+<!-- ═══════════════════════════════════════════
+     MODAL — Confirmar cambio de estado
+════════════════════════════════════════════ -->
+<div class="modal-overlay func-modal-overlay" id="modal-confirmar-estado">
+  <div class="modal-box func-modal-box">
+    <div class="func-modal-icon estado-icon">
+      <i class="fa-solid fa-pen"></i>
+    </div>
+    <h3 class="func-modal-title">Cambiar estado</h3>
+    <p class="func-modal-desc">
+      ¿Estás seguro de que deseas cambiar el estado de
+      <strong id="modal-estado-nombre"></strong> a
+      <strong id="modal-estado-nuevo"></strong>?
+    </p>
+    <div class="func-modal-actions">
+      <button class="func-btn-cancelar" id="btn-cancelar-estado">Cancelar</button>
+      <button class="func-btn-confirmar estado-confirmar" id="btn-confirmar-estado">Confirmar</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     MODAL — Confirmar eliminar
+════════════════════════════════════════════ -->
+<div class="modal-overlay func-modal-overlay" id="modal-confirmar-eliminar">
+  <div class="modal-box func-modal-box">
+    <div class="func-modal-icon eliminar-icon">
+      <i class="fa-solid fa-trash"></i>
+    </div>
+    <h3 class="func-modal-title">Eliminar funcionario</h3>
+    <p class="func-modal-desc">
+      ¿Estás seguro de que deseas eliminar a
+      <strong id="modal-eliminar-nombre"></strong>?
+      Esta acción no se puede deshacer.
+    </p>
+    <div class="func-modal-actions">
+      <button class="func-btn-cancelar" id="btn-cancelar-eliminar">Cancelar</button>
+      <button class="func-btn-confirmar eliminar-confirmar" id="btn-confirmar-eliminar">Eliminar</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     MODAL — Chat con funcionario
+════════════════════════════════════════════ -->
+<div class="modal-overlay" id="modal-mensaje">
+  <div class="modal-box modal-chat-box">
+    <div class="chat-header">
+      <div class="chat-header-info">
+        <div class="chat-avatar" id="chat-avatar-admin"></div>
+        <span class="chat-nombre" id="chat-nombre-admin">Funcionario</span>
+      </div>
+      <button class="modal-close" id="close-mensaje"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="chat-mensajes" id="chat-mensajes-admin">
+      <div class="chat-loading">Cargando mensajes...</div>
+    </div>
+    <div class="chat-input-wrap">
+      <textarea class="chat-input" id="chat-input-admin" placeholder="Escribe un mensaje..." rows="1"></textarea>
+      <button class="chat-send-btn" id="chat-send-admin">
+        <i class="fa-solid fa-paper-plane"></i>
+      </button>
+    </div>
+  </div>
+</div>

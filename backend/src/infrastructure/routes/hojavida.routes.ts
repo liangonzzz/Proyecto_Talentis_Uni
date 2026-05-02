@@ -9,14 +9,16 @@ import {
   getExperiencia, createExperiencia, updateExperiencia, deleteExperiencia,
   getAfiliaciones, upsertAfiliaciones,
   getDocumentos, upsertDocumentos,
+  getEstadoModulos,
 } from '../controller/HojaVidaController';
 import multer from 'multer';
 import path from 'path';
 import fs from 'fs';
 import { deleteDocumento } from '../controller/HojaVidaController';
+import { getHojaVidaCandidato } from '../controller/HojaVidaController';
 
 
-const uploadsDir = path.join(__dirname, '..', '..', '..', 'uploads');
+const uploadsDir = path.join(__dirname, '..', '..', 'static', 'uploads');
 if (!fs.existsSync(uploadsDir)) fs.mkdirSync(uploadsDir, { recursive: true });
 
 const storage = multer.diskStorage({
@@ -80,6 +82,12 @@ router.post('/documentos', upload.fields([
 
 // Documentos
 router.delete('/documentos/:campo', deleteDocumento);
+
+// Estado de módulos
+router.get('/candidatos/:id/modulos', getEstadoModulos);
+
+// Hoja de vida candidato
+router.get('/candidato/:id', getHojaVidaCandidato);
 
 export default router;
 

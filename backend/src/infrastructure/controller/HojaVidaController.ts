@@ -9,7 +9,8 @@ import {
   GetExperienciaUseCase, CreateExperienciaUseCase, UpdateExperienciaUseCase, DeleteExperienciaUseCase,
   GetAfiliacionesUseCase, UpsertAfiliacionesUseCase,
   GetDocumentosUseCase, UpsertDocumentosUseCase,
-  DeleteDocumentoUseCase, 
+  DeleteDocumentoUseCase,
+  GetEstadoModulosUseCase, 
 } from '../../application/usecases/HojaVidaUseCases';
 
 const repo = new HojaVidaRepository();
@@ -280,5 +281,28 @@ export const deleteDocumento = async (req: Request, res: Response): Promise<void
     res.json({ message: 'Documento eliminado' });
   } catch (e) {
     res.status(500).json({ message: 'Error al eliminar documento' });
+  }
+};
+
+// ── ESTADO DE MÓDULOS ───────────────────────────────────────
+export const getEstadoModulos = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const usuario_id = Number(req.params.id);
+    const data = await new GetEstadoModulosUseCase(repo).execute(usuario_id);
+    res.json(data);
+  } catch (e) {
+    res.status(500).json({ message: 'Error al obtener estado de módulos' });
+  }
+};
+
+
+//para ver hoja de vida de cada candidato
+export const getHojaVidaCandidato = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const usuario_id = Number(req.params.id);
+    const data = await repo.getHojaVidaCompleta(usuario_id);
+    res.json(data);
+  } catch (e) {
+    res.status(500).json({ message: 'Error al obtener hoja de vida' });
   }
 };

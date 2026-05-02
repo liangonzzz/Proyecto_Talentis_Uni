@@ -16,6 +16,14 @@ export class LoginUseCase {
 
     const token = JwtUtil.sign({ id: usuario.id, rol: usuario.rol, nombre: `${usuario.nombre} ${usuario.apellidos}` });
 
-    return { token, rol: usuario.rol, nombre: `${usuario.nombre} ${usuario.apellidos}`, correo: usuario.correo, tipo_documento: usuario.tipo_documento, numero_documento: usuario.numero_documento };
+    return { 
+      token, 
+      rol: usuario.rol, 
+      nombre: `${usuario.nombre} ${usuario.apellidos}`, 
+      correo: usuario.correo, 
+      tipo_documento: usuario.tipo_documento, 
+      numero_documento: usuario.numero_documento,
+      id: usuario.id
+    };
   }
-}
+} 

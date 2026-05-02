@@ -13,17 +13,6 @@
           </div>
         </div>
         <div class="filtro-group">
-          <label class="filtro-label">Proyecto</label>
-          <div class="select-wrap">
-            <select class="filtro-select" id="filtro-proyecto">
-              <option value="">Todos</option>
-              <option value="Soluciones">Soluciones</option>
-              <option value="Talentis">Talentis</option>
-            </select>
-            <svg class="select-arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M5 8l5 5 5-5"/></svg>
-          </div>
-        </div>
-        <div class="filtro-group">
           <label class="filtro-label">Actividad</label>
           <div class="select-wrap">
             <select class="filtro-select" id="filtro-actividad">
@@ -60,6 +49,13 @@
           <span>Haz clic en el siguiente botón si necesitas registrar horas sobre una tarea diferente.</span>
           <button class="btn-crear-tarea outline" id="btn-crear-lista">Crear tarea y registrar horas</button>
         </div>
+
+        <!-- ── HISTORIAL (últimas 4) ── -->
+        <div class="historial-wrap" id="historial-wrap" style="margin-top:24px; display:none;">
+          <p style="font-size:13px; font-weight:600; color:#6b7280; margin-bottom:8px; text-transform:uppercase; letter-spacing:.05em;">Tareas finalizadas</p>
+          <div id="historial-lista"></div>
+        </div>
+
       </div>
 
       <!-- Panel detalle -->
@@ -124,6 +120,48 @@
   </div>
 </div>
 
+<!-- ===================== MODAL ELIMINAR TAREA ===================== -->
+<div class="modal-overlay" id="modal-eliminar-tarea">
+  <div class="modal-box" style="max-width:400px;">
+    <button class="modal-close" id="close-eliminar-tarea"><i class="fa-solid fa-xmark"></i></button>
+    <h2 class="modal-title">Eliminar tarea</h2>
+    <p class="modal-subtitle">¿Estás seguro de que quieres eliminar esta tarea? Esta acción no se puede deshacer.</p>
+    <div class="modal-actions">
+      <button class="btn-cancelar" id="cancel-eliminar-tarea">Cancelar</button>
+      <button class="btn-guardar" id="confirm-eliminar-tarea" style="background:#ef4444;">Eliminar</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== MODAL FINALIZAR TAREA ===================== -->
+<div class="modal-overlay" id="modal-finalizar-tarea">
+  <div class="modal-box">
+    <button class="modal-close" id="close-finalizar-tarea"><i class="fa-solid fa-xmark"></i></button>
+    <div class="modal-eliminar-icono" style="background:#f0fdf4; color:#16a34a;">
+      <i class="fa-solid fa-circle-check"></i>
+    </div>
+    <h2 class="modal-title">Finalizar tarea</h2>
+    <p class="modal-subtitle">¿Confirmas que esta tarea está finalizada?<br>Se moverá al historial de tareas completadas.</p>
+    <div class="modal-actions">
+      <button class="btn-cancelar" id="cancel-finalizar-tarea">Cancelar</button>
+      <button class="btn-guardar" id="confirm-finalizar-tarea" style="background:#16a34a;">Confirmar</button>
+    </div>
+  </div>
+</div>
+<!-- ===================== MODAL PROGRESO HORAS ===================== -->
+<div class="modal-overlay" id="modal-progreso">
+  <div class="modal-box">
+    <div class="modal-eliminar-icono" id="modal-progreso-icono-wrap">
+      <i id="modal-progreso-icono"></i>
+    </div>
+    <h2 class="modal-title" id="modal-progreso-titulo"></h2>
+    <p class="modal-subtitle" id="modal-progreso-texto"></p>
+    <div class="modal-actions">
+      <button class="btn-cancelar" id="cancel-progreso">Entendido</button>
+      <button class="btn-guardar" id="confirm-progreso" style="background:#16a34a;">Finalizar tarea</button>
+    </div>
+  </div>
+</div>
 <!-- ===================== MODAL CREAR TAREA ===================== -->
 <div class="modal-overlay" id="modal-crear-tarea">
   <div class="modal-box">
@@ -138,16 +176,6 @@
       <div class="form-group full">
         <label>Descripción</label>
         <textarea id="nueva-desc" placeholder="Describe la tarea..."></textarea>
-      </div>
-      <div class="form-group">
-        <label>Proyecto</label>
-        <div class="select-wrap">
-          <select id="nueva-proyecto">
-            <option value="Soluciones">Soluciones</option>
-            <option value="Talentis">Talentis</option>
-          </select>
-          <svg class="select-arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M5 8l5 5 5-5"/></svg>
-        </div>
       </div>
       <div class="form-group">
         <label>Actividad</label>

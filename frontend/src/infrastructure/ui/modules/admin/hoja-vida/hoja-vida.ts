@@ -85,6 +85,19 @@ function actualizarProgreso(): void {
 
 async function cargarPerfil(): Promise<void> {
   const nombre = localStorage.getItem('nombre') ?? '';
+  const rol    = localStorage.getItem('rol') ?? '';
+
+  // Cambiar label y placeholder según el rol
+  const label = document.getElementById('perfil-cargo-label');
+  const input = document.getElementById('perfil-cargo') as HTMLInputElement;
+  if (rol === 'candidato') {
+    if (label) label.textContent = 'Cargo al que aspira';
+    if (input) input.placeholder = 'Escriba el cargo al que aspira';
+  } else {
+    if (label) label.textContent = 'Cargo actual';
+    if (input) input.placeholder = 'Escriba su cargo actual';
+  }
+
   setVal('perfil-nombre', nombre);
   const res  = await fetch(`${API}/perfil`, { headers: headers() });
   const data = await res.json();
@@ -661,4 +674,150 @@ export async function initHojaDeVida(): Promise<void> {
   initDocumentoVisual('doc-procuraduria-input','drop-procuraduria',   'doc-procuraduria-preview','doc-procuraduria-name','doc-procuraduria-size','doc-procuraduria-delete','');
   initDocumentoVisual('doc-contrato-input',    'drop-contrato',       'doc-contrato-preview',    'doc-contrato-name',    'doc-contrato-size',    'doc-contrato-delete',    '');
   initDocumentoVisual('doc-referencia-input',  'drop-referencia',     'doc-referencia-preview',  'doc-referencia-name',  'doc-referencia-size',  'doc-referencia-delete',  '');
+
+ 
+    const rolActual = localStorage.getItem('rol');
+    const rolesConChat = ['candidato', 'empleado'];
+    if (rolesConChat.includes(rolActual ?? '')) {
+      initChatCandidato();
+    }
+}
+
+function initChatCandidato(): void {
+  const candidatoId = Number(localStorage.getItem('id'));
+  if (!candidatoId) return;
+
+  document.body.insertAdjacentHTML('beforeend', `
+    <button class="chat-fab" id="chat-fab-btn" title="Mensajes de RR.HH.">
+      <i class="fa-solid fa-comments"></i>
+      <span class="chat-fab-badge" id="chat-fab-badge" style="display:none"></span>
+    </button>
+    <div class="modal-chat-candidato" id="chat-modal-candidato">
+      <div class="chat-header">
+        <div class="chat-header-info">
+          <div class="chat-avatar">RH</div>
+          <span class="chat-nombre">RR.HH. — Talentis</span>
+        </div>
+        <button class="modal-close" id="chat-candidato-close" style="background:none;border:none;cursor:pointer;color:#6b7280;font-size:16px">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <div class="chat-mensajes" id="chat-mensajes-candidato">
+        <div class="chat-loading">Cargando mensajes...</div>
+      </div>
+      <div class="chat-input-wrap">
+        <textarea class="chat-input" id="chat-input-candidato" placeholder="Escribe un mensaje..." rows="1"></textarea>
+        <button class="chat-send-btn" id="chat-send-candidato">
+          <i class="fa-solid fa-paper-plane"></i>
+        </button>
+      </div>
+    </div>
+  `);
+
+  let chatAbierto = false;
+  let pollingChat: number | null = null;
+
+  function formatHora(dateStr: string): string {
+    const d = new Date(dateStr);
+    return d.toLocaleTimeString('es-CO', { hour: '2-digit', minute: '2-digit' });
+  }
+
+  function renderMensajesCandidato(mensajes: any[]): void {
+    const container = document.getElementById('chat-mensajes-candidato')!;
+    if (mensajes.length === 0) {
+      container.innerHTML = `<div class="chat-empty">No hay mensajes aún.</div>`;
+      return;
+    }
+    container.innerHTML = mensajes.map((m: any) => {
+      const esMio = m.autor_id === candidatoId;
+      return `
+        <div class="chat-burbuja-wrap ${esMio ? 'derecha' : 'izquierda'}">
+          <div class="chat-burbuja">${m.mensaje}</div>
+          <span class="chat-hora">${formatHora(m.created_at)}</span>
+        </div>`;
+    }).join('');
+    container.scrollTop = container.scrollHeight;
+  }
+
+  async function cargarMensajesCandidato(): Promise<void> {
+    try {
+      const res = await fetch(`http://localhost:3000/api/mensajes/${candidatoId}`, {
+        headers: { Authorization: `Bearer ${token()}` },
+      });
+      if (!res.ok) return;
+      const mensajes = await res.json();
+      renderMensajesCandidato(mensajes);
+    } catch {}
+  }
+
+  async function verificarNoLeidos(): Promise<void> {
+    try {
+      const res = await fetch(`http://localhost:3000/api/mensajes/${candidatoId}/no-leidos`, {
+        headers: { Authorization: `Bearer ${token()}` },
+      });
+      if (!res.ok) return;
+      const { count } = await res.json();
+      const badge = document.getElementById('chat-fab-badge')!;
+      if (count > 0) {
+        badge.textContent = String(count);
+        badge.style.display = 'flex';
+      } else {
+        badge.style.display = 'none';
+      }
+    } catch {}
+  }
+
+  async function enviarMensajeCandidato(): Promise<void> {
+    const input = document.getElementById('chat-input-candidato') as HTMLTextAreaElement;
+    const texto = input.value.trim();
+    if (!texto) return;
+    input.value = '';
+    input.style.height = 'auto';
+    try {
+      await fetch(`http://localhost:3000/api/mensajes/${candidatoId}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token()}` },
+        body: JSON.stringify({ mensaje: texto }),
+      });
+      await cargarMensajesCandidato();
+    } catch {
+      alert('Error al enviar el mensaje.');
+    }
+  }
+
+  document.getElementById('chat-fab-btn')?.addEventListener('click', () => {
+    chatAbierto = !chatAbierto;
+    document.getElementById('chat-modal-candidato')!.classList.toggle('abierto', chatAbierto);
+    if (chatAbierto) {
+      cargarMensajesCandidato();
+      document.getElementById('chat-fab-badge')!.style.display = 'none';
+      if (pollingChat) clearInterval(pollingChat);
+      pollingChat = window.setInterval(cargarMensajesCandidato, 5000);
+    } else {
+      if (pollingChat) { clearInterval(pollingChat); pollingChat = null; }
+    }
+  });
+
+  document.getElementById('chat-candidato-close')?.addEventListener('click', () => {
+    chatAbierto = false;
+    document.getElementById('chat-modal-candidato')!.classList.remove('abierto');
+    if (pollingChat) { clearInterval(pollingChat); pollingChat = null; }
+  });
+
+  document.getElementById('chat-send-candidato')?.addEventListener('click', enviarMensajeCandidato);
+
+  document.getElementById('chat-input-candidato')?.addEventListener('keydown', (e: KeyboardEvent) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      enviarMensajeCandidato();
+    }
+  });
+
+  document.getElementById('chat-input-candidato')?.addEventListener('input', function(this: HTMLTextAreaElement) {
+    this.style.height = 'auto';
+    this.style.height = Math.min(this.scrollHeight, 100) + 'px';
+  });
+
+  verificarNoLeidos();
+  setInterval(verificarNoLeidos, 30000);
 }

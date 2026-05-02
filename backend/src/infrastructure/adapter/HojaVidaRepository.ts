@@ -278,6 +278,60 @@ export class HojaVidaRepository implements IHojaVidaRepository {
     [usuario_id]
   );
   }
+  
+  async getEstadoModulos(usuario_id: number): Promise<{
+  informacion_perfil: string;
+  datos_personales: string;
+  datos_contacto: string;
+  formacion_academica: string;
+  experiencia_laboral: string;
+  afiliaciones: string;
+  documentos: string;
+}> {
+  const [perfil, datosPersonales, contacto, formacion, experiencia, afiliaciones, documentos] =
+    await Promise.all([
+      this.getPerfil(usuario_id),
+      this.getDatosPersonales(usuario_id),
+      this.getContacto(usuario_id),
+      this.getFormacion(usuario_id),
+      this.getExperiencia(usuario_id),
+      this.getAfiliaciones(usuario_id),
+      this.getDocumentos(usuario_id),
+    ]);
+
+  // Documentos: contar cuántos de los 4 no son null
+  const camposDoc = ['cedula_url', 'hoja_vida_url', 'diploma_url', 'policia_url'];
+  const docsCount = documentos
+    ? camposDoc.filter(c => (documentos as any)[c]).length
+    : 0;
+
+  return {
+    informacion_perfil:  perfil          ? 'completo' : 'vacio',
+    datos_personales:    datosPersonales
+      ? ((datosPersonales as any).cedula_url ? 'completo' : 'parcial')
+      : 'vacio',
+    datos_contacto:      contacto        ? 'completo' : 'vacio',
+    formacion_academica: formacion.length > 0 ? 'completo' : 'vacio',
+    experiencia_laboral: experiencia.length > 0 ? 'completo' : 'vacio',
+    afiliaciones:        afiliaciones    ? 'completo' : 'vacio',
+    documentos:          docsCount === 4 ? 'completo' : docsCount > 0 ? 'parcial' : 'vacio',
+  };
+}
+
+// Método adicional para obtener toda la hoja de vida de un candidato
+async getHojaVidaCompleta(usuario_id: number) {
+  const [perfil, datosPersonales, contacto, formacion, experiencia, afiliaciones, documentos] =
+    await Promise.all([
+      this.getPerfil(usuario_id),
+      this.getDatosPersonales(usuario_id),
+      this.getContacto(usuario_id),
+      this.getFormacion(usuario_id),
+      this.getExperiencia(usuario_id),
+      this.getAfiliaciones(usuario_id),
+      this.getDocumentos(usuario_id),
+    ]);
+  return { perfil, datosPersonales, contacto, formacion, experiencia, afiliaciones, documentos };
+}
 
 }
 

@@ -5,6 +5,7 @@ export interface LoginResponse {
   correo: string;
   tipo_documento: string;
   numero_documento: string;
+  id: number;
 }
 
 export interface IAuthService {

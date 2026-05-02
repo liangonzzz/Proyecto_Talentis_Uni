@@ -137,10 +137,15 @@ export class UpsertDocumentosUseCase {
 }
 
 //Borrar documentos
-
 export class DeleteDocumentoUseCase {
   constructor(private repo: IHojaVidaRepository) {}
   async execute(usuario_id: number, campo: string): Promise<void> {
     await this.repo.deleteDocumento(usuario_id, campo);
   }
+}
+
+// ── ESTADO DE MÓDULOS ───────────────────────────────────────
+export class GetEstadoModulosUseCase {
+  constructor(private repo: IHojaVidaRepository) {}
+  execute(usuario_id: number) { return this.repo.getEstadoModulos(usuario_id); }
 }

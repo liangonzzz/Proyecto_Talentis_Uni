@@ -50,4 +50,16 @@ export interface IHojaVidaRepository {
 
   //Borrar documentos
   deleteDocumento(usuario_id: number, campo: string): Promise<void>;
+  
+  // Estado de módulos
+  getEstadoModulos(usuario_id: number): Promise<{
+  informacion_perfil: string;
+  datos_personales: string;
+  datos_contacto: string;
+  formacion_academica: string;
+  experiencia_laboral: string;
+  afiliaciones: string;
+  documentos: string;
+  }>;
+
 }

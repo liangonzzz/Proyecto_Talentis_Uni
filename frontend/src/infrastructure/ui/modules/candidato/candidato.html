@@ -76,16 +76,17 @@
       <div class="form-grid">
         <div class="form-group">
           <label>Nombre(s)</label>
-          <input type="text" id="c-nombres" placeholder="Maria Camila" />
+          <input type="text" id="c-nombres" placeholder="Ingresa tu nombre" />
         </div>
         <div class="form-group">
           <label>Apellido(s)</label>
-          <input type="text" id="c-apellidos" placeholder="Navarrete Gomez" />
+          <input type="text" id="c-apellidos" placeholder="Ingresa tu apellido" />
         </div>
         <div class="form-group">
           <label>Tipo de documento</label>
           <div class="select-wrap">
             <select id="c-tipo-doc">
+              <option value="" disabled selected>Seleccione tipo de documento</option>
               <option value="CC">Cédula de ciudadanía</option>
               <option value="CE">Cédula de extranjería</option>
               <option value="Pasaporte">Pasaporte</option>
@@ -95,11 +96,11 @@
         </div>
         <div class="form-group">
           <label>Documento de identificación</label>
-          <input type="text" id="c-documento" placeholder="1029154738" />
+          <input type="text" id="c-documento" placeholder="Ingresa tu documento" />
         </div>
         <div class="form-group full">
           <label>Correo</label>
-          <input type="email" id="c-correo" placeholder="maria.navarrete@empresa.com.co" />
+          <input type="email" id="c-correo" placeholder="Ingresa tu correo" />
         </div>
       </div>
       <p class="form-error" id="crear-error"></p>
@@ -163,13 +164,22 @@
 
 <!-- ===================== MODAL MENSAJE ===================== -->
 <div class="modal-overlay" id="modal-mensaje">
-  <div class="modal-box">
-    <button class="modal-close" id="close-mensaje"><i class="fa-solid fa-xmark"></i></button>
-    <h2 class="modal-title" id="mensaje-titulo">Enviar mensaje</h2>
-    <textarea class="modal-textarea tall" id="mensaje-textarea" placeholder="Escriba su mensaje aquí..."></textarea>
-    <div class="modal-actions">
-      <button class="btn-cancelar" id="cancel-mensaje">Cancelar</button>
-      <button class="btn-guardar" id="enviar-mensaje">Enviar</button>
+  <div class="modal-box modal-chat-box">
+    <div class="chat-header">
+      <div class="chat-header-info">
+        <div class="chat-avatar" id="chat-avatar-admin"></div>
+        <span class="chat-nombre" id="chat-nombre-admin">Candidato</span>
+      </div>
+      <button class="modal-close" id="close-mensaje"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="chat-mensajes" id="chat-mensajes-admin">
+      <div class="chat-loading">Cargando mensajes...</div>
+    </div>
+    <div class="chat-input-wrap">
+      <textarea class="chat-input" id="chat-input-admin" placeholder="Escribe un mensaje..." rows="1"></textarea>
+      <button class="chat-send-btn" id="chat-send-admin">
+        <i class="fa-solid fa-paper-plane"></i>
+      </button>
     </div>
   </div>
 </div>

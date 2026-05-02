@@ -1,11 +1,12 @@
 export class SessionStorageService {
-  static guardarSesion(token: string, rol: string, nombre: string, correo: string, tipo_documento: string, numero_documento: string): void {
+  static guardarSesion(token: string, rol: string, nombre: string, correo: string, tipo_documento: string, numero_documento: string, id: number): void {
     localStorage.setItem('token', token);
     localStorage.setItem('rol', rol);
     localStorage.setItem('nombre', nombre);
     localStorage.setItem('correo', correo);
     localStorage.setItem('tipo_documento', tipo_documento);
     localStorage.setItem('numero_documento', numero_documento);
+    localStorage.setItem('id', String(id));
   }
 
   static obtenerToken(): string | null {
@@ -35,4 +36,9 @@ export class SessionStorageService {
   static cerrarSesion(): void {
     localStorage.clear();
   }
+
+  static obtenerID(): string | null {
+  return localStorage.getItem('id');
+  }
+  
 }

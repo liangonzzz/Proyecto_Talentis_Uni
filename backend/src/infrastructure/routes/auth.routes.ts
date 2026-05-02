@@ -3,6 +3,8 @@ import { AuthController } from '../controller/AuthController';
 import { PasswordResetController } from '../controller/Passwordresetcontroller';
 import { PasswordResetRepository } from '../adapter/PasswordResetRepository';
 import { JwtUtil } from '../util/jwt.util';
+import { verificarToken, RequestConUsuario } from '../adapter/auth.middleware';
+import { AppDataSource } from '../config/data-base';
 
 const router = Router();
 const authController = new AuthController();
@@ -54,6 +56,27 @@ router.get('/verificar-token-reset', async (req: Request, res: Response) => {
     return res.status(200).json({ valid: true });
   } catch {
     return res.status(500).json({ message: 'Error al verificar token' });
+  }
+});
+
+// ── GET /api/auth/me ──────────────────────────────────────────────
+// Devuelve el usuario actual con rol, bloqueado y motivo_bloqueo
+router.get('/me', verificarToken, async (req: RequestConUsuario, res: Response) => {
+  try {
+    const id = req.usuario?.id;
+    if (!id) return res.status(401).json({ message: 'No autorizado' });
+
+    const rows = await AppDataSource.query(
+      `SELECT id, nombre, apellidos, correo, rol, bloqueado, motivo_bloqueo, bloqueado_at
+       FROM usuarios WHERE id = $1`,
+      [id]
+    );
+
+    if (!rows.length) return res.status(404).json({ message: 'Usuario no encontrado' });
+
+    return res.status(200).json(rows[0]);
+  } catch (error: any) {
+    return res.status(500).json({ message: error.message ?? 'Error interno' });
   }
 });
 

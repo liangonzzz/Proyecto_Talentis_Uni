@@ -1,0 +1,43 @@
+<div class="main-wrapper">
+  <div class="page-header-wrap">
+    <div class="page-header">
+      <div style="display:flex;align-items:center;gap:16px">
+        <button id="btn-volver" style="background:none;border:none;cursor:pointer;color:#5b9bd5;font-size:13px;display:flex;align-items:center;gap:6px">
+          <i class="fa-solid fa-arrow-left"></i> Volver a Candidatos
+        </button>
+        <h1 class="page-title">Hoja de Vida</h1>
+      </div>
+      <div class="progress-wrap">
+        <div class="progress-track"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+        <div class="progress-badge" id="progress-badge">0%</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="content-area">
+    <div class="profile-panel">
+      <div class="profile-top-card">
+        <div class="avatar-ring-wrap">
+          <div class="avatar-ring">
+            <div id="panel-avatar" style="font-family:'Sora',sans-serif;font-weight:700;color:#5b9bd5;font-size:28px;width:84px;height:84px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#c7ddf8,#a8e6df)"></div>
+          </div>
+        </div>
+        <div class="profile-name" id="panel-nombre"></div>
+        <div class="profile-role" id="panel-role"></div>
+        <div class="profile-email" id="panel-email"></div>
+      </div>
+      <div class="steps">
+        <div class="step"><div class="step-dot" id="step-perfil"><svg viewBox="0 0 10 10" fill="none" stroke="#c8d8ea" stroke-width="2.2" width="9" height="9"><polyline points="2,5 4.5,7.5 8,2.5"/></svg></div><span class="step-lbl">Información de perfil</span></div>
+        <div class="step"><div class="step-dot" id="step-personal"><svg viewBox="0 0 10 10" fill="none" stroke="#c8d8ea" stroke-width="2.2" width="9" height="9"><polyline points="2,5 4.5,7.5 8,2.5"/></svg></div><span class="step-lbl">Datos personales</span></div>
+        <div class="step"><div class="step-dot" id="step-formacion"><svg viewBox="0 0 10 10" fill="none" stroke="#c8d8ea" stroke-width="2.2" width="9" height="9"><polyline points="2,5 4.5,7.5 8,2.5"/></svg></div><span class="step-lbl">Formación académica</span></div>
+        <div class="step"><div class="step-dot" id="step-experiencia"><svg viewBox="0 0 10 10" fill="none" stroke="#c8d8ea" stroke-width="2.2" width="9" height="9"><polyline points="2,5 4.5,7.5 8,2.5"/></svg></div><span class="step-lbl">Experiencia laboral</span></div>
+        <div class="step"><div class="step-dot" id="step-afiliaciones"><svg viewBox="0 0 10 10" fill="none" stroke="#c8d8ea" stroke-width="2.2" width="9" height="9"><polyline points="2,5 4.5,7.5 8,2.5"/></svg></div><span class="step-lbl">Afiliaciones</span></div>
+        <div class="step"><div class="step-dot" id="step-documentos"><svg viewBox="0 0 10 10" fill="none" stroke="#c8d8ea" stroke-width="2.2" width="9" height="9"><polyline points="2,5 4.5,7.5 8,2.5"/></svg></div><span class="step-lbl">Documentos</span></div>
+      </div>
+    </div>
+
+    <div class="sections-wrapper">
+      <div class="sections-panel" id="secciones-container"></div>
+    </div>
+  </div>
+</div>

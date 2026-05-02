@@ -1,79 +1,139 @@
-<div class="main-wrapper">
+<div class="db-wrap">
 
-  <div class="page-header-wrap">
-    <div class="page-header">
-      <h1 class="page-title">Mi tablero</h1>
+  <div class="db-header">
+    <h1>Mi tablero</h1>
+    <span class="db-date"></span>
+  </div>
+
+  <div class="db-cards">
+    <div class="db-card">
+      <div class="db-card-accent accent-blue"></div>
+      <div class="db-card-icon icon-blue">
+        <svg width="16" height="16" fill="none" viewBox="0 0 24 24"><circle cx="9" cy="7" r="4" stroke="#2563a8" stroke-width="2"/><path d="M3 21v-2a4 4 0 014-4h4a4 4 0 014 4v2" stroke="#2563a8" stroke-width="2" stroke-linecap="round"/><circle cx="19" cy="11" r="2" stroke="#2563a8" stroke-width="2"/><path d="M23 21v-1a3 3 0 00-2-2.83" stroke="#2563a8" stroke-width="2" stroke-linecap="round"/></svg>
+      </div>
+      <div class="db-card-label">Candidatos</div>
+      <div class="db-card-value" id="val-candidatos">—</div>
+      <div class="db-card-sub"><span class="db-card-badge badge-up">activos</span></div>
+    </div>
+
+    <div class="db-card">
+      <div class="db-card-accent accent-teal"></div>
+      <div class="db-card-icon icon-teal">
+        <svg width="16" height="16" fill="none" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" stroke="#3cb8b2" stroke-width="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2" stroke="#3cb8b2" stroke-width="2"/><line x1="12" y1="12" x2="12" y2="16" stroke="#3cb8b2" stroke-width="2" stroke-linecap="round"/><line x1="10" y1="14" x2="14" y2="14" stroke="#3cb8b2" stroke-width="2" stroke-linecap="round"/></svg>
+      </div>
+      <div class="db-card-label">Funcionarios</div>
+      <div class="db-card-value" id="val-funcionarios">—</div>
+      <div class="db-card-sub"><span class="db-card-badge badge-up">activos</span></div>
+    </div>
+
+    <div class="db-card">
+      <div class="db-card-accent accent-amber"></div>
+      <div class="db-card-icon icon-amber">
+        <svg width="16" height="16" fill="none" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" stroke="#EF9F27" stroke-width="2"/><polyline points="14 2 14 8 20 8" stroke="#EF9F27" stroke-width="2"/><line x1="16" y1="13" x2="8" y2="13" stroke="#EF9F27" stroke-width="2" stroke-linecap="round"/><line x1="16" y1="17" x2="8" y2="17" stroke="#EF9F27" stroke-width="2" stroke-linecap="round"/></svg>
+      </div>
+      <div class="db-card-label">Horas pendientes</div>
+      <div class="db-card-value" id="val-hojas">—</div>
+      <div class="db-card-sub"><span class="db-card-badge badge-down">sin completar</span></div>
+    </div>
+
+    <div class="db-card">
+      <div class="db-card-accent accent-green"></div>
+      <div class="db-card-icon icon-green">
+        <svg width="16" height="16" fill="none" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" stroke="#639922" stroke-width="2"/><line x1="16" y1="2" x2="16" y2="6" stroke="#639922" stroke-width="2" stroke-linecap="round"/><line x1="8" y1="2" x2="8" y2="6" stroke="#639922" stroke-width="2" stroke-linecap="round"/><line x1="3" y1="10" x2="21" y2="10" stroke="#639922" stroke-width="2"/><circle cx="12" cy="16" r="1.5" fill="#639922"/></svg>
+      </div>
+      <div class="db-card-label">Tareas hoy</div>
+      <div class="db-card-value" id="val-tareas">—</div>
+      <div class="db-card-sub"><span class="db-card-badge badge-up" id="badge-tareas">0 completadas</span></div>
     </div>
   </div>
 
-  <div class="dashboard-content">
+  <div class="db-bottom">
 
-    <!-- Cards resumen -->
-    <div class="cards-grid">
-      <div class="card">
-        <p class="card-title">Candidatos</p>
-        <h2 class="card-value">120</h2>
+    <div class="db-panel">
+      <div class="db-panel-title">
+        Actividad reciente
       </div>
-      <div class="card">
-        <p class="card-title">Funcionarios</p>
-        <h2 class="card-value">35</h2>
-      </div>
-      <div class="card">
-        <p class="card-title">Hojas pendientes</p>
-        <h2 class="card-value">18</h2>
-      </div>
-      <div class="card">
-        <p class="card-title">Tareas hoy</p>
-        <h2 class="card-value">7</h2>
+      <div id="actividad-lista">
+        <div class="activity-item">
+          <div class="activity-dot dot-blue"></div>
+          <div>
+            <div class="activity-text">Cargando...</div>
+            <div class="activity-time"></div>
+          </div>
+        </div>
       </div>
     </div>
 
-    <!-- Sección inferior -->
-    <div class="dashboard-grid">
+    <div class="db-panel">
+      <div class="db-panel-title">
+        Tareas pendientes
+        <span class="panel-link">Ver todo →</span>
+      </div>
+      <div class="task-item">
+        <div class="task-check"></div>
+        <span class="task-label">Entrevistar candidato #23</span>
+        <span class="task-pill pill-urgent">Urgente</span>
+      </div>
+      <div class="task-item">
+        <div class="task-check"></div>
+        <span class="task-label">Revisar documentos</span>
+        <span class="task-pill pill-normal">Hoy</span>
+      </div>
+      <div class="task-item">
+        <div class="task-check"></div>
+        <span class="task-label">Actualizar contrato</span>
+        <span class="task-pill pill-normal">Hoy</span>
+      </div>
+    </div>
 
-      <!-- Actividad -->
-      <div class="card big-card">
-        <h3 class="section-title">Actividad reciente</h3>
-        <ul class="activity-list">
-          <li>Juan Pérez subió su hoja de vida</li>
-          <li>Se completó la tarea "Entrevista técnica"</li>
-          <li>Nuevo candidato: María López</li>
-        </ul>
+    <div class="db-panel">
+      <div class="db-panel-title">Estado candidatos</div>
+
+      <div class="estado-item" data-estado="postulados">
+        <div class="estado-header">
+          <span class="estado-label">Postulados</span>
+          <div class="estado-info">
+            <span class="estado-pct">—</span>
+            <span class="estado-count">—</span>
+          </div>
+        </div>
+        <div class="barra"><div class="fill fill-blue" style="width:0%"></div></div>
       </div>
 
-      <!-- Tareas -->
-      <div class="card big-card">
-        <h3 class="section-title">Tareas pendientes</h3>
-        <ul class="task-list">
-          <li>Entrevistar candidato #23</li>
-          <li>Revisar documentos</li>
-          <li>Actualizar contrato</li>
-        </ul>
+      <div class="estado-item" data-estado="en_revision">
+        <div class="estado-header">
+          <span class="estado-label">En revisión</span>
+          <div class="estado-info">
+            <span class="estado-pct">—</span>
+            <span class="estado-count">—</span>
+          </div>
+        </div>
+        <div class="barra"><div class="fill fill-teal" style="width:0%"></div></div>
       </div>
 
-      <!-- Estado candidatos -->
-      <div class="card big-card">
-        <h3 class="section-title">Estado candidatos</h3>
-        <div class="estado-item">
-          <span>Postulados</span>
-          <div class="barra"><div class="fill" style="width: 70%"></div></div>
+      <div class="estado-item" data-estado="entrevista">
+        <div class="estado-header">
+          <span class="estado-label">Entrevista</span>
+          <div class="estado-info">
+            <span class="estado-pct">—</span>
+            <span class="estado-count">—</span>
+          </div>
         </div>
-        <div class="estado-item">
-          <span>En revisión</span>
-          <div class="barra"><div class="fill" style="width: 50%"></div></div>
+        <div class="barra"><div class="fill fill-amber" style="width:0%"></div></div>
+      </div>
+
+      <div class="estado-item" data-estado="contratados">
+        <div class="estado-header">
+          <span class="estado-label">Contratados</span>
+          <div class="estado-info">
+            <span class="estado-pct">—</span>
+            <span class="estado-count">—</span>
+          </div>
         </div>
-        <div class="estado-item">
-          <span>Entrevista</span>
-          <div class="barra"><div class="fill" style="width: 30%"></div></div>
-        </div>
-        <div class="estado-item">
-          <span>Contratados</span>
-          <div class="barra"><div class="fill" style="width: 20%"></div></div>
-        </div>
+        <div class="barra"><div class="fill fill-green" style="width:0%"></div></div>
       </div>
 
     </div>
 
   </div>
-
 </div>

@@ -602,3 +602,115 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
 }
 
 .btn-guardar:hover { background: var(--blue-mid); }
+
+/* ── ESTADO VACÍO (fix centrado real) ── */
+.tareas-empty {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  min-height: 420px; /* asegura que se vea centrado en pantalla */
+}
+
+.tareas-empty-icon {
+  font-size: 52px;
+  color: #c8d7e8; /* azul muy claro, igual al screenshot */
+}
+
+.tareas-empty-text {
+  font-size: 14px;
+  color: var(--text-soft);
+}
+
+/* ── BOTÓN ELIMINAR dentro de tarea-item ── */
+.btn-eliminar-tarea {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #94a3b8; /* siempre visible */
+  padding: 4px 6px;
+  border-radius: 6px;
+  font-size: 13px;
+  transition: color 0.15s, background 0.15s;
+  flex-shrink: 0;
+}
+
+
+
+.tarea-item:hover .btn-eliminar-tarea:hover {
+  color: #ef4444;
+  background: #fef2f2;
+}
+
+
+
+.tarea-item.active:hover .btn-eliminar-tarea {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.tarea-item.active:hover .btn-eliminar-tarea:hover {
+  color: #fca5a5;
+  background: rgba(239, 68, 68, 0.2);
+}
+
+/* ── MODAL ELIMINAR — rediseño completo ── */
+#modal-eliminar-tarea .modal-box {
+  max-width: 380px;
+  text-align: center;
+  padding: 36px 32px 28px;
+}
+
+.modal-eliminar-icono {
+  width: 56px;
+  height: 56px;
+  background: #fef2f2;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 18px;
+  font-size: 22px;
+  color: #ef4444;
+}
+
+#modal-eliminar-tarea .modal-title {
+  font-size: 18px;
+  margin-bottom: 8px;
+  color: var(--text-main);
+}
+
+#modal-eliminar-tarea .modal-subtitle {
+  font-size: 13.5px;
+  color: var(--text-soft);
+  line-height: 1.6;
+  margin-bottom: 0;
+}
+
+#modal-eliminar-tarea .modal-actions {
+  margin-top: 24px;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  width: 300px;
+}
+
+#modal-eliminar-tarea .btn-cancelar {
+  width: auto;
+  flex: 1;
+  height: 40px;
+  font-size: 13px;
+}
+
+#modal-eliminar-tarea .btn-guardar {
+  width: auto;
+  flex: 1;
+  height: 40px;
+  font-size: 13px;
+  background: #ef4444;
+}
+
+#modal-eliminar-tarea .btn-guardar:hover {
+  background: #dc2626;
+}
