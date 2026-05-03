@@ -1,5 +1,0 @@
-ALTER TABLE hv_documentos
-  ADD COLUMN IF NOT EXISTS policia_url     VARCHAR(300),
-  ADD COLUMN IF NOT EXISTS procuraduria_url VARCHAR(300),
-  ADD COLUMN IF NOT EXISTS contrato_url    VARCHAR(300),
-  ADD COLUMN IF NOT EXISTS referencia_url  VARCHAR(300)
